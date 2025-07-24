@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NS Hacker AI Tools</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      background-color: #010a20;
+      font-family: 'Courier New', monospace;
+      color: #00ccff;
+      overflow-x: hidden;
+    }
+
+    .rain-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .overlay {
+      position: relative;
+      z-index: 1;
+    }
+
+    .header {
+      text-align: center;
+      padding: 40px 10px 20px;
+    }
+
+    .title {
+      font-size: 2.5rem;
+      color: #00ccff;
+      text-shadow: 0 0 10px #00ccff;
+      animation: flicker 1.5s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .tool-button {
+      background: rgba(0, 40, 80, 0.8);
+      border: 1px solid #00ccff;
+      color: #00ccff;
+      padding: 15px;
+      text-align: center;
+      border-radius: 8px;
+      transition: all 0.3s;
+      box-shadow: 0 0 10px #00ccff33;
+    }
+
+    .tool-button:hover {
+      background: #00ccff;
+      color: #001a33;
+      box-shadow: 0 0 20px #00ccff88;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #0088cc;
+    }
+  </style>
+</head>
+<body>
+<canvas id="rainCanvas" class="rain-canvas"></canvas>
+
+<div class="overlay">
+  <div class="header">
+    <h1 class="title">NS BASE: Hacker AI & Cybersecurity Tools</h1>
+    <p class="text-light">Cinematic Blue Hacker Interface</p>
+  </div>
+
+  <div class="container tool-grid">
+    <div class="tool-button">AI Code Analyzer</div>
+    <div class="tool-button">AI Password Cracker (Sim)</div>
+    <div class="tool-button">Steganography Decoder</div>
+    <div class="tool-button">Encryption Suite</div>
+    <div class="tool-button">Network Scanner</div>
+    <div class="tool-button">Port Analyzer</div>
+    <div class="tool-button">Packet Sniffer</div>
+    <div class="tool-button">Deep Web Crawler</div>
+    <div class="tool-button">AI Phishing Detector</div>
+    <div class="tool-button">Cyber Threat Map</div>
+    <div class="tool-button">Face Recognition Tool</div>
+    <div class="tool-button">Voice Authentication</div>
+    <div class="tool-button">Data Breach Checker</div>
+    <div class="tool-button">AI Keylogger Tracker</div>
+    <div class="tool-button">SQL Injection Simulator</div>
+    <div class="tool-button">Firewall Test Tool</div>
+    <div class="tool-button">Zero-Day Detector</div>
+    <div class="tool-button">Tor Anonymizer</div>
+    <div class="tool-button">AI Chatbot Intelligence</div>
+    <div class="tool-button">Hacker Terminal Emulator</div>
+  </div>
+
+  <footer>© 2025 NS BASE - Created by Naga Sasank | Hacker Themed Web UI</footer>
+</div>
+
+<script>
+  // Rain Effect
+  const canvas = document.getElementById('rainCanvas');
+  const ctx = canvas.getContext('2d');
+
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
+
+  const rainDrops = [];
+  const rainCount = 300;
+
+  for (let i = 0; i < rainCount; i++) {
+    rainDrops.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      length: Math.random() * 20 + 10,
+      speed: Math.random() * 5 + 5
+    });
+  }
+
+  function drawRain() {
+    ctx.clearRect(0, 0, width, height);
+    ctx.strokeStyle = '#00ccff88';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+
+    for (let drop of rainDrops) {
+      ctx.moveTo(drop.x, drop.y);
+      ctx.lineTo(drop.x, drop.y + drop.length);
+    }
+
+    ctx.stroke();
+    moveRain();
+    requestAnimationFrame(drawRain);
+  }
+
+  function moveRain() {
+    for (let drop of rainDrops) {
+      drop.y += drop.speed;
+      if (drop.y > height) {
+        drop.y = -drop.length;
+        drop.x = Math.random() * width;
+      }
+    }
+  }
+
+  drawRain();
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+</script>
+</body>
+</html>

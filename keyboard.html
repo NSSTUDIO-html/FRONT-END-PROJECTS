@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>3D Keyboard</title>
+  <style>
+    body {
+      background: #121212;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      perspective: 1000px;
+      margin: 0;
+    }
+
+    .keyboard {
+      display: grid;
+      grid-template-columns: repeat(10, 60px);
+      grid-gap: 12px;
+      transform-style: preserve-3d;
+      transform: rotateX(10deg) rotateY(5deg);
+    }
+
+    .key {
+      background: linear-gradient(to top, #1f1f1f, #333);
+      color: #fff;
+      border: 1px solid #444;
+      height: 60px;
+      text-align: center;
+      line-height: 60px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 8px;
+      box-shadow: 0 6px 0 #0a0a0a;
+      transition: transform 0.1s, box-shadow 0.1s;
+      cursor: none;
+      user-select: none;
+    }
+
+    .key:active,
+    .key.pressed {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #000;
+      background: #222;
+    }
+  </style>
+</head>
+<body>
+
+<div class="keyboard" id="keyboard">
+  <!-- JS will insert keys here -->
+</div>
+
+<script>
+  const keys = [
+    'Q','W','E','R','T','Y','U','I','O','P',
+    'A','S','D','F','G','H','J','K','L',
+    'Z','X','C','V','B','N','M','←','Space'
+  ];
+
+  const keyboard = document.getElementById('keyboard');
+
+  keys.forEach(key => {
+    const keyDiv = document.createElement('div');
+    keyDiv.classList.add('key');
+    keyDiv.textContent = key === 'Space' ? '␣' : key;
+    keyDiv.setAttribute('data-key', key);
+    keyboard.appendChild(keyDiv);
+
+    keyDiv.addEventListener('click', () => {
+      keyDiv.classList.add('pressed');
+      setTimeout(() => keyDiv.classList.remove('pressed'), 150);
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const pressedKey = e.key.toUpperCase();
+    const keyEl = Array.from(document.querySelectorAll('.key'))
+      .find(k => k.getAttribute('data-key') === pressedKey || 
+                 (pressedKey === ' ' && k.getAttribute('data-key') === 'Space') ||
+                 (pressedKey === 'BACKSPACE' && k.getAttribute('data-key') === '←'));
+    if (keyEl) {
+      keyEl.classList.add('pressed');
+      setTimeout(() => keyEl.classList.remove('pressed'), 150);
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Instagram Love Gradient Heart</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f0f0f0;
+      margin: 0;
+    }
+
+    .heart {
+      position: relative;
+      width: 100px;
+      height: 90px;
+      background: linear-gradient(45deg, #ff5858, #f857a6, #ff9966);
+      transform: rotate(-45deg);
+      border-radius: 50px 50px 0 0;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 90px;
+      background: inherit;
+      border-radius: 50px 50px 50px 10px;
+    }
+
+    .heart::before {
+      top: 0;
+      left: 50px;
+    }
+
+    .heart::after {
+      top: -50px;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="heart"></div>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All JS Black Topics</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: sans-serif; background: #fafafa; padding: 20px; }
+    .section { border: 1px solid #ccc; background: #fff; margin: 20px 0; padding: 15px; }
+    h2 { margin-top: 0; color: #222; }
+    .output { background: #eee; padding: 10px; margin-top: 8px; white-space: pre-wrap; }
+    canvas { border: 1px solid #000; display: block; margin-top: 10px; }
+    button { margin-right: 8px; }
+  </style>
+</head>
+<body>
+  <h1>✅ JavaScript Black-Topic Demos</h1>
+
+  <!-- 1. While + Break + For-of -->
+  <div class="section"><h2>1. while / break / for...of</h2>
+    <div id="loopOut" class="output"></div>
+    <script>
+      let o = "";
+      let i=0;
+      while(i<5){ o+=i+" "; i++; if(i===3) break; }
+      o+="| ";
+      const arr=[1,2,3];
+      for(let v of arr) o+=v+" ";
+      document.getElementById("loopOut").innerText = o;
+    </script>
+  </div>
+
+  <!-- 2. Set -->
+  <div class="section"><h2>2. Set Methods</h2>
+    <div id="setOut" class="output"></div>
+    <script>
+      const s=new Set(['a','b','a']);
+      s.add('c');
+      document.getElementById('setOut').innerText = JSON.stringify(Array.from(s));
+    </script>
+  </div>
+
+  <!-- 3. Map -->
+  <div class="section"><h2>3. Map Methods</h2>
+    <div id="mapOut" class="output"></div>
+    <script>
+      const m=new Map(); m.set('x',1); m.set('y',2);
+      document.getElementById('mapOut').innerText = `x=${m.get('x')}, y=${m.get('y')}`;
+    </script>
+  </div>
+
+  <!-- 4. typeof / conversion -->
+  <div class="section"><h2>4. typeof & Type Conversion</h2>
+    <div class="output">
+      typeof "17" = <span id="t1"></span>
+      typeof + "17" = <span id="t2"></span>
+      converted = <span id="t3"></span>
+    </div>
+    <script>
+      document.getElementById('t1').innerText = typeof "17";
+      document.getElementById('t2').innerText = typeof +"17";
+      document.getElementById('t3').innerText = + "17";
+    </script>
+  </div>
+
+  <!-- 5. Hoisting -->
+  <div class="section"><h2>5. Hoisting</h2>
+    <div id="hoistOut" class="output"></div>
+    <script>
+      hoistOut.innerText = a;
+      var a=100;
+    </script>
+  </div>
+
+  <!-- 6. Strict Mode -->
+  <div class="section"><h2>6. Strict Mode</h2>
+    <div id="strictOut" class="output"></div>
+    <script>"use strict";
+      try { undeclared=5 } catch(e){ strictOut.innerText=e.message; }
+    </script>
+  </div>
+
+  <!-- 7. this / Arrow -->
+  <div class="section"><h2>7. this & Arrow Function</h2>
+    <div id="thisOut" class="output"></div>
+    <script>
+      const obj={n:'N', f:function(){ return this.n }, a:()=>this.n };
+      thisOut.innerText = obj.f()+" | arrow says: "+ obj.a();
+    </script>
+  </div>
+
+  <!-- 8. Functions call/apply/bind + Closures -->
+  <div class="section"><h2>8. call/apply/bind & Closures</h2>
+    <div id="funcOut" class="output"></div>
+    <script>
+      function show(x){ return this.name+" "+x; }
+      const o2={name:'Z'};
+      const c2=show.call(o2,1), a1=show.apply(o2,[2]);
+      const bnd=show.bind(o2,3)();
+      function outer(){ let c2=0; return ()=>++c2; }
+      const clo=outer();
+      funcOut.innerText = [c2,a1,bnd, clo(), clo()].join(' | ');
+    </script>
+  </div>
+
+  <!-- 9. Class / Prototype -->
+  <div class="section"><h2>9. Class & Prototype</h2>
+    <div id="classOut" class="output"></div>
+    <script>
+      class C { constructor(v){ this.v=v } show(){return this.v} }
+      const o3=new C('hi');
+      C.prototype.blah=()=>'ok';
+      classOut.innerText = o3.show()+" & "+o3.blah();
+    </script>
+  </div>
+
+  <!-- 10. Object get/set/freeze -->
+  <div class="section"><h2>10. Object get/set/freeze</h2>
+    <div id="objOut" class="output"></div>
+    <script>
+      const o4={ _x:0,
+        get x(){return this._x},
+        set x(v){this._x=v},
+      };
+      o4.x=5;
+      Object.freeze(o4);
+      try{o4.x=10}catch(e){}
+      objOut.innerText = o4.x;
+    </script>
+  </div>
+
+  <!-- 11. Promise & Async/Await -->
+  <div class="section"><h2>11. Promises & Async/Await</h2>
+    <div id="pOut" class="output">...</div>
+    <script>
+      new Promise(r=>setTimeout(()=>r('P'),500))
+        .then(r=>pOut.innerText=r);
+      (async()=>{await new Promise(r=>setTimeout(r,300)); pOut.innerText+='/A'})();
+    </script>
+  </div>
+
+  <!-- 12. JSON -->
+  <div class="section"><h2>12. JSON parse/stringify</h2>
+    <div id="jsonOut" class="output"></div>
+    <script>
+      const obj5={a:1,b:2};
+      const str=JSON.stringify(obj5);
+      const back=JSON.parse(str);
+      jsonOut.innerText = str+" => "+back.b;
+    </script>
+  </div>
+
+  <!-- 13. AJAX (fetch simulation) -->
+  <div class="section"><h2>13. AJAX / Fetch (mock)</h2>
+    <div id="ajaxOut" class="output">loading...</div>
+    <script>
+      setTimeout(()=>ajaxOut.innerText='fetched!', 700);
+    </script>
+  </div>
+
+  <!-- 14. DOM / Events / setTimeout -->
+  <div class="section"><h2>14. DOM, Event, setTimeout</h2>
+    <button onclick="domOut.innerText='clicked';">Click me</button>
+    <div id="domOut" class="output">none yet</div>
+    <div id="timeOut" class="output"></div>
+    <script>
+      setTimeout(()=>timeOut.innerText='after timeout',1000);
+    </script>
+  </div>
+
+  <!-- 15. cookies / localStorage -->
+  <div class="section"><h2>15. BOM: Cookies & Web Storage</h2>
+    <button onclick="document.cookie='u=N';storageOut.innerText=localStorage.setItem('u','U')">Save</button>
+    <button onclick="storageOut.innerText=localStorage.getItem('u')+', cookie='+document.cookie">Load</button>
+    <div id="storageOut" class="output"></div>
+  </div>
+
+  <!-- 16. Geolocation -->
+  <div class="section"><h2>16. Web API: Geolocation</h2>
+    <button onclick="navigator.geolocation.getCurrentPosition(p=>geoOut.innerText=p.coords.latitude+','+p.coords.longitude)">Where am I?</button>
+    <div id="geoOut" class="output"></div>
+  </div>
+
+  <!-- 17. jQuery -->
+  <div class="section"><h2>17. jQuery</h2>
+    <button id="jqBtn">jQuery Click</button>
+    <div id="jqOut" class="output"></div>
+    <script>
+      $('#jqBtn').click(()=>$('#jqOut').text('jQuery works'));
+    </script>
+  </div>
+
+  <!-- 18. Canvas -->
+  <div class="section"><h2>18. Canvas graphic</h2>
+    <canvas id="cnv" width="180" height="90"></canvas>
+    <script>
+      const c=document.getElementById('cnv'),g=c.getContext('2d');
+      g.fillStyle='blue';g.fillRect(20,20,100,40);
+    </script>
+  </div>
+
+  <!-- 19. Chart.js -->
+  <div class="section"><h2>19. Chart.js</h2>
+    <canvas id="chart" width="200" height="100"></canvas>
+    <script>
+      new Chart(chart,{type:'bar',data:{labels:['A','B','C'],datasets:[{label:'V',data:[3,7,1],backgroundColor:['red','green','blue']}]}})
+    </script>
+  </div>
+</body>
+</html>

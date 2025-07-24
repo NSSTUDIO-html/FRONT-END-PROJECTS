@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sasank's Intermediate Marks - D3.js Charts</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body { font-family: sans-serif; background: #f4f4f4; padding: 20px; }
+    h2 { text-align: center; }
+    svg { margin: 30px auto; display: block; background: white; border-radius: 10px; }
+    .bar { fill: #4caf50; }
+    .bar:hover { fill: #ff9800; }
+    .axis-label { font-size: 12px; }
+  </style>
+</head>
+<body>
+
+  <h2>📊 Sasank's Intermediate Marks (All D3.js Charts)</h2>
+
+  <!-- Bar Chart -->
+  <svg id="barChart" width="700" height="400"></svg>
+
+  <!-- Line Chart -->
+  <svg id="lineChart" width="700" height="400"></svg>
+
+  <!-- Area Chart -->
+  <svg id="areaChart" width="700" height="400"></svg>
+
+  <!-- Pie Chart -->
+  <svg id="pieChart" width="400" height="400"></svg>
+
+  <!-- Donut Chart -->
+  <svg id="donutChart" width="400" height="400"></svg>
+
+  <script>
+    const data = [
+      { subject: 'English', marks: 116 },
+      { subject: 'Telugu', marks: 134 },
+      { subject: 'Maths-A', marks: 117 },
+      { subject: 'Maths-B', marks: 107 },
+      { subject: 'Physics', marks: 128 },
+      { subject: 'Chemistry', marks: 125 },
+      { subject: 'Physics Practical', marks: 59 },
+      { subject: 'Chemistry Practical', marks: 60 }
+    ];
+
+    // Shared margins and scales
+    const margin = { top: 30, right: 30, bottom: 50, left: 60 };
+    const width = 700 - margin.left - margin.right;
+    const height = 400 - margin.top - margin.bottom;
+
+    // ---------------- BAR CHART ----------------
+    {
+      const svg = d3.select("#barChart");
+      const chart = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+      const x = d3.scaleBand().domain(data.map(d => d.subject)).range([0, width]).padding(0.3);
+      const y = d3.scaleLinear().domain([0, d3.max(data, d => d.marks)]).nice().range([height, 0]);
+
+      chart.append("g").attr("transform", `translate(0,${height})`)
+        .call(d3.axisBottom(x)).selectAll("text")
+        .attr("transform", "rotate(-45)").style("text-anchor", "end");
+
+      chart.append("g").call(d3.axisLeft(y));
+
+      chart.selectAll(".bar").data(data).enter()
+        .append("rect").attr("class", "bar")
+        .attr("x", d => x(d.subject))
+        .attr("y", d => y(d.marks))
+        .attr("width", x.bandwidth())
+        .attr("height", d => height - y(d.marks));
+    }
+
+    // ---------------- LINE CHART ----------------
+    {
+      const svg = d3.select("#lineChart");
+      const chart = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+      const x = d3.scalePoint().domain(data.map(d => d.subject)).range([0, width]);
+      const y = d3.scaleLinear().domain([0, d3.max(data, d => d.marks)]).nice().range([height, 0]);
+
+      const line = d3.line().x(d => x(d.subject)).y(d => y(d.marks));
+      chart.append("path")
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", "#0077cc")
+        .attr("stroke-width", 3)
+        .attr("d", line);
+
+      chart.selectAll("circle").data(data).enter()
+        .append("circle")
+        .attr("cx", d => x(d.subject))
+        .attr("cy", d => y(d.marks))
+        .attr("r", 4)
+        .attr("fill", "#0077cc");
+
+      chart.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(x));
+      chart.append("g").call(d3.axisLeft(y));
+    }
+
+    // ---------------- AREA CHART ----------------
+    {
+      const svg = d3.select("#areaChart");
+      const chart = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+      const x = d3.scalePoint().domain(data.map(d => d.subject)).range([0, width]);
+      const y = d3.scaleLinear().domain([0, d3.max(data, d => d.marks)]).range([height, 0]);
+
+      const area = d3.area()
+        .x(d => x(d.subject))
+        .y0(height)
+        .y1(d => y(d.marks));
+
+      chart.append("path")
+        .datum(data)
+        .attr("fill", "#8bc34a88")
+        .attr("stroke", "#558b2f")
+        .attr("stroke-width", 2)
+        .attr("d", area);
+
+      chart.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(x));
+      chart.append("g").call(d3.axisLeft(y));
+    }
+
+    // ---------------- PIE CHART ----------------
+    {
+      const svg = d3.select("#pieChart"),
+        width = +svg.attr("width"),
+        height = +svg.attr("height"),
+        radius = Math.min(width, height) / 2;
+
+      const pieGroup = svg.append("g").attr("transform", `translate(${width / 2},${height / 2})`);
+      const color = d3.scaleOrdinal(d3.schemeCategory10);
+      const pie = d3.pie().value(d => d.marks);
+      const arc = d3.arc().innerRadius(0).outerRadius(radius);
+
+      pieGroup.selectAll("path")
+        .data(pie(data))
+        .enter().append("path")
+        .attr("d", arc)
+        .attr("fill", d => color(d.data.subject))
+        .attr("stroke", "white")
+        .style("stroke-width", "2px");
+    }
+
+    // ---------------- DONUT CHART ----------------
+    {
+      const svg = d3.select("#donutChart"),
+        width = +svg.attr("width"),
+        height = +svg.attr("height"),
+        radius = Math.min(width, height) / 2;
+
+      const donutGroup = svg.append("g").attr("transform", `translate(${width / 2},${height / 2})`);
+      const color = d3.scaleOrdinal(d3.schemeTableau10);
+      const pie = d3.pie().value(d => d.marks);
+      const arc = d3.arc().innerRadius(radius / 2).outerRadius(radius);
+
+      donutGroup.selectAll("path")
+        .data(pie(data))
+        .enter().append("path")
+        .attr("d", arc)
+        .attr("fill", d => color(d.data.subject))
+        .attr("stroke", "white")
+        .style("stroke-width", "2px");
+    }
+  </script>
+</body>
+</html>

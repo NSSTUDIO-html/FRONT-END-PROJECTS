@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Fake Ground AR Cube</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    #cameraFeed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    canvas {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <video id="cameraFeed" autoplay playsinline muted></video>
+  <canvas id="arCanvas"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  <script>
+    // Start camera
+    const video = document.getElementById("cameraFeed");
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false })
+      .then((stream) => {
+        video.srcObject = stream;
+      })
+      .catch((err) => {
+        alert("Camera access error: " + err);
+      });
+
+    // THREE.js Setup
+    const canvas = document.getElementById("arCanvas");
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
+    camera.position.z = 1.5;
+
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(0, 1, 2);
+    scene.add(light);
+
+    // Create Cube
+    const geometry = new THREE.BoxGeometry(0.3, 0.3, 0.3);
+    const material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+    const cube = new THREE.Mesh(geometry, material);
+    cube.position.y = -0.3; // Move cube to appear like it's on "ground"
+    scene.add(cube);
+
+    // Animate
+    function animate() {
+      requestAnimationFrame(animate);
+      cube.rotation.y += 0.01;
+      cube.rotation.x += 0.01;
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
+</body>
+</html>

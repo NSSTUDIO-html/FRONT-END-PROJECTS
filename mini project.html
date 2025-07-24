@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Jarvis Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: lightblue;
+      color: #222;
+      transition: all 0.3s ease;
+    }
+
+    .dark-mode {
+      background-color: #121212;
+      color: white;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      background: linear-gradient(to right, #007cf0, #00dfd8);
+      color: white;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background 0.3s ease;
+    }
+
+    .dark-mode .card {
+      background: #1e1e1e;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
+      background-color: #007cf0;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005ec2;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Hello I AM Sasank 👋 | <span id="time"></span> | <span id="date"></span>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h2>🔍 Google Search</h2>
+      <input type="text" id="searchQuery" placeholder="Type to search..." />
+      <button onclick="searchGoogle()">Search</button>
+    </div>
+
+    <div class="card">
+      <h2>🌤️ Weather Info</h2>
+      <p>City: Ongole</p>
+      <p>Temp: <strong>32°C</strong> | Clear Sky</p>
+    </div>
+
+    <div class="card">
+      <h2>📝 Quick Notes</h2>
+      <textarea id="noteArea" rows="6" placeholder="Write your notes..."></textarea>
+      <button onclick="saveNote()">Save</button>
+      <button onclick="clearNote()">Clear</button>
+    </div>
+
+    <div class="card">
+      <h2>🎵 Music Player</h2>
+      <audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+      <button onclick="document.getElementById('music').play()">Play</button>
+      <button onclick="document.getElementById('music').pause()">Pause</button>
+      <button onclick="document.getElementById('music').load()">Stop</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button onclick="toggleMode()">Toggle Dark / Light Mode</button>
+  </div>
+
+  <script>
+    // Live Time & Date
+    function updateClock() {
+      const now = new Date();
+      document.getElementById("time").innerText = now.toLocaleTimeString();
+      document.getElementById("date").innerText = now.toDateString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Google Search
+    function searchGoogle() {
+      const query = document.getElementById("searchQuery").value;
+      if (query) {
+        window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+      }
+    }
+
+    // Save Note
+    function saveNote() {
+      const note = document.getElementById("noteArea").value;
+      localStorage.setItem("myNote", note);
+      alert("Note saved!");
+    }
+
+    // Load Note on Page Load
+    window.onload = () => {
+      const savedNote = localStorage.getItem("myNote");
+      if (savedNote) {
+        document.getElementById("noteArea").value = savedNote;
+      }
+    }
+
+    // Clear Note
+    function clearNote() {
+      document.getElementById("noteArea").value = "";
+      localStorage.removeItem("myNote");
+    }
+
+    // Dark/Light Toggle
+    function toggleMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+  </script>
+</body>
+</html>

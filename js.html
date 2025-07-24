@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Topics All-in-One</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #ffffff;
+      padding: 20px;
+    }
+    section {
+      margin-bottom: 40px;
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    pre {
+      background: #2c2c2c;
+      padding: 10px;
+      overflow-x: auto;
+      border-radius: 6px;
+    }
+    h2 {
+      color: #00ffcc;
+    }
+  </style>
+</head>
+<body>
+  <h1>All JavaScript Topics with Code Examples</h1>  <section><h2>JavaScript Examples Output</h2>
+    <pre id="output"></pre>
+  </section>  <footer>
+    <p>All JavaScript topics and examples coded in one place. Made by Naga Sasank.</p>
+  </footer>  <script>
+    let output = "";
+
+    // 1. Variables and Data Types
+    let name = "Sasank";
+    const age = 25;
+    var isStudent = true;
+    output += `Name: ${name}, Age: ${age}, Student: ${isStudent}\n`;
+
+    // 2. Functions
+    function greet(name) {
+      return "Hello, " + name;
+    }
+    output += greet("Naga") + "\n";
+
+    // 3. Arrow Functions
+    const add = (a, b) => a + b;
+    output += `5 + 3 = ${add(5, 3)}\n`;
+
+    // 4. Control Flow
+    let score = 85;
+    if(score > 90){
+      output += "Excellent\n";
+    }else if(score > 70){
+      output += "Good\n";
+    }else{
+      output += "Try again\n";
+    }
+
+    // 5. Loops
+    for(let i = 1; i <= 5; i++){
+      output += i + " ";
+    }
+    output += "\n";
+
+    // 6. Arrays & Methods
+    let fruits = ["Apple", "Banana", "Mango"];
+    fruits.push("Orange");
+    output += `Fruits: ${fruits.join(", ")}\n`;
+
+    // 7. Objects
+    let person = {
+      name: "Sasank",
+      age: 25,
+      greet() {
+        return "Hello " + this.name;
+      }
+    };
+    output += person.greet() + "\n";
+
+    // 8. DOM Manipulation (example only; not changing background here)
+    // document.body.style.backgroundColor = "#333";
+
+    // 9. Events
+    document.addEventListener("click", function(){
+      alert("Page clicked!");
+    });
+
+    // 10. Fetch API (dummy text, since we can't fetch without a real URL)
+    output += "Fetch API Example - see JS source\n";
+
+    // 11. Promises & Async/Await (dummy async example)
+    async function dummyLoad() {
+      return "Data loaded";
+    }
+    dummyLoad().then(res => {
+      output += res + "\n";
+      document.getElementById("output").innerText = output;
+    });
+
+    // 12. Local Storage
+    localStorage.setItem("username", "sasank");
+    let user = localStorage.getItem("username");
+    output += `LocalStorage: ${user}\n`;
+
+    // 13. ES6 Classes
+    class Animal {
+      constructor(name) {
+        this.name = name;
+      }
+      speak() {
+        return this.name + " makes a noise.";
+      }
+    }
+    let dog = new Animal("Dog");
+    output += dog.speak() + "\n";
+
+    // 14. Try/Catch
+    try {
+      let x = y + 1;
+    } catch (error) {
+      output += `Error: ${error.message}\n`;
+    }
+
+    // 15. Event Loop
+    output += "Start\n";
+    setTimeout(() => {
+      output += "Timeout\n";
+      document.getElementById("output").innerText = output;
+    }, 0);
+    output += "End\n";
+
+    // Print initial output
+    document.getElementById("output").innerText = output;
+  </script></body>
+</html>

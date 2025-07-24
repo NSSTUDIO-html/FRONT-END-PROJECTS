@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Learn JavaScript - All in One</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #222;
+    }
+    section {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-left: 5px solid #007acc;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      overflow-x: auto;
+    }
+    button {
+      margin-top: 10px;
+      background: #007acc;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005f99;
+    }
+    .output {
+      background: #222;
+      color: #0f0;
+      padding: 10px;
+      margin-top: 10px;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔥 Learn JavaScript - Interactive Guide</h1>
+
+  <section>
+    <h2>1. Variables</h2>
+    <pre><code>let a = 10;
+const b = "Hello";
+var c = true;
+</code></pre>
+    <button onclick="variablesDemo()">Run</button>
+    <div class="output" id="output1"></div>
+  </section>
+
+  <section>
+    <h2>2. Functions</h2>
+    <pre><code>function greet(name) {
+  return "Hi " + name;
+}</code></pre>
+    <button onclick="functionsDemo()">Run</button>
+    <div class="output" id="output2"></div>
+  </section>
+
+  <section>
+    <h2>3. Arrays & Loops</h2>
+    <pre><code>let fruits = ["Apple", "Banana", "Cherry"];
+fruits.forEach(fruit => console.log(fruit));</code></pre>
+    <button onclick="arrayLoopDemo()">Run</button>
+    <div class="output" id="output3"></div>
+  </section>
+
+  <section>
+    <h2>4. Objects</h2>
+    <pre><code>let person = {
+  name: "Sasank",
+  age: 22,
+  greet: function() {
+    return "Hello " + this.name;
+  }
+}</code></pre>
+    <button onclick="objectDemo()">Run</button>
+    <div class="output" id="output4"></div>
+  </section>
+
+  <section>
+    <h2>5. DOM Manipulation</h2>
+    <pre><code>document.getElementById("demo").textContent = "Updated!"</code></pre>
+    <button onclick="domDemo()">Change Text Below</button>
+    <div id="demo">Original Text</div>
+  </section>
+
+  <section>
+    <h2>6. Events</h2>
+    <pre><code>document.getElementById("clickBtn").addEventListener("click", () => alert("Clicked!"));</code></pre>
+    <button id="clickBtn">Click Me</button>
+  </section>
+
+  <section>
+    <h2>7. ES6 Features (Arrow, Destructuring)</h2>
+    <pre><code>let nums = [1, 2];
+let [x, y] = nums;
+const add = (a, b) => a + b;</code></pre>
+    <button onclick="es6Demo()">Run</button>
+    <div class="output" id="output5"></div>
+  </section>
+
+  <section>
+    <h2>8. Async/Await & Fetch</h2>
+    <pre><code>async function loadUser() {
+  let res = await fetch("https://api.github.com/users/octocat");
+  let data = await res.json();
+  console.log(data.login);
+}</code></pre>
+    <button onclick="fetchDemo()">Fetch GitHub User</button>
+    <div class="output" id="output6"></div>
+  </section>
+
+  <section>
+    <h2>9. Error Handling</h2>
+    <pre><code>try {
+  throw new Error("Something went wrong");
+} catch (e) {
+  console.log(e.message);
+}</code></pre>
+    <button onclick="errorDemo()">Try Catch</button>
+    <div class="output" id="output7"></div>
+  </section>
+
+  <script>
+    function variablesDemo() {
+      let a = 10;
+      const b = "Hello";
+      var c = true;
+      document.getElementById("output1").textContent = `a=${a}, b=${b}, c=${c}`;
+    }
+
+    function functionsDemo() {
+      function greet(name) {
+        return "Hi " + name;
+      }
+      document.getElementById("output2").textContent = greet("Sasank");
+    }
+
+    function arrayLoopDemo() {
+      let fruits = ["Apple", "Banana", "Cherry"];
+      document.getElementById("output3").textContent = fruits.join('\n');
+    }
+
+    function objectDemo() {
+      let person = {
+        name: "Sasank",
+        age: 22,
+        greet: function () {
+          return "Hello " + this.name;
+        }
+      };
+      document.getElementById("output4").textContent = person.greet();
+    }
+
+    function domDemo() {
+      document.getElementById("demo").textContent = "Text Updated by JavaScript!";
+    }
+
+    function es6Demo() {
+      let nums = [5, 10];
+      let [x, y] = nums;
+      const add = (a, b) => a + b;
+      document.getElementById("output5").textContent = `x=${x}, y=${y}, x+y=${add(x, y)}`;
+    }
+
+    async function fetchDemo() {
+      try {
+        let res = await fetch("https://api.github.com/users/octocat");
+        let data = await res.json();
+        document.getElementById("output6").textContent = `GitHub User: ${data.login}`;
+      } catch (err) {
+        document.getElementById("output6").textContent = "Error fetching data";
+      }
+    }
+
+    function errorDemo() {
+      try {
+        throw new Error("Something went wrong!");
+      } catch (e) {
+        document.getElementById("output7").textContent = e.message;
+      }
+    }
+  </script>
+
+</body>
+</html>

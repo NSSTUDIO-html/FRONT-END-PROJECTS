@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>jQuery All Features Demo</title>
+
+  <!-- jQuery & jQuery UI CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+  <style>
+    body { font-family: Arial; background: #f0f0f0; padding: 20px; }
+    h1 { color: #333; }
+    #box {
+      width: 150px; height: 150px;
+      background: teal; margin: 10px 0;
+      position: relative;
+    }
+    .highlight { background: orange; }
+    .result { margin-top: 10px; font-weight: bold; }
+    .btn { padding: 5px 10px; margin: 5px; }
+  </style>
+</head>
+<body>
+
+  <h1 id="title">jQuery Webpage Demo</h1>
+
+  <!-- Buttons for effects -->
+  <button class="btn" id="hideBtn">Hide</button>
+  <button class="btn" id="showBtn">Show</button>
+  <button class="btn" id="toggleBtn">Toggle</button>
+  <button class="btn" id="fadeBtn">Fade</button>
+  <button class="btn" id="slideBtn">Slide</button>
+  <button class="btn" id="animateBtn">Animate</button>
+  <button class="btn" id="classBtn">Toggle Class</button>
+
+  <div id="box"></div>
+
+  <!-- Form interaction -->
+  <input type="text" id="name" placeholder="Enter name">
+  <input type="text" id="dob" placeholder="Pick Date">
+  <button class="btn" id="greetBtn">Greet</button>
+
+  <div class="result" id="greetMsg"></div>
+
+  <!-- AJAX Load -->
+  <button class="btn" id="loadData">Load External Data</button>
+  <div id="dataArea" style="background: #fff; padding: 10px; border: 1px solid #ccc;"></div>
+
+  <!-- Hidden text file simulation -->
+  <div id="hiddenText" style="display:none;">This is data loaded using jQuery AJAX .load()</div>
+
+  <script>
+    $(document).ready(function(){
+
+      // Basic Events + Effects
+      $("#hideBtn").click(function(){ $("#box").hide(); });
+      $("#showBtn").click(function(){ $("#box").show(); });
+      $("#toggleBtn").click(function(){ $("#box").toggle(); });
+      $("#fadeBtn").click(function(){ $("#box").fadeToggle(); });
+      $("#slideBtn").click(function(){ $("#box").slideToggle(); });
+
+      // Animate box
+      $("#animateBtn").click(function(){
+        $("#box").animate({
+          left: '+=100px',
+          height: 'toggle'
+        }, 1000).animate({left: '0px', height: '150px'}, 1000);
+      });
+
+      // Toggle class
+      $("#classBtn").click(function(){
+        $("#box").toggleClass("highlight");
+      });
+
+      // Form input greeting
+      $("#greetBtn").click(function(){
+        let name = $("#name").val();
+        let dob = $("#dob").val();
+        if(name){
+          $("#greetMsg").html("Hello, <b>" + name + "</b>! Your DOB is " + dob);
+        } else {
+          $("#greetMsg").text("Please enter your name.");
+        }
+      });
+
+      // AJAX Load simulation using hidden div
+      $("#loadData").click(function(){
+        let data = $("#hiddenText").html();  // Simulate .load() from file
+        $("#dataArea").html(data);
+      });
+
+      // jQuery UI Date Picker
+      $("#dob").datepicker();
+
+      // DOM Traversal Example
+      $("button").mouseenter(function(){
+        $(this).css("background", "#ddd");
+      }).mouseleave(function(){
+        $(this).css("background", "");
+      });
+
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All-in-One AJAX Webpage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 15px;
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .user, .post {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+    .spinner {
+      display: none;
+      text-align: center;
+      font-size: 18px;
+    }
+    input[type="text"], input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .search-box {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🌐 AJAX Demo Page</h2>
+
+    <!-- AJAX Load Users -->
+    <button onclick="loadUsers()">Load Users</button>
+    <div class="spinner" id="spinner">Loading...</div>
+    <div id="user-list"></div>
+
+    <!-- AJAX Search Users -->
+    <div class="search-box">
+      <input type="text" id="search" placeholder="Live Search Users..." onkeyup="liveSearch(this.value)">
+    </div>
+
+    <!-- AJAX Form Submit -->
+    <h3>Contact Form (AJAX Submit)</h3>
+    <form onsubmit="submitForm(event)">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="email" id="email" placeholder="Your Email" required>
+      <button type="submit">Submit</button>
+    </form>
+    <div id="form-response"></div>
+  </div>
+
+  <script>
+    // Load Users with Spinner
+    function loadUsers() {
+      document.getElementById('spinner').style.display = 'block';
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', 'https://jsonplaceholder.typicode.com/users', true);
+      xhr.onload = function () {
+        document.getElementById('spinner').style.display = 'none';
+        if (this.status === 200) {
+          const users = JSON.parse(this.responseText);
+          let output = '';
+          users.forEach(user => {
+            output += `
+              <div class="user">
+                <strong>${user.name}</strong><br>
+                Email: ${user.email}<br>
+                City: ${user.address.city}
+              </div>
+            `;
+          });
+          document.getElementById('user-list').innerHTML = output;
+        }
+      };
+      xhr.send();
+    }
+
+    // Live Search Users
+    function liveSearch(query) {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', 'https://jsonplaceholder.typicode.com/users', true);
+      xhr.onload = function () {
+        if (this.status === 200) {
+          const users = JSON.parse(this.responseText);
+          let output = '';
+          users.filter(user => user.name.toLowerCase().includes(query.toLowerCase()))
+               .forEach(user => {
+                output += `
+                  <div class="user">
+                    <strong>${user.name}</strong><br>
+                    Email: ${user.email}
+                  </div>
+                `;
+          });
+          document.getElementById('user-list').innerHTML = output;
+        }
+      };
+      xhr.send();
+    }
+
+    // Submit form with AJAX (fake submit)
+    function submitForm(event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://jsonplaceholder.typicode.com/posts', true);
+      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+      xhr.onload = function () {
+        if (this.status === 201) {
+          const response = JSON.parse(this.responseText);
+          document.getElementById('form-response').innerHTML = `
+            <p>✅ Thank you, ${name}! Form submitted successfully.</p>
+            <p><strong>Response ID:</strong> ${response.id}</p>
+          `;
+        }
+      };
+      const data = JSON.stringify({ name, email });
+      xhr.send(data);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Object Detection AI</title>
+  <!-- TensorFlow + COCO SSD -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@latest"></script>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    canvas {
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white font-sans flex flex-col items-center justify-center min-h-screen p-4 relative">
+
+  <h1 class="text-3xl font-bold mb-4 text-center text-blue-400">🔍 Real-Time Object Detection</h1>
+
+  <div class="relative">
+    <video id="webcam" autoplay playsinline muted width="640" height="480" class="shadow-xl border-4 border-blue-500 rounded-xl"></video>
+    <canvas id="canvas" width="640" height="480"></canvas>
+
+    <!-- 🔄 Switch Camera Button -->
+    <button id="switchCameraBtn"
+      class="absolute top-2 right-2 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full shadow-lg z-20"
+      title="Switch Camera">
+      🔄
+    </button>
+  </div>
+
+  <div id="status" class="mt-4 text-green-300 font-medium">🧠 Loading model...</div>
+
+  <script>
+    const video = document.getElementById('webcam');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const status = document.getElementById('status');
+    const switchBtn = document.getElementById('switchCameraBtn');
+
+    let currentFacingMode = 'environment'; // or 'user'
+    let stream;
+    let model;
+
+    async function setupWebcam(facingMode = 'environment') {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode },
+        audio: false
+      });
+
+      video.srcObject = stream;
+
+      return new Promise(resolve => {
+        video.onloadedmetadata = () => {
+          resolve(video);
+        };
+      });
+    }
+
+    async function startDetection() {
+      await setupWebcam(currentFacingMode);
+      model = await cocoSsd.load();
+      status.textContent = "✅ Model loaded. Detecting objects...";
+      detectFrame();
+    }
+
+    function detectFrame() {
+      model.detect(video).then(predictions => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        predictions.forEach(pred => {
+          ctx.strokeStyle = "#00FF00";
+          ctx.lineWidth = 2;
+          ctx.strokeRect(...pred.bbox);
+
+          ctx.fillStyle = "#00FF00";
+          ctx.font = "16px sans-serif";
+          ctx.fillText(
+            `${pred.class} (${Math.round(pred.score * 100)}%)`,
+            pred.bbox[0],
+            pred.bbox[1] > 10 ? pred.bbox[1] - 5 : 10
+          );
+        });
+
+        requestAnimationFrame(detectFrame);
+      });
+    }
+
+    switchBtn.addEventListener('click', async () => {
+      currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
+      await setupWebcam(currentFacingMode);
+    });
+
+    startDetection();
+  </script>
+</body>
+</html>

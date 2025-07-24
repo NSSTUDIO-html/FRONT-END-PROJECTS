@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DOM Techniques Demo</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f0f0f0; }
+    .box { padding: 10px; margin: 10px 0; background: #fff; border: 1px solid #ccc; }
+    .highlight { background-color: yellow; }
+  </style>
+</head>
+<body>
+
+  <h1 id="main-title">DOM Techniques in JavaScript</h1>
+
+  <!-- Section: Selection -->
+  <div class="box" id="selection-section">
+    <h2>Select Elements</h2>
+    <p id="byId">Select by ID</p>
+    <p class="byClass">Select by Class</p>
+    <p name="byName">Select by Name</p>
+  </div>
+
+  <!-- Section: Manipulation -->
+  <div class="box" id="manipulation-section">
+    <h2>Manipulate Elements</h2>
+    <p id="text-content">Old Text</p>
+    <p id="inner-html">Original <strong>HTML</strong></p>
+    <button onclick="manipulateDom()">Change Content</button>
+  </div>
+
+  <!-- Section: Create / Remove -->
+  <div class="box" id="create-section">
+    <h2>Create / Remove Elements</h2>
+    <button onclick="addElement()">Add Element</button>
+    <button onclick="removeElement()">Remove Last</button>
+    <div id="container"></div>
+  </div>
+
+  <!-- Section: Events -->
+  <div class="box" id="event-section">
+    <h2>Events</h2>
+    <button id="click-me">Click Me</button>
+    <p id="event-result">Waiting for click...</p>
+  </div>
+
+  <!-- Section: ClassList -->
+  <div class="box" id="classlist-section">
+    <h2>ClassList</h2>
+    <p id="class-target">Watch my background!</p>
+    <button onclick="toggleHighlight()">Toggle Highlight</button>
+  </div>
+
+  <!-- Section: Traversing -->
+  <div class="box" id="traverse-section">
+    <h2>DOM Traversing</h2>
+    <ul id="list">
+      <li>Item 1</li>
+      <li class="second">Item 2</li>
+      <li>Item 3</li>
+    </ul>
+    <button onclick="traverseDom()">Highlight 2nd Item</button>
+  </div>
+
+  <!-- Section: Form Input -->
+  <div class="box" id="form-section">
+    <h2>Form Handling</h2>
+    <input type="text" id="name-input" placeholder="Enter your name">
+    <button onclick="greetUser()">Greet</button>
+    <p id="greeting"></p>
+  </div>
+
+  <script>
+    // DOM Selection Examples
+    const byId = document.getElementById('byId');
+    const byClass = document.getElementsByClassName('byClass')[0];
+    const byName = document.getElementsByName('byName')[0];
+    byId.style.color = 'blue';
+    byClass.style.color = 'green';
+    byName.style.color = 'red';
+
+    // Manipulate DOM
+    function manipulateDom() {
+      document.getElementById('text-content').textContent = 'New Text using textContent';
+      document.getElementById('inner-html').innerHTML = 'Changed <em>HTML</em> using innerHTML';
+    }
+
+    // Create/Remove Elements
+    function addElement() {
+      const div = document.createElement('div');
+      div.textContent = 'New Element';
+      div.style.marginTop = '5px';
+      document.getElementById('container').appendChild(div);
+    }
+
+    function removeElement() {
+      const container = document.getElementById('container');
+      if (container.lastChild) {
+        container.removeChild(container.lastChild);
+      }
+    }
+
+    // Event Handling
+    document.getElementById('click-me').addEventListener('click', () => {
+      document.getElementById('event-result').textContent = 'Button Clicked!';
+    });
+
+    // ClassList Methods
+    function toggleHighlight() {
+      const target = document.getElementById('class-target');
+      target.classList.toggle('highlight');
+    }
+
+    // Traversing DOM
+    function traverseDom() {
+      const ul = document.getElementById('list');
+      const secondItem = ul.children[1];
+      secondItem.style.backgroundColor = 'orange';
+    }
+
+    // Form Handling
+    function greetUser() {
+      const name = document.getElementById('name-input').value;
+      document.getElementById('greeting').textContent = `Hello, ${name}!`;
+    }
+  </script>
+
+</body>
+</html>

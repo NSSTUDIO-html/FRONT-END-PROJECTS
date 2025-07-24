@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AJAX + JSON Example</title>
+</head>
+<body>
+  <h2>User Info</h2>
+  <button onclick="loadUser()">Get User</button>
+  <div id="userData"></div>
+
+  <script>
+    function loadUser() {
+      fetch('https://jsonplaceholder.typicode.com/users/1') // fake API
+        .then(response => response.json()) // parse JSON
+        .then(user => {
+          document.getElementById("userData").innerHTML = `
+            <p><strong>Name:</strong> ${user.name}</p>
+            <p><strong>Email:</strong> ${user.email}</p>
+            <p><strong>City:</strong> ${user.address.city}</p>
+          `;
+        })
+        .catch(error => {
+          document.getElementById("userData").innerHTML = "Error loading user data.";
+          console.error(error);
+        });
+    }
+  </script>
+</body>
+</html>

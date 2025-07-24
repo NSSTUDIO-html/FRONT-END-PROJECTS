@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CSS Sheet Examples</title>
+  <style>
+    /* 1. Selectors */
+    body, h1, p { font-family: Arial, sans-serif; }
+
+    /* 2. Pseudo-classes & Pseudo-elements */
+    a:hover { color: red; }
+    p::first-letter { font-size: 200%; color: green; }
+
+    /* 3. Units */
+    .units { font-size: 2em; width: 50vw; }
+
+    /* 4. Browser Prefix */
+    .box {
+      -webkit-transform: rotate(5deg);
+      -moz-transform: rotate(5deg);
+      transform: rotate(5deg);
+    }
+
+    /* 5. @font-face */
+    @font-face {
+      font-family: 'MyFont';
+      src: url('https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxM.woff2');
+    }
+    .custom-font { font-family: 'MyFont'; }
+
+    /* 6. Media Queries */
+    @media (max-width: 600px) {
+      .responsive { color: blue; }
+    }
+
+    /* 7. Dimension */
+    .box-size { width: 100px; height: 100px; background: orange; }
+
+    /* 8. Appearance (Simplified) */
+    input[type="checkbox"] {
+      -webkit-appearance: none;
+      width: 20px; height: 20px;
+      background: green;
+    }
+
+    /* 9. Contrast (Using colors) */
+    .contrast { background: black; color: white; padding: 10px; }
+
+    /* 10. Position */
+    .relative { position: relative; top: 10px; left: 10px; }
+
+    /* 11. Fonts & Texts */
+    .text-style { font-size: 18px; font-weight: bold; text-transform: uppercase; }
+
+    /* 12. Lists */
+    ul.custom-list { list-style-type: square; }
+
+    /* 13. Display & Visibility */
+    .hidden { visibility: hidden; }
+    .block { display: block; }
+
+    /* 14. Animation */
+    @keyframes slide {
+      from { margin-left: 0; }
+      to { margin-left: 100px; }
+    }
+    .animate { animation: slide 2s infinite alternate; }
+
+    /* 15. Print & Cursor */
+    @media print {
+      body { font-size: 12px; }
+    }
+    .cursor-pointer { cursor: pointer; }
+
+    /* 16. Functions */
+    .calc-box { width: calc(100% - 40px); background: lightblue; }
+
+    /* 17. Display */
+    .inline { display: inline; }
+
+    /* 18. Flex */
+    .flex-container {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* 19. Grid */
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* 20. Extra Alignments */
+    .centered {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100px;
+      background: #eee;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Topics Examples</h1>
+
+  <p class="units">This text uses em and vw units.</p>
+  <div class="box">Rotated Box (Prefix Example)</div>
+  <p class="custom-font">This is a custom font using @font-face.</p>
+  <p class="responsive">Resize the window to see media query effect.</p>
+  <div class="box-size">Box with width and height</div>
+  <input type="checkbox">
+  <p class="contrast">High Contrast Text</p>
+  <div class="relative">Relative Positioned Element</div>
+  <p class="text-style">Text styled with font and transformations</p>
+  <ul class="custom-list"><li>List item 1</li><li>List item 2</li></ul>
+  <p class="hidden">This is hidden</p>
+  <p class="block">This is block</p>
+  <div class="animate">Animated Box</div>
+  <p class="cursor-pointer">Hover me (cursor pointer)</p>
+  <div class="calc-box">Width using calc()</div>
+  <p class="inline">Inline Element</p>
+
+  <h2>Flex Example</h2>
+  <div class="flex-container">
+    <div style="background:red;">Flex 1</div>
+    <div style="background:blue;">Flex 2</div>
+  </div>
+
+  <h2>Grid Example</h2>
+  <div class="grid-container">
+    <div style="background:green;">Grid 1</div>
+    <div style="background:purple;">Grid 2</div>
+  </div>
+
+  <h2>Center Alignment</h2>
+  <div class="centered">Centered Box</div>
+
+</body>
+</html>

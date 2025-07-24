@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Perfect HTML5 Webpage by Naga Sasank">
+  <meta name="author" content="Naga Sasank">
+  <title>My Perfect HTML5 Page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background: #f9f9f9;
+    }
+
+    header {
+      background: #333;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    nav {
+      background: #555;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.5rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    section {
+      margin-bottom: 2rem;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Welcome to My HTML5 Website</h1>
+    <p>Created by Naga Sasank</p>
+  </header>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <main>
+    <section id="home">
+      <h2>Home</h2>
+      <p>This is a clean and modern HTML5 layout ready for CSS and JS enhancements.</p>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <ul>
+        <li>AI Jarvis Dashboard</li>
+        <li>Cyber Tools Web App</li>
+        <li>Rising Shooters Game</li>
+      </ul>
+    </section>
+
+    <section id="about">
+      <h2>About Me</h2>
+      <p>I’m Naga Sasank, passionate about AI, cybersecurity, and building futuristic tech like AR/VR and 3D model generators.</p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <form>
+        <label>Name:</label><br>
+        <input type="text" name="name" required><br><br>
+
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br><br>
+
+        <label>Message:</label><br>
+        <textarea name="message" rows="5" required></textarea><br><br>
+
+        <button type="submit">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Naga Sasank | All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

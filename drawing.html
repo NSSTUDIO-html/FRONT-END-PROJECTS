@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Animated Face Drawing</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    canvas {
+      background: #fff;
+      border: 5px solid #333;
+      box-shadow: 0 0 20px #00c9ff;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="faceCanvas" width="500" height="500"></canvas>
+
+  <script>
+    const canvas = document.getElementById("faceCanvas");
+    const ctx = canvas.getContext("2d");
+
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = "#000";
+    ctx.lineCap = "round";
+
+    const strokes = [
+      // Face outline
+      { x: 250, y: 100, delay: 0 },
+      { x: 220, y: 120, delay: 10 },
+      { x: 200, y: 160, delay: 10 },
+      { x: 190, y: 250, delay: 10 },
+      { x: 200, y: 320, delay: 10 },
+      { x: 230, y: 370, delay: 10 },
+      { x: 270, y: 370, delay: 10 },
+      { x: 300, y: 320, delay: 10 },
+      { x: 310, y: 250, delay: 10 },
+      { x: 300, y: 160, delay: 10 },
+      { x: 280, y: 120, delay: 10 },
+      { x: 250, y: 100, delay: 10 },
+
+      // Left eye
+      { x: 215, y: 190, delay: 30 },
+      { x: 220, y: 185, delay: 10 },
+      { x: 225, y: 185, delay: 10 },
+      { x: 230, y: 190, delay: 10 },
+      { x: 225, y: 195, delay: 10 },
+      { x: 220, y: 195, delay: 10 },
+      { x: 215, y: 190, delay: 10 },
+
+      // Right eye
+      { x: 270, y: 190, delay: 30 },
+      { x: 275, y: 185, delay: 10 },
+      { x: 280, y: 185, delay: 10 },
+      { x: 285, y: 190, delay: 10 },
+      { x: 280, y: 195, delay: 10 },
+      { x: 275, y: 195, delay: 10 },
+      { x: 270, y: 190, delay: 10 },
+
+      // Nose
+      { x: 250, y: 200, delay: 30 },
+      { x: 245, y: 240, delay: 10 },
+      { x: 250, y: 250, delay: 10 },
+      { x: 255, y: 240, delay: 10 },
+
+      // Mouth
+      { x: 230, y: 290, delay: 30 },
+      { x: 240, y: 295, delay: 10 },
+      { x: 250, y: 297, delay: 10 },
+      { x: 260, y: 295, delay: 10 },
+      { x: 270, y: 290, delay: 10 },
+    ];
+
+    let i = 0;
+
+    function drawStroke() {
+      if (i >= strokes.length) return;
+
+      const { x, y, delay } = strokes[i];
+      if (i === 0 || strokes[i - 1].delay > 20) {
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
+        ctx.stroke();
+      }
+
+      i++;
+      setTimeout(drawStroke, delay);
+    }
+
+    drawStroke();
+  </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Export to GLB</title>
+  <style>
+    body { margin: 0; overflow: hidden; }
+    #exportBtn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 1;
+      padding: 10px 20px;
+      background: #00bcd4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<button id="exportBtn">Export GLB</button>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js"></script>
+<!-- Working GLTFExporter -->
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r150/examples/js/exporters/GLTFExporter.js"></script>
+
+<!-- Working OrbitControls -->
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r150/examples/js/controls/OrbitControls.js"></script> <script>
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x202020);
+
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+camera.position.set(2, 2, 5);
+
+const renderer = new THREE.WebGLRenderer({antialias: true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Controls
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+// Light
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(5, 10, 7.5);
+scene.add(light);
+
+// Model (Your Three.js scene)
+const geometry = new THREE.BoxGeometry();
+const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
+
+// Render loop
+function animate() {
+  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
+}
+animate();
+
+// Export to GLB
+function exportGLB() {
+  const exporter = new THREE.GLTFExporter();
+  exporter.parse(
+    scene,
+    function (result) {
+      const blob = new Blob([result], { type: 'application/octet-stream' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'scene.glb';
+      link.click();
+    },
+    { binary: true }
+  );
+}
+document.getElementById('exportBtn').onclick = exportGLB;
+</script>
+
+</body>
+</html>

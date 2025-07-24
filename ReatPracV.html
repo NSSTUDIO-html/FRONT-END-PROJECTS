@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MiniBlog React SPA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+
+    h1, h2 {
+      margin: 0 0 10px;
+    }
+
+    a {
+      color: #0070f3;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .nav {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- React & ReactDOM CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+  <!-- Babel for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- React App Code -->
+  <script type="text/babel">
+    const { useState } = React;
+
+    const posts = [
+      { id: 1, title: "🚀 What is React?", content: "React is a JavaScript library for building user interfaces." },
+      { id: 2, title: "📘 JSX Explained", content: "JSX lets you write HTML-like syntax in JavaScript." },
+      { id: 3, title: "🎣 React Hooks", content: "Hooks like useState let you manage state in functional components." }
+    ];
+
+    function App() {
+      const [page, setPage] = useState("home");
+      const [currentId, setCurrentId] = useState(null);
+
+      function showPost(id) {
+        setCurrentId(id);
+        setPage("post");
+      }
+
+      function goHome() {
+        setPage("home");
+        setCurrentId(null);
+      }
+
+      return (
+        <div className="container">
+          <div className="nav">
+            {page !== "home" && <a onClick={goHome}>← Back to Home</a>}
+          </div>
+
+          {page === "home" && <Home posts={posts} onPostClick={showPost} />}
+          {page === "post" && <Post post={posts.find(p => p.id === currentId)} />}
+        </div>
+      );
+    }
+
+    function Home({ posts, onPostClick }) {
+      return (
+        <div>
+          <h1>📝 Blog Home</h1>
+          {posts.map(post => (
+            <div className="card" key={post.id}>
+              <h2>{post.title}</h2>
+              <a onClick={() => onPostClick(post.id)}>Read more →</a>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    function Post({ post }) {
+      if (!post) return <p>Post not found.</p>;
+      return (
+        <div className="card">
+          <h1>{post.title}</h1>
+          <p>{post.content}</p>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

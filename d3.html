@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Stylish D3.js Charts</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
+      padding: 30px;
+    }
+    .chart-title {
+      text-align: center;
+      font-size: 22px;
+      color: #222;
+      margin-top: 40px;
+      margin-bottom: 10px;
+      text-shadow: 1px 1px #fff;
+    }
+    svg {
+      display: block;
+      margin: 0 auto 30px auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+<div class="chart-title">📊 Animated Gradient Bar Chart</div>
+<svg id="barChart" width="400" height="300"></svg>
+
+<div class="chart-title">📈 Smooth Line Chart</div>
+<svg id="lineChart" width="400" height="300"></svg>
+
+<div class="chart-title">🥧 Gradient Pie Chart</div>
+<svg id="pieChart" width="400" height="300"></svg>
+
+<div class="chart-title">🍩 Donut Chart with Animation</div>
+<svg id="donutChart" width="400" height="300"></svg>
+
+<div class="chart-title">🏞️ Area Chart with Fade In</div>
+<svg id="areaChart" width="400" height="300"></svg>
+
+<div class="chart-title">🔵 Glowing Scatter Plot</div>
+<svg id="scatterPlot" width="400" height="300"></svg>
+
+<script>
+// Data
+const data = [25, 40, 15, 60, 20];
+const lineData = [10, 20, 35, 25, 50];
+const scatterData = [
+  {x: 20, y: 30},
+  {x: 60, y: 90},
+  {x: 100, y: 40},
+  {x: 160, y: 80},
+  {x: 220, y: 60}
+];
+const width = 400, height = 300;
+
+// Gradients
+function addGradient(svg, id, color1, color2) {
+  const defs = svg.append("defs");
+  const gradient = defs.append("linearGradient")
+    .attr("id", id)
+    .attr("x1", "0%").attr("y1", "0%")
+    .attr("x2", "0%").attr("y2", "100%");
+  gradient.append("stop").attr("offset", "0%").attr("stop-color", color1);
+  gradient.append("stop").attr("offset", "100%").attr("stop-color", color2);
+}
+
+// BAR CHART
+const svgBar = d3.select("#barChart");
+addGradient(svgBar, "barGradient", "#00c6ff", "#0072ff");
+
+svgBar.selectAll("rect")
+  .data(data)
+  .enter()
+  .append("rect")
+  .attr("x", (d,i) => i * 70 + 30)
+  .attr("y", height)
+  .attr("rx", 10)
+  .attr("width", 40)
+  .attr("height", 0)
+  .style("fill", "url(#barGradient)")
+  .transition()
+  .duration(1000)
+  .attr("y", d => height - d * 4)
+  .attr("height", d => d * 4);
+
+// LINE CHART
+const svgLine = d3.select("#lineChart");
+const xLine = d3.scaleLinear().domain([0, 4]).range([40, width - 40]);
+const yLine = d3.scaleLinear().domain([0, 60]).range([height - 40, 40]);
+const line = d3.line().x((d, i) => xLine(i)).y(d => yLine(d)).curve(d3.curveCardinal);
+
+svgLine.append("path")
+  .datum(lineData)
+  .attr("d", line)
+  .attr("stroke", "#ff5e62")
+  .attr("fill", "none")
+  .attr("stroke-width", 3)
+  .attr("stroke-dasharray", "500")
+  .attr("stroke-dashoffset", 500)
+  .transition()
+  .duration(1500)
+  .attr("stroke-dashoffset", 0);
+
+// PIE CHART
+const svgPie = d3.select("#pieChart").append("g").attr("transform", `translate(${width/2}, ${height/2})`);
+const pie = d3.pie()(data);
+const arc = d3.arc().innerRadius(0).outerRadius(100);
+const colorPie = d3.scaleSequential(d3.interpolateCool).domain([0, data.length]);
+
+svgPie.selectAll("path")
+  .data(pie)
+  .enter()
+  .append("path")
+  .attr("d", arc)
+  .attr("fill", (d,i) => colorPie(i))
+  .transition()
+  .duration(1000)
+  .attrTween("d", function(d) {
+    const i = d3.interpolate({startAngle: 0, endAngle: 0}, d);
+    return t => arc(i(t));
+  });
+
+// DONUT CHART
+const svgDonut = d3.select("#donutChart").append("g").attr("transform", `translate(${width/2}, ${height/2})`);
+const arcDonut = d3.arc().innerRadius(50).outerRadius(100);
+
+svgDonut.selectAll("path")
+  .data(pie)
+  .enter()
+  .append("path")
+  .attr("fill", (d, i) => d3.interpolatePlasma(i / data.length))
+  .transition()
+  .delay((d, i) => i * 150)
+  .duration(1000)
+  .attrTween("d", function(d) {
+    const i = d3.interpolate({startAngle: 0, endAngle: 0}, d);
+    return t => arcDonut(i(t));
+  });
+
+// AREA CHART
+const svgArea = d3.select("#areaChart");
+const xArea = d3.scaleLinear().domain([0, 4]).range([40, width - 40]);
+const yArea = d3.scaleLinear().domain([0, 60]).range([height - 40, 40]);
+const area = d3.area()
+  .x((d, i) => xArea(i))
+  .y0(height - 40)
+  .y1(d => yArea(d))
+  .curve(d3.curveMonotoneX);
+
+svgArea.append("path")
+  .datum(lineData)
+  .attr("d", area)
+  .attr("fill", "url(#barGradient)")
+  .attr("opacity", 0)
+  .transition()
+  .duration(1000)
+  .attr("opacity", 1);
+
+// SCATTER PLOT
+const svgScatter = d3.select("#scatterPlot");
+
+svgScatter.selectAll("circle")
+  .data(scatterData)
+  .enter()
+  .append("circle")
+  .attr("cx", d => d.x + 100)
+  .attr("cy", d => height - d.y)
+  .attr("r", 0)
+  .style("fill", "#ff4e50")
+  .style("filter", "drop-shadow(0px 0px 4px #ff4e50)")
+  .transition()
+  .duration(1000)
+  .attr("r", 8);
+</script>
+
+</body>
+</html>

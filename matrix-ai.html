@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Matrix AI // Hacker Interface</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: #00ff00;
+      font-family: 'Courier New', Courier, monospace;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .terminal {
+      position: relative;
+      z-index: 2;
+      padding: 20px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .title {
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: #00ff00;
+      font-weight: bold;
+    }
+
+    .log {
+      margin: 5px 0;
+      animation: typing 1.5s steps(40, end);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .input-line {
+      display: flex;
+      margin-top: 10px;
+    }
+
+    .input-line::before {
+      content: "MATRIX-AI > ";
+      color: lime;
+    }
+
+    #commandInput {
+      background: black;
+      color: #00ff00;
+      border: none;
+      outline: none;
+      font-family: monospace;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: limegreen;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="terminal" id="terminal">
+  <div class="title">MATRIX AI // NAGA SASANKQ ONLINE</div>
+  <div class="log">[+] Initializing quantum protocols...</div>
+  <div class="log">[+] Breaching firewall layer...</div>
+  <div class="log">[+] Injecting payload into neural grid...</div>
+  <div class="log">[+] Access granted. Welcome, Agent VEER.</div>
+
+  <div class="input-line">
+    <input type="text" id="commandInput" placeholder="Type a command..." autofocus />
+  </div>
+</div>
+
+<script>
+  // MATRIX RAIN CODE
+  const canvas = document.getElementById('matrix');
+  const ctx = canvas.getContext('2d');
+
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+
+  const characters = "01アカサタナハマヤラワABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const fontSize = 14;
+  const columns = Math.floor(canvas.width / fontSize);
+  const drops = Array(columns).fill(1);
+
+  function drawMatrix() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#00ff00";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = characters.charAt(Math.floor(Math.random() * characters.length));
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+
+      drops[i]++;
+    }
+  }
+
+  setInterval(drawMatrix, 33);
+
+  // TERMINAL COMMAND INPUT
+  const terminal = document.getElementById("terminal");
+  const input = document.getElementById("commandInput");
+
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      const command = input.value.trim();
+      if (command) {
+        printToTerminal(">> " + command);
+        setTimeout(() => {
+          printToTerminal(fakeResponse(command));
+        }, 1000);
+        input.value = "";
+        terminal.scrollTop = terminal.scrollHeight;
+      }
+    }
+  });
+
+  function printToTerminal(text) {
+    const line = document.createElement("div");
+    line.classList.add("log");
+    line.textContent = text;
+    terminal.insertBefore(line, input.parentElement);
+  }
+
+  function fakeResponse(cmd) {
+    switch (cmd.toLowerCase()) {
+      case "status":
+        return "[SYSTEM] Matrix AI is active and stable.";
+      case "whoami":
+        return "[IDENTITY] Agent VEER // NAGA SASANKQ";
+      case "access":
+        return "[ACCESS] Authorization level: MAXIMUM. 🔓";
+      case "help":
+        return "[COMMANDS] status, whoami, access, shutdown";
+      case "shutdown":
+        return "[WARNING] Shutting down Matrix AI...";
+      default:
+        return "[ERROR] Unknown command. Try 'help'";
+    }
+  }
+</script>
+
+</body>
+</html>

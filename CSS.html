@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS Cheat Sheet Demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: #333;
+      background: linear-gradient(to right, #f0f0f0, #ffffff);
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 20px;
+    }
+
+    h1, h2 {
+      text-align: center;
+      text-transform: uppercase;
+      text-shadow: 1px 1px 2px #999;
+    }
+
+    .box {
+      border: 2px solid #333;
+      padding: 20px;
+      margin: 10px;
+      background-color: #e0e0e0;
+      border-radius: 10px;
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .box:hover {
+      transform: scale(1.05);
+    }
+
+    .flex-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .flex-item {
+      flex: 1 1 45%;
+      background: #cceeff;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .grid-demo {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 10px;
+    }
+
+    .grid-item {
+      background: #ffd6cc;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .animated {
+      animation: moveBox 2s infinite;
+    }
+
+    @keyframes moveBox {
+      0% { margin-left: 0; }
+      50% { margin-left: 30px; }
+      100% { margin-left: 0; }
+    }
+
+    .pseudo-demo:hover {
+      background-color: #ffeb99;
+    }
+
+    .position-demo {
+      position: relative;
+      height: 100px;
+    }
+
+    .absolute-box {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #ccc;
+      padding: 5px;
+    }
+
+    .overflow-demo {
+      overflow: auto;
+      height: 60px;
+    }
+
+    .custom-cursor {
+      cursor: pointer;
+    }
+
+    @media screen and (max-width: 600px) {
+      body {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h1>CSS Cheat Sheet Demo</h1>
+    <p class="pseudo-demo">Hover over this box to see pseudo-class effect</p>
+  </div>
+
+  <div class="box flex-container">
+    <div class="flex-item">Flex 1</div>
+    <div class="flex-item">Flex 2</div>
+  </div>
+
+  <div class="box grid-demo">
+    <div class="grid-item">Grid 1</div>
+    <div class="grid-item">Grid 2</div>
+    <div class="grid-item">Grid 3</div>
+  </div>
+
+  <div class="box animated">
+    Animated Box (keyframes)
+  </div>
+
+  <div class="box position-demo">
+    <div class="absolute-box">Absolute Positioned</div>
+    Positioned Box
+  </div>
+
+  <div class="box overflow-demo">
+    This box has overflow set to auto. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ut fermentum nulla.
+  </div>
+
+  <div class="box custom-cursor">
+    This box changes cursor on hover.
+  </div>
+
+</body>
+</html>

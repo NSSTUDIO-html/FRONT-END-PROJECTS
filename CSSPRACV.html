@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Naga Sasank Portfolio</title>
+  <style>
+    /* RESET & BASE STYLES */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      background: #f4f4f4;
+      color: #333;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    ul {
+      list-style: none;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #222;
+      color: #fff;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+    .nav-links a {
+      color: #fff;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: #00bcd4;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      background: linear-gradient(to right, #2193b0, #6dd5ed);
+      color: white;
+    }
+    .hero h2 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .btn {
+      background: #fff;
+      color: #2193b0;
+      padding: 10px 25px;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #e0f7fa;
+    }
+
+    /* SKILLS SECTION */
+    .skills {
+      padding: 60px 20px;
+      background-color: #fff;
+    }
+    .skills h2 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .skill-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .skill-item {
+      background: #f0f0f0;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+      transition: transform 0.3s;
+    }
+    .skill-item:hover {
+      transform: scale(1.05);
+      background: #d7eff7;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #222;
+      color: #aaa;
+      margin-top: 40px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .nav-links {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">Naga Sasank</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Skills</a></li>
+        <li><a href="#">Projects</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h2>Hello, I'm Naga Sasank</h2>
+    <p>Aspiring Full Stack Developer | Game & AI Creator</p>
+    <a href="#" class="btn">Download CV</a>
+  </section>
+
+  <!-- Skills Section -->
+  <section class="skills">
+    <h2>My Skills</h2>
+    <div class="skill-list">
+      <div class="skill-item">HTML5</div>
+      <div class="skill-item">CSS3</div>
+      <div class="skill-item">JavaScript</div>
+      <div class="skill-item">Python</div>
+      <div class="skill-item">Three.js</div>
+      <div class="skill-item">TensorFlow.js</div>
+      <div class="skill-item">Pandas</div>
+      <div class="skill-item">React</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Naga Sasank. All rights reserved.
+  </footer>
+
+</body>
+</html>

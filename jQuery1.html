@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>jQuery All-in-One Project</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+      background: #f0f0f0;
+    }
+    #profile {
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      display: none;
+    }
+    .highlight {
+      background-color: yellow;
+    }
+    .box {
+      width: 100px;
+      height: 100px;
+      background: green;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>jQuery Interactive Profile</h1>
+
+  <!-- Form -->
+  <form id="profileForm">
+    <label>Name: <input type="text" id="name" required></label><br><br>
+    <label>Email: <input type="email" id="email" required></label><br><br>
+    <label>DOB: <input type="text" id="dob" required></label><br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <hr>
+
+  <!-- Profile Section -->
+  <div id="profile">
+    <h2 id="profileName"></h2>
+    <p id="profileEmail"></p>
+    <p id="profileDOB"></p>
+    <button id="toggleBox">Toggle Animation</button>
+    <div class="box"></div>
+  </div>
+
+  <script>
+    $(document).ready(function(){
+
+      // Datepicker Plugin
+      $("#dob").datepicker();
+
+      // Form Submission
+      $("#profileForm").submit(function(e){
+        e.preventDefault();
+        $("#profileName").text("Name: " + $("#name").val());
+        $("#profileEmail").text("Email: " + $("#email").val());
+        $("#profileDOB").text("DOB: " + $("#dob").val());
+
+        $("#profile").slideDown(500);
+
+        // Add class and CSS
+        $("#profileName").addClass("highlight").css("font-size", "24px");
+      });
+
+      // Animation
+      $("#toggleBox").click(function(){
+        $(".box").animate({
+          width: 'toggle',
+          opacity: 'toggle',
+        }, 1000);
+      });
+
+      // Traversing Example
+      $("#profile").on("click", "p", function(){
+        $(this).css("color", "blue");
+      });
+
+      // AJAX Simulation
+      setTimeout(function(){
+        $.get("https://jsonplaceholder.typicode.com/users/1", function(data){
+          console.log("AJAX Response (Name):", data.name);
+        });
+      }, 2000);
+
+    });
+  </script>
+</body>
+</html>

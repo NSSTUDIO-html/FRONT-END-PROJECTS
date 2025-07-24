@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AJAX Practice Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f1f1f1;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #008CBA;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    #output {
+      margin-top: 20px;
+      background: white;
+      padding: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>AJAX Practice Example</h1>
+  <p>Click the button to fetch a random user using AJAX:</p>
+
+  <button onclick="fetchUser()">Fetch User</button>
+
+  <div id="output">User info will be displayed here.</div>
+
+  <script>
+    function fetchUser() {
+      // Create XMLHttpRequest object
+      const xhr = new XMLHttpRequest();
+
+      // Setup: GET request to a public API
+      xhr.open('GET', 'https://randomuser.me/api/', true);
+
+      // When the request loads
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          const user = response.results[0];
+
+          // Display user data
+          document.getElementById('output').innerHTML = `
+            <h2>${user.name.first} ${user.name.last}</h2>
+            <p><strong>Email:</strong> ${user.email}</p>
+            <p><strong>Location:</strong> ${user.location.city}, ${user.location.country}</p>
+            <img src="${user.picture.medium}" alt="User Picture">
+          `;
+        } else {
+          document.getElementById('output').innerText = 'Failed to fetch data.';
+        }
+      };
+
+      // Send the request
+      xhr.send();
+    }
+  </script>
+
+</body>
+</html>

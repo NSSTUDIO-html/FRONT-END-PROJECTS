@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manda Kamalakar</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(180deg, #ffffff, #f0f4ff);
+      color: #333333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 750px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      border: 1px solid #e0e0e0;
+      animation: fadeIn 1.2s ease-out;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      background: linear-gradient(90deg, cyan, blue,purple,yellow,orange,red,black,green);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientText 5s ease infinite;
+      background-size: 200% auto;
+    }
+
+    .info {
+      margin: 20px 0;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      animation: slideUp 1s ease;
+    }
+
+    .info span {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .highlight {
+      color: #007CF0;
+      font-weight: bold;
+      font-size: 1.4rem;
+      animation: pulse 2s infinite;
+      text-shadow: 0 0 8px #00DFD8;
+    }
+
+    .images {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 30px;
+      animation: fadeIn 2s ease-in;
+    }
+
+    .images img {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 3px solid #e0f7fa;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      box-shadow: 0 6px 20px rgba(0, 124, 240, 0.1);
+      animation: popIn 1.2s ease;
+    }
+
+    .images img:hover {
+      transform: scale(1.1) rotate(1deg);
+      box-shadow: 0 10px 25px rgba(0, 124, 240, 0.3);
+    }
+
+    @keyframes gradientText {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      .info {
+        font-size: 1rem;
+      }
+      .images img {
+        width: 120px;
+        height: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>MANDA KAMALAKAR</h1>
+    <div class="info">
+      <span>🎂 Age: 25</span>
+      <span>🏫 School: SPKR SCHOOL (SSC)</span>
+      <span>🏛️ Inter: AKVK INTER COLLEGE (CEC)</span>
+      <span>🎓 Degree: B.Com - AKVK DEGREE COLLEGE</span>
+      <span>🎓 Postgraduate: MBA - Pace College</span>
+      <span class="highlight">🔥 BGM LOVER 🔥</span>
+    </div>
+    <div class="images">
+      <img src="/storage/emulated/0/Pictures/WhatsApp/IMG-20250622-WA0022.jpg" alt="Kamalakar 1" />
+      <img src="/storage/emulated/0/Pictures/WhatsApp/IMG-20250622-WA0024.jpg" alt="Kamalakar 2" />
+    </div>
+  </div>
+</body>
+</html>

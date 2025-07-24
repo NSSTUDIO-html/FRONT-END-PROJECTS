@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Realistic Helicopter</title>
+</head>
+<body>
+<canvas id="myCanvas" width="800" height="500" style="border:1px solid #000;"></canvas>
+
+<script>
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+
+// Sky
+const sky = ctx.createLinearGradient(0, 0, 0, 500);
+sky.addColorStop(0, "#87CEFA");
+sky.addColorStop(1, "#E0FFFF");
+ctx.fillStyle = sky;
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+// Helicopter body
+ctx.beginPath();
+ctx.moveTo(200, 250);
+ctx.quadraticCurveTo(300, 180, 400, 250); // top curve
+ctx.quadraticCurveTo(300, 300, 200, 250); // bottom curve
+ctx.fillStyle = "#444";
+ctx.shadowColor = "gray";
+ctx.shadowBlur = 10;
+ctx.fill();
+ctx.shadowBlur = 0;
+
+// Tail boom
+ctx.fillStyle = "#444";
+ctx.fillRect(390, 240, 130, 15);
+
+// Tail fin
+ctx.beginPath();
+ctx.moveTo(520, 240);
+ctx.lineTo(550, 225);
+ctx.lineTo(550, 255);
+ctx.closePath();
+ctx.fillStyle = "#333";
+ctx.fill();
+
+// Main rotor blades
+ctx.beginPath();
+ctx.lineWidth = 8;
+ctx.strokeStyle = "#111";
+ctx.moveTo(300, 170);
+ctx.lineTo(500, 150);
+ctx.moveTo(300, 170);
+ctx.lineTo(100, 150);
+ctx.stroke();
+
+// Main rotor base
+ctx.beginPath();
+ctx.arc(300, 170, 10, 0, 2 * Math.PI);
+ctx.fillStyle = "#000";
+ctx.fill();
+
+// Tail rotor
+ctx.beginPath();
+ctx.lineWidth = 3;
+ctx.moveTo(550, 240);
+ctx.lineTo(570, 230);
+ctx.moveTo(550, 240);
+ctx.lineTo(570, 250);
+ctx.stroke();
+
+// Cockpit glass
+ctx.beginPath();
+ctx.moveTo(220, 245);
+ctx.quadraticCurveTo(270, 210, 320, 245);
+ctx.lineTo(220, 245);
+ctx.fillStyle = "rgba(173,216,230,0.7)";
+ctx.fill();
+
+// Skids
+ctx.strokeStyle = "#222";
+ctx.lineWidth = 5;
+ctx.beginPath();
+ctx.moveTo(220, 300);
+ctx.lineTo(180, 330);
+ctx.moveTo(380, 300);
+ctx.lineTo(420, 330);
+ctx.moveTo(180, 330);
+ctx.lineTo(420, 330);
+ctx.stroke();
+
+</script>
+</body>
+</html>

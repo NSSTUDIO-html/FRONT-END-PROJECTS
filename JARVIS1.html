@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jarvis AI Command Line</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background: #0b0b0b;
+      color: #00ffe7;
+      font-family: 'Courier New', monospace;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .command-line {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 2px solid #00ffe7;
+      background: black;
+      color: #00ffe7;
+      border-radius: 8px;
+    }
+    .response {
+      margin-top: 20px;
+      padding: 10px;
+      background: #111;
+      border-radius: 8px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 30px;
+    }
+    .btn {
+      background: #1a1a1a;
+      border: 1px solid #00ffe7;
+      color: #00ffe7;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn:hover {
+      background: #00ffe7;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🧠 Jarvis AI Command Panel</h1>
+
+<div class="command-line">
+  <input type="text" id="commandInput" placeholder="Type a command like: open matrix, run flask..." onkeypress="checkCommand(event)">
+  <div id="response" class="response">Awaiting command...</div>
+</div>
+
+<div class="grid" id="buttonsGrid">
+  <!-- Buttons will be generated from JS -->
+</div>
+
+<script>
+const tools = {
+  "matrix": "Matrix AI - Encrypted command system & chatbot.",
+  "musical": "Musical Land - Virtual instruments & AI music.",
+  "ar universe": "AR Universe - Mixed reality gaming world.",
+  "sketcher": "AR Sketcher - AR camera-guided drawing assistant.",
+  "titan": "Titan Core AI - Central AI system with modules.",
+  "anime": "Anime AI - 3D anime character & animation tool.",
+  "guard": "GuardAI - Cybersecurity assistant.",
+  "reality": "Reality Render - AI-based rendering engine.",
+  "vidmorph": "VidMorph AI - Video transformation using AI.",
+  "oneshot3d": "ONESHOT3D - Generate 3D from a single image.",
+  "bb": "BB Mech - Car + Robot weapon system.",
+  "rising": "Rising Shooters - Action game with 50+ levels.",
+  "django": "Django - Python web framework.",
+  "flask": "Flask - Lightweight Python web APIs.",
+  "pandas": "Pandas - Data analysis and manipulation.",
+  "numpy": "NumPy - Scientific computing in Python.",
+  "sklearn": "Scikit-learn - ML toolkit in Python.",
+  "tensorflow": "TensorFlow - Deep learning engine.",
+  "pytorch": "PyTorch - AI framework for research.",
+  "opencv": "OpenCV - Image & video processing.",
+  "sqlite": "SQLite3 - Local database engine.",
+  "chatbot": "AI Chatbot - GPT-based conversation tool.",
+  "face": "Face Recognition - Detect faces in real-time.",
+  "object": "Object Detection - Identify items via camera.",
+  "voice": "Voice Assistant - Jarvis listens and replies.",
+  "sentiment": "Sentiment Analysis - Understand user emotions.",
+  "gan": "GANs - Generate new images from AI.",
+  "nlp": "NLP AI - Language understanding & generation.",
+  "hacking": "Hacking Toolkit - Ethical tools only.",
+  "ip": "IP Tracker - Locate devices remotely.",
+  "keylogger": "Keylogger - Log keystrokes (for learning).",
+  "scanner": "Network Scanner - Scan devices on WiFi.",
+  "ports": "Port Scanner - Check open ports.",
+  "sniffer": "Packet Sniffer - Capture network traffic.",
+  "termux": "Termux Tools - Ethical hacking terminal.",
+  "firewall": "GuardAI Firewall - Block suspicious activity.",
+  "combat": "Combat AI - Weaponized mech controls.",
+  "target": "Target Lock - Auto aim tracker.",
+  "thermal": "Thermal AI - Detect heat & motion.",
+  "jetpack": "Jetpack Boost - Activate flight module.",
+  "shield": "Shield System - Mech defense activator.",
+  "voicecomms": "Voice Comms - Robot communication module.",
+  "command": "Command Panel - View all active systems.",
+  "draw": "Drawing Pad - AI-based sketch generator.",
+  "render": "3D Renderer - Create realistic models.",
+  "stock": "Stock AI - AI-based investing insights.",
+};
+
+function checkCommand(event) {
+  if (event.key === 'Enter') {
+    const cmd = document.getElementById('commandInput').value.toLowerCase().trim();
+    const match = Object.keys(tools).find(key => cmd.includes(key));
+    document.getElementById('response').innerText = match ? tools[match] : "Unknown command: " + cmd;
+  }
+}
+
+function showInfo(tool) {
+  document.getElementById('commandInput').value = "open " + tool;
+  document.getElementById('response').innerText = tools[tool] || "Tool not found.";
+}
+
+function loadButtons() {
+  const grid = document.getElementById('buttonsGrid');
+  Object.keys(tools).forEach(tool => {
+    const btn = document.createElement('div');
+    btn.className = 'btn';
+    btn.textContent = tool.toUpperCase();
+    btn.onclick = () => showInfo(tool);
+    grid.appendChild(btn);
+  });
+}
+loadButtons();
+</script>
+
+</body>
+</html>

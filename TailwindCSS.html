@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>React + Tailwind</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- React & ReactDOM CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- Babel Compiler for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+  <!-- React Mount Point -->
+  <div id="root"></div>
+
+  <!-- React Code -->
+  <script type="text/babel">
+
+    function Card({ title, description }) {
+      return (
+        <div className="bg-white p-4 rounded-lg shadow hover:shadow-xl transition duration-300">
+          <h2 className="text-xl font-bold text-blue-600">{title}</h2>
+          <p className="text-gray-700 mt-2">{description}</p>
+        </div>
+      );
+    }
+
+    function App() {
+      return (
+        <div className="max-w-xl mx-auto">
+          <h1 className="text-3xl font-bold text-center text-purple-700 mb-6">React + Tailwind Project</h1>
+          <div className="space-y-4">
+            <Card title="Hello World" description="This is your first React + Tailwind card!" />
+            <Card title="Fast Styling" description="Tailwind makes styling super fast and consistent." />
+            <Card title="Mobile Friendly" description="Fully responsive and easy to maintain." />
+          </div>
+        </div>
+      );
+    }
+
+    // Mount App
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+
+  </script>
+</body>
+</html>

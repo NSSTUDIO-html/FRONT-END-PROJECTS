@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Topics with Examples</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+    h1 {
+      color: #d62828;
+      text-align: center;
+    }
+    .topic {
+      background: #fff;
+      border-left: 5px solid #d62828;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 8px;
+    }
+    .topic h2 {
+      color: #d62828;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>  <h1>JavaScript Practice Examples</h1>  <div class="topic">
+    <h2>JS HOME</h2>
+    <pre><code>console.log("Welcome to JavaScript!");</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Introduction</h2>
+    <pre><code>// JavaScript runs in your browser and controls content
+alert("Hello from JavaScript!");</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Where To</h2>
+    <pre><code>// You can write JavaScript in the head, body, or external .js files</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Output</h2>
+    <pre><code>console.log("Console Output");
+document.write("Page Output");
+alert("Popup Output");</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Statements</h2>
+    <pre><code>let x = 5;
+let y = 10;
+let z = x + y;
+console.log(z);</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Syntax</h2>
+    <pre><code>// JavaScript is case-sensitive
+let name = "John";
+console.log(name);</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Comments</h2>
+    <pre><code>// This is a single-line comment
+/* This is a
+multi-line comment */</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Variables</h2>
+    <pre><code>let age = 25;
+const name = "Alice";
+var city = "New York";</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Let</h2>
+    <pre><code>let count = 0;
+count++;
+console.log(count);</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Const</h2>
+    <pre><code>const PI = 3.14;
+console.log(PI);</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Operators</h2>
+    <pre><code>let sum = 5 + 3;
+let isTrue = (sum === 8);
+console.log(isTrue);</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Arithmetic</h2>
+    <pre><code>let a = 10;
+let b = 3;
+console.log(a % b);</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Assignment</h2>
+    <pre><code>let x = 10;
+x += 5;
+console.log(x);</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Data Types</h2>
+    <pre><code>let text = "Hello";
+let number = 42;
+let isValid = true;
+let obj = {name: "JS"};</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Functions</h2>
+    <pre><code>function greet(name) {
+  return `Hello, ${name}`;
+}
+console.log(greet("Naga"));</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Objects</h2>
+    <pre><code>let user = {
+  name: "Naga",
+  age: 21
+};
+console.log(user.name);</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Arrays</h2>
+    <pre><code>let fruits = ["Apple", "Banana", "Mango"];
+console.log(fruits[1]);</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Loop While</h2>
+    <pre><code>let i = 0;
+while (i < 5) {
+  console.log("Count: " + i);
+  i++;
+}</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Async</h2>
+    <pre><code>async function getData() {
+  return "Async Data";
+}
+getData().then(console.log);</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Classes</h2>
+    <pre><code>class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+  speak() {
+    return `${this.name} makes a sound`;
+  }
+}
+console.log(new Animal("Dog").speak());</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS HTML DOM</h2>
+    <pre><code>document.getElementById("demo").innerHTML = "Hello DOM";</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Browser BOM</h2>
+    <pre><code>alert("Window width: " + window.innerWidth);</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS JSON</h2>
+    <pre><code>let str = '{"name":"Sasank","age":22}';
+let obj = JSON.parse(str);
+console.log(obj.name);</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS vs jQuery</h2>
+    <pre><code>// JS
+ document.querySelector("#demo").textContent = "JS Style";
+// jQuery (if included)
+// $('#demo').text('jQuery Style');</code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS Graphics</h2>
+    <pre><code>&lt;canvas id="canvas" width="100" height="100"&gt;&lt;/canvas&gt;
+<script>
+const ctx = document.getElementById("canvas").getContext("2d");
+ctx.fillStyle = "blue";
+ctx.fillRect(10, 10, 80, 80);
+</script></code></pre>
+  </div>
+  <div class="topic">
+    <h2>JS AJAX</h2>
+    <pre><code>fetch('https://jsonplaceholder.typicode.com/posts/1')
+.then(res => res.json())
+.then(data => console.log(data));</code></pre>
+  </div></body>
+</html>

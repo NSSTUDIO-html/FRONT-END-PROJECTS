@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS All Properties Practice Page</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #74ebd5, #acb6e5);
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 4px #aaa;
+      margin-bottom: 30px;
+    }
+
+    .box {
+      width: 200px;
+      height: 200px;
+      background-color: #fff;
+      border: 5px solid #444;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px auto;
+      box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .box:hover {
+      transform: scale(1.1);
+      background: #e0f7fa;
+    }
+
+    .positioning {
+      position: relative;
+      background: #f0f0f0;
+      margin-top: 40px;
+      padding: 10px;
+    }
+
+    .positioning div {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: red;
+      top: 10px;
+      left: 10px;
+    }
+
+    .flex-container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: #fff;
+      padding: 20px;
+      margin: 20px auto;
+      border: 2px dashed #333;
+    }
+
+    .flex-container div {
+      background: #4caf50;
+      color: white;
+      padding: 20px;
+      margin: 10px;
+      border-radius: 5px;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin: 20px auto;
+      max-width: 600px;
+    }
+
+    .grid-container div {
+      background: #2196f3;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 5px;
+    }
+
+    .animated {
+      width: 100px;
+      height: 100px;
+      background: #ff9800;
+      margin: 30px auto;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-30px);
+      }
+    }
+
+    .responsive-box {
+      width: 100%;
+      max-width: 300px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      text-align: center;
+      border: 1px solid #ccc;
+    }
+
+    @media (max-width: 600px) {
+      .responsive-box {
+        background: #ffeb3b;
+        color: #000;
+      }
+    }
+
+    a {
+      display: inline-block;
+      margin: 20px;
+      text-decoration: none;
+      color: #000;
+      border-bottom: 2px solid transparent;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      color: blue;
+      border-bottom: 2px solid blue;
+    }
+
+    p::first-letter {
+      font-size: 200%;
+      color: red;
+    }
+
+    p::selection {
+      background: yellow;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Practice Playground</h1>
+
+  <div class="box">Box with Shadow, Border, Padding</div>
+
+  <div class="positioning">
+    Positioning:
+    <div></div>
+  </div>
+
+  <div class="flex-container">
+    <div>Flex 1</div>
+    <div>Flex 2</div>
+    <div>Flex 3</div>
+  </div>
+
+  <div class="grid-container">
+    <div>Grid 1</div>
+    <div>Grid 2</div>
+    <div>Grid 3</div>
+  </div>
+
+  <div class="animated"></div>
+
+  <div class="responsive-box">Resize screen to test Media Query</div>
+
+  <a href="#">Hover Me</a>
+
+  <p>This is a sample paragraph for pseudo-elements practice.</p>
+
+</body>
+</html>

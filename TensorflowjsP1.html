@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Face Mask Detection</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.13.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    video, canvas {
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 10px;
+      border: none;
+      background-color: #22c55e;
+      color: white;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h2>😷 Face Mask Detection</h2>
+  <video id="video" width="320" height="240" autoplay muted playsinline></video>
+  <canvas id="canvas" width="320" height="240"></canvas>
+  <br />
+  <button onclick="switchCamera()">🔄 Switch Camera</button>
+
+  <script>
+    let video = document.getElementById("video");
+    let canvas = document.getElementById("canvas");
+    let context = canvas.getContext("2d");
+    let currentStream;
+    let useFrontCamera = true;
+    let model;
+
+    async function setupCamera() {
+      if (currentStream) {
+        currentStream.getTracks().forEach((track) => track.stop());
+      }
+      const constraints = {
+        video: {
+          facingMode: useFrontCamera ? "user" : "environment",
+          width: 320,
+          height: 240,
+        },
+      };
+      currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+      video.srcObject = currentStream;
+    }
+
+    async function loadModels() {
+      await faceapi.nets.tinyFaceDetector.loadFromUri("https://justadudewhohacks.github.io/face-api.js/models/");
+      model = await tf.loadLayersModel("https://teachablemachine.withgoogle.com/models/NGFZs0azc/model.json");
+    }
+
+    function switchCamera() {
+      useFrontCamera = !useFrontCamera;
+      setupCamera();
+    }
+
+    async function detectMask() {
+      const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions());
+
+      context.drawImage(video, 0, 0, 320, 240);
+      detections.forEach(async (detection) => {
+        const box = detection.box;
+        const faceImage = context.getImageData(box.x, box.y, box.width, box.height);
+        const resized = tf.browser.fromPixels(faceImage).resizeNearestNeighbor([224, 224]).toFloat().expandDims();
+        const prediction = await model.predict(resized).data();
+        const label = prediction[0] > prediction[1] ? "😷 Mask" : "🚫 No Mask";
+
+        context.strokeStyle = prediction[0] > prediction[1] ? "#22c55e" : "#ef4444";
+        context.lineWidth = 2;
+        context.strokeRect(box.x, box.y, box.width, box.height);
+        context.fillStyle = "#000";
+        context.fillText(label, box.x + 5, box.y - 5);
+      });
+
+      requestAnimationFrame(detectMask);
+    }
+
+    async function start() {
+      await loadModels();
+      await setupCamera();
+      video.onloadeddata = () => detectMask();
+    }
+
+    start();
+  </script>
+</body>
+</html>

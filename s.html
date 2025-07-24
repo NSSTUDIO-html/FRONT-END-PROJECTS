@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Three.js High Quality</title>
+    <style>
+      body { margin: 0; overflow: hidden; background: black; }
+      canvas { display: block; }
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      // ✅ Correct CDN path
+      import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js';
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      document.body.appendChild(renderer.domElement);
+
+      const geometry = new THREE.SphereGeometry(1, 64, 64); // High-quality sphere
+      const material = new THREE.MeshStandardMaterial({ color: 0x00ffcc, roughness: 0.1, metalness: 1 });
+      const sphere = new THREE.Mesh(geometry, material);
+      scene.add(sphere);
+    sphere.scale.set(3,3,3);
+
+      const light = new THREE.DirectionalLight(0xffffff, 1);
+      light.position.set(2, 2, 2);
+      scene.add(light);
+
+      camera.position.z = 3;
+
+      function animate() {
+        requestAnimationFrame(animate);
+        sphere.rotation.y += 0.01;
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    </script>
+  </body>
+</html>

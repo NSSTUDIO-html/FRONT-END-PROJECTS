@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ApexCharts All Types</title>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+    }
+    .chart-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+    .chart-box {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>All ApexCharts Types</h1>
+  <div class="chart-container">
+    <div class="chart-box"><div id="lineChart"></div></div>
+    <div class="chart-box"><div id="areaChart"></div></div>
+    <div class="chart-box"><div id="barChart"></div></div>
+    <div class="chart-box"><div id="columnChart"></div></div>
+    <div class="chart-box"><div id="pieChart"></div></div>
+    <div class="chart-box"><div id="donutChart"></div></div>
+    <div class="chart-box"><div id="radialBarChart"></div></div>
+    <div class="chart-box"><div id="mixedChart"></div></div>
+    <div class="chart-box"><div id="heatmapChart"></div></div>
+    <div class="chart-box"><div id="radarChart"></div></div>
+    <div class="chart-box"><div id="bubbleChart"></div></div>
+  </div>
+
+  <script>
+    // Line Chart
+    new ApexCharts(document.querySelector("#lineChart"), {
+      chart: { type: 'line' },
+      series: [{ name: "Sales", data: [10, 41, 35, 51, 49, 62, 69] }],
+      xaxis: { categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] }
+    }).render();
+
+    // Area Chart
+    new ApexCharts(document.querySelector("#areaChart"), {
+      chart: { type: 'area' },
+      series: [{ name: "Visitors", data: [31, 40, 28, 51, 42, 109, 100] }],
+      xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'] }
+    }).render();
+
+    // Bar Chart
+    new ApexCharts(document.querySelector("#barChart"), {
+      chart: { type: 'bar' },
+      series: [{ name: "Revenue", data: [44, 55, 57, 56, 61, 58] }],
+      xaxis: { categories: ['A', 'B', 'C', 'D', 'E', 'F'] }
+    }).render();
+
+    // Column Chart
+    new ApexCharts(document.querySelector("#columnChart"), {
+      chart: { type: 'bar' },
+      plotOptions: { bar: { horizontal: false } },
+      series: [{ name: "Users", data: [30, 40, 45, 50, 49, 60] }],
+      xaxis: { categories: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6'] }
+    }).render();
+
+    // Pie Chart
+    new ApexCharts(document.querySelector("#pieChart"), {
+      chart: { type: 'pie' },
+      series: [44, 55, 13, 43],
+      labels: ['Apple', 'Mango', 'Banana', 'Orange']
+    }).render();
+
+    // Donut Chart
+    new ApexCharts(document.querySelector("#donutChart"), {
+      chart: { type: 'donut' },
+      series: [25, 15, 44, 55],
+      labels: ['Google', 'Facebook', 'Amazon', 'Netflix']
+    }).render();
+
+    // RadialBar Chart
+    new ApexCharts(document.querySelector("#radialBarChart"), {
+      chart: { type: 'radialBar' },
+      series: [67],
+      labels: ['Progress']
+    }).render();
+
+    // Mixed Chart
+    new ApexCharts(document.querySelector("#mixedChart"), {
+      chart: { type: 'line' },
+      series: [
+        { name: 'Website Blog', type: 'column', data: [440, 505, 414, 671, 227] },
+        { name: 'Social Media', type: 'line', data: [230, 420, 350, 510, 610] }
+      ],
+      xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May'] }
+    }).render();
+
+    // Heatmap Chart
+    new ApexCharts(document.querySelector("#heatmapChart"), {
+      chart: { type: 'heatmap' },
+      series: [
+        {
+          name: 'Metric 1',
+          data: [45, 52, 38, 24, 33, 26, 21]
+        }
+      ]
+    }).render();
+
+    // Radar Chart
+    new ApexCharts(document.querySelector("#radarChart"), {
+      chart: { type: 'radar' },
+      series: [{
+        name: 'Performance',
+        data: [80, 50, 30, 40, 100, 20],
+      }],
+      labels: ['A', 'B', 'C', 'D', 'E', 'F']
+    }).render();
+
+    // Bubble Chart
+    new ApexCharts(document.querySelector("#bubbleChart"), {
+      chart: { type: 'bubble' },
+      series: [{
+        name: "Data",
+        data: [[20, 30, 15], [40, 50, 25], [60, 70, 35]]
+      }],
+      xaxis: { tickAmount: 12 },
+      yaxis: { max: 100 }
+    }).render();
+  </script>
+
+</body>
+</html>

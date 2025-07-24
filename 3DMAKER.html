@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>3D Depth Model Generator</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: black; }
+    input[type="file"] {
+      position: absolute; top: 10px; left: 10px; z-index: 1;
+      background: white; padding: 6px; border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <input type="file" id="upload" accept="image/*" />
+  <script type="module">
+    import * as THREE from '/https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+    import { OrbitControls } from '/https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 1, 1000);
+    camera.position.set(0, 80, 150);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(innerWidth, innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    dirLight.position.set(100, 100, 100);
+    scene.add(dirLight);
+
+    let mesh;
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    document.getElementById('upload').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => build3DFromImage(img);
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function build3DFromImage(image) {
+      const size = 100;
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(image, 0, 0, size, size);
+      const data = ctx.getImageData(0, 0, size, size).data;
+
+      const geometry = new THREE.PlaneGeometry(100, 100, size - 1, size - 1);
+      geometry.rotateX(-Math.PI / 2);
+
+      for (let i = 0, j = 0; i < data.length; i += 4, j++) {
+        const brightness = data[i]; // red channel
+        const height = brightness / 255 * 30;
+        geometry.attributes.position.setY(j, height);
+      }
+      geometry.computeVertexNormals();
+
+      if (mesh) scene.remove(mesh);
+
+      const material = new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        flatShading: true,
+        side: THREE.DoubleSide
+      });
+
+      mesh = new THREE.Mesh(geometry, material);
+        mesh.scale.set(1,1,1);
+        mesh.position.set(0,0,0);
+      scene.add(mesh);
+    }
+  </script>
+</body>
+</html>

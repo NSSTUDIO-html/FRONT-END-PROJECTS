@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <title>Hello, World!</title>
+  <style>
+  body{
+    width:100%;
+  }
+  #container{
+    display:flex;
+    justify-content:space-around;
+    width:100%;
+  }
+  
+  div{
+    background:black;
+    width:10%;
+    height:300px;
+    display:flex;
+    border-radius:20px;
+  }
+  #c{
+    animation:si 2.5s linear infinite;
+  }
+  #l{
+    animation:si 3s linear infinite;
+  }
+  #ll{
+    animation:si 4s linear infinite;
+  }
+  #r{
+    animation:si 3s linear infinite;
+  }
+  #rr{
+    animation:si 4s linear infinite;
+  }
+  @keyframes si {
+    0%{
+      transform:scale(1);
+      background:silver;
+    }
+    70%{
+      transform:scale(0);
+      background:gold;
+    }
+    100%{
+      transform:scale(1);
+      background:silver;
+    }
+  }
+  #cir{
+    animation:ei 5s linear infinite;
+    height:160px;
+    width:90%;
+    object-fit:100%;
+    border-radius:50%;
+    border:10px solid gold;
+    background:white;
+    text-align:center;
+    justify-content:center;
+    align-items:center;
+    font-family:monospace;
+    
+  }
+  @keyframes ei {
+    0%{
+      border-top:black;
+    }
+    25%{
+      border-right:blue;
+    }
+    75%{
+      border-bottom:blue;
+    }
+    100%{
+      border-left:blue;
+    }
+  }
+  </style>
+</head>
+<body>
+  <span id="container">
+  <div id="ll"></div>
+  <div id="l"></div>
+  <div id="c"></div>
+  <div id="r"></div>
+  <div id="rr"></div>
+  </span>
+  
+  
+  <div id="cir">LOADING....</div>
+</body>
+</html>

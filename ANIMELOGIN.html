@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Animated Login Form</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .login-box {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      width: 320px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+      animation: slideFade 1s ease forwards;
+      transform: translateY(50px);
+      opacity: 0;
+    }
+
+    @keyframes slideFade {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .login-box h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #0072ff;
+      border-radius: 8px;
+      outline: none;
+      font-size: 16px;
+      transition: 0.3;
+    }
+
+    .form-group label {
+      position: absolute;
+      top: 50%;
+      left: 12px;
+      transform: translateY(-50%);
+      background: white;
+      padding: 0 5px;
+      color: #666;
+      font-size: 14px;
+      transition: 0.3s;
+      pointer-events: none;
+    }
+
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label {
+      top: -10px;
+      left: 8px;
+      font-size: 5px;
+      color: #0072ff;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: #0072ff;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .login-box button:hover {
+      background: black;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <h2>Login</h2>
+    <form>
+      <div class="form-group">
+        <input type="text" required placeholder=" " />
+        <label>Username</label>
+      </div>
+      <div class="form-group">
+        <input type="password" required placeholder=" " />
+        <label>Password</label>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+</body>
+</html>

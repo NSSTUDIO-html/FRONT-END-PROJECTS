@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery All Topics Demo</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    .box { width: 100px; height: 100px; background: red; margin: 10px; }
+    .highlight { background: yellow; }
+  </style>
+</head>
+<body>
+  <h1 id="header">jQuery Full Demo</h1>  <!-- Selectors and Events --><button id="btnHide">Hide Box</button> <button id="btnShow">Show Box</button> <button id="btnToggle">Toggle Box</button>
+
+  <div id="mainBox" class="box"></div>  <!-- Animation --><button id="btnFade">Fade Box</button> <button id="btnSlide">Slide Box</button> <button id="btnAnimate">Animate Box</button>
+
+  <!-- DOM Manipulation -->  <input type="text" id="nameInput" placeholder="Enter name">
+  <button id="btnSetText">Set Text</button>
+  <p id="outputText"></p>  <!-- Traversing -->  <ul id="list">
+    <li>Item 1</li>
+    <li class="active">Item 2</li>
+    <li>Item 3</li>
+  </ul>
+  <button id="btnHighlightActive">Highlight Active</button>  <!-- DOM Add/Remove --><button id="btnAdd">Add Item</button> <button id="btnRemove">Remove Last</button>
+
+  <!-- AJAX --><button id="btnLoad">Load External Content</button>
+
+  <div id="ajaxContent"></div>  <!-- Utilities --><button id="btnEach">Loop Items</button>
+
+  <script>
+    $(document).ready(function () {
+      // Show/Hide/Toggle
+      $('#btnHide').click(() => $('#mainBox').hide());
+      $('#btnShow').click(() => $('#mainBox').show());
+      $('#btnToggle').click(() => $('#mainBox').toggle());
+
+      // Effects
+      $('#btnFade').click(() => $('#mainBox').fadeToggle());
+      $('#btnSlide').click(() => $('#mainBox').slideToggle());
+      $('#btnAnimate').click(() => {
+        $('#mainBox').animate({
+          left: '+=100px',
+          width: '150px',
+          height: '150px'
+        });
+      });
+
+      // DOM Content
+      $('#btnSetText').click(() => {
+        const name = $('#nameInput').val();
+        $('#outputText').text("Hello, " + name);
+      });
+
+      // Traversing
+      $('#btnHighlightActive').click(() => {
+        $('#list .active').addClass('highlight');
+      });
+
+      // DOM Add/Remove
+      $('#btnAdd').click(() => {
+        $('#list').append('<li>New Item</li>');
+      });
+
+      $('#btnRemove').click(() => {
+        $('#list li:last').remove();
+      });
+
+      // AJAX Example
+      $('#btnLoad').click(() => {
+        $('#ajaxContent').load('https://jsonplaceholder.typicode.com/posts/1', function(response, status, xhr){
+          if (status == "error") {
+            $(this).html("Error loading content.");
+          }
+        });
+      });
+
+      // Utilities: each
+      $('#btnEach').click(() => {
+        $('#list li').each(function (index) {
+          $(this).append(' [' + index + ']');
+        });
+      });
+    });
+  </script></body>
+</html>

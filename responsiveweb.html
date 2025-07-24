@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Landing Page</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav h1 {
+      font-size: 1.5rem;
+    }
+
+    .hero {
+      background: linear-gradient(to right, #007bff, #00c6ff);
+      color: white;
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+
+    .hero h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      background: #f8f8f8;
+    }
+
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .card h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    footer {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .hero h2 {
+        font-size: 1.5rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <h1>🔥 MySite</h1>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Welcome to My Responsive Website</h2>
+    <p>This site looks great on mobile, tablet, and desktop!</p>
+  </section>
+
+  <section class="features">
+    <div class="card">
+      <h3>⚡ Fast</h3>
+      <p>Loads quickly on any device.</p>
+    </div>
+    <div class="card">
+      <h3>📱 Mobile Friendly</h3>
+      <p>Perfect layout on phones and tablets.</p>
+    </div>
+    <div class="card">
+      <h3>💡 Clean Design</h3>
+      <p>Modern and minimalistic look.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Naga Sasank. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

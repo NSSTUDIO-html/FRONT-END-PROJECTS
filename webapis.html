@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ultimate Web API Showcase</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 900px; margin: auto; }
+    section { border:1px solid #ccc; margin:20px 0; padding:15px; border-radius:5px; }
+    button, input, textarea { display:block; width:100%; margin-top:8px; padding:8px; }
+    .output { background:#f0f0f0; padding:10px; min-height:24px; }
+    video, canvas, img { max-width:100%; margin-top:8px; }
+  </style>
+</head>
+<body>
+  <h1>Ultimate Web API Showcase</h1>
+
+  <section><h2>DOM: Intersection Observer</h2>
+    <div id="box" style="height:100px; background:#8fa; margin-bottom:300px">Scroll me!</div>
+    <div id="obsOut" class="output">not visible</div>
+    <script>
+      new IntersectionObserver((ents)=>{
+        ents.forEach(e=>{
+          obsOut.textContent = e.isIntersecting ? "📍 Visible" : "❌ Not visible";
+        });
+      }).observe(box);
+    </script>
+  </section>
+
+  <section><h2>Geolocation</h2>
+    <button onclick="navigator.geolocation.getCurrentPosition(p=>geo.textContent=\`Lat ${p.coords.latitude}, Lon ${p.coords.longitude}\`, e=>geo.textContent=e.message)">Get Location</button>
+    <div id="geo" class="output"></div>
+  </section>
+
+  <section><h2>Clipboard</h2>
+    <input id="cb" placeholder="Text to copy" />
+    <button onclick="navigator.clipboard.writeText(cb.value).then(()=>alert('✔︎ Copied'))">Copy Text</button>
+  </section>
+
+  <section><h2>Notifications</h2>
+    <button onclick="
+      Notification.requestPermission().then(p=>{
+        if(p==='granted') new Notification('Hello!',{body:'This is a test.'});
+      })">Show Notification</button>
+  </section>
+
+  <section><h2>Vibration</h2>
+    <button onclick="navigator.vibrate([300,100,300])">Vibrate Pattern</button>
+  </section>
+
+  <section><h2>Web Audio</h2>
+    <button onclick="
+      const ctx=new AudioContext();
+      const o=ctx.createOscillator();
+      o.connect(ctx.destination);
+      o.start(); setTimeout(()=>o.stop(),400);
+    ">Play Tone</button>
+  </section>
+
+  <section><h2>Media (Camera + Echo via WebRTC)</h2>
+    <video id="vid" autoplay playsinline style="height:200px"></video>
+    <button onclick="
+      navigator.mediaDevices.getUserMedia({video:true,audio:true})
+        .then(s=>{
+          vid.srcObject=s;
+          const pc=new RTCPeerConnection();
+          s.getTracks().forEach(t=>pc.addTrack(t,s));
+          pc.ontrack=e=>vid.srcObject=e.streams[0];
+          pc.createOffer().then(o=>pc.setLocalDescription(o)).then(()=>pc.setRemoteDescription(pc.localDescription));
+        }).catch(console.error)
+    ">Start Echo</button>
+  </section>
+
+  <section><h2>Canvas + WebGL</h2>
+    <canvas id="can" width="300" height="150" style="border:1px solid"></canvas>
+    <script>
+      const c = can.getContext('2d');
+      c.fillStyle='coral'; c.fillRect(0,0,300,150);
+    </script>
+  </section>
+
+  <section><h2>Web Components</h2>
+    <script>
+      class MyEl extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = "<strong>Hello from Web Component!</strong>";
+        }
+      }
+      customElements.define('my-el', MyEl);
+    </script>
+    <my-el></my-el>
+  </section>
+
+  <section><h2>History API</h2>
+    <button onclick="history.pushState({p:1},'', '?p=1')">Push URL ?p=1</button>
+    <div class="output">URL: <span id="urlOut"></span></div>
+    <script>
+      function update(){ urlOut.textContent=location.href; }
+      addEventListener('popstate',update);
+      update();
+    </script>
+  </section>
+
+</body>
+</html>

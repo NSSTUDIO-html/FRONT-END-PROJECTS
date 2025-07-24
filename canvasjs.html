@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CanvasJS Chart</title>
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body>
+  <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
+  <script>
+    window.onload = function () {
+      var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        title: {
+          text: "Monthly Sales"
+        },
+        data: [{
+          type: "column", // chart type
+          dataPoints: [
+            { label: "Jan", y: 40 },
+            { label: "Feb", y: 55 },
+            { label: "Mar", y: 50 },
+            { label: "Apr", y: 65 },
+            { label: "May", y: 95 }
+          ]
+        }]
+      });
+      chart.render();
+    }
+  </script>
+</body>
+</html>

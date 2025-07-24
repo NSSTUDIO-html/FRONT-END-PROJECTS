@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BOM in JavaScript</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    pre {
+      background: #fff;
+      padding: 15px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin: 5px;
+      padding: 10px 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Browser Object Model (BOM) Demo</h1>
+  
+  <button onclick="showAlert()">Show Alert</button>
+  <button onclick="askName()">Prompt Name</button>
+  <button onclick="confirmReload()">Confirm Reload</button>
+  <button onclick="showLocation()">Show Location</button>
+  <button onclick="redirect()">Redirect</button>
+  <button onclick="openWindow()">Open New Window</button>
+  <button onclick="closeWindow()">Close New Window</button>
+  <button onclick="showScreenInfo()">Screen Info</button>
+  <button onclick="showNavigator()">Navigator Info</button>
+  <button onclick="goBack()">Go Back</button>
+  <button onclick="setTimers()">Set Timers</button>
+
+  <pre id="output">Output will appear here...</pre>
+
+  <script>
+    const output = document.getElementById("output");
+    let newWin;
+
+    function showAlert() {
+      alert("This is an alert from BOM!");
+    }
+
+    function askName() {
+      const name = prompt("What is your name?");
+      output.textContent = "You entered: " + name;
+    }
+
+    function confirmReload() {
+      const res = confirm("Do you want to reload?");
+      if (res) location.reload();
+    }
+
+    function showLocation() {
+      output.textContent = `
+URL: ${location.href}
+Host: ${location.host}
+Pathname: ${location.pathname}
+Protocol: ${location.protocol}
+      `;
+    }
+
+    function redirect() {
+      location.href = "https://www.google.com";
+    }
+
+    function openWindow() {
+      newWin = window.open("https://www.wikipedia.org", "_blank", "width=400,height=300");
+      output.textContent = "New window opened.";
+    }
+
+    function closeWindow() {
+      if (newWin) {
+        newWin.close();
+        output.textContent = "Window closed.";
+      } else {
+        output.textContent = "No window to close.";
+      }
+    }
+
+    function showScreenInfo() {
+      output.textContent = `
+Width: ${screen.width}
+Height: ${screen.height}
+Available Width: ${screen.availWidth}
+Available Height: ${screen.availHeight}
+Color Depth: ${screen.colorDepth}
+Pixel Depth: ${screen.pixelDepth}
+      `;
+    }
+
+    function showNavigator() {
+      output.textContent = `
+App Name: ${navigator.appName}
+User Agent: ${navigator.userAgent}
+Language: ${navigator.language}
+Platform: ${navigator.platform}
+Online: ${navigator.onLine}
+      `;
+    }
+
+    function goBack() {
+      history.back(); // Works only if there's a history
+    }
+
+    function setTimers() {
+      output.textContent = "Setting a timeout and interval...";
+
+      setTimeout(() => {
+        alert("This alert is from setTimeout (3 sec)");
+      }, 3000);
+
+      let count = 0;
+      const interval = setInterval(() => {
+        count++;
+        output.textContent = `Interval count: ${count}`;
+        if (count >= 5) clearInterval(interval);
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>

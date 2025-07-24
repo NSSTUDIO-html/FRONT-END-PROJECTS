@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML Image Tags Example</title>
+  <style>
+    figure { border: 1px solid #ccc; padding: 10px; max-width: 300px; }
+    figcaption { text-align: center; font-style: italic; }
+    canvas { border: 1px solid black; margin-top: 10px; }
+    svg { border: 1px solid gray; }
+  </style>
+</head>
+<body>
+
+  <!-- 1. <img> with <map> and <area> -->
+  <h2>Image Map Example</h2>
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7RcxJTin3dMxDQcmiSR78r2-YwfXVs5seEYHEe6Vp9HGcnwF_Q2YXZg0&s=10" usemap="#exampleMap" alt="Sample Map">
+  <map name="exampleMap">
+    <area shape="rect" coords="100,100,100,150" href="https://www.google.com" alt="Left">
+    <area shape="rect" coords="100,100,300,150" href="https://www.openai.com" alt="Right">
+  </map>
+
+  <!-- 2. <picture> with fallback -->
+  <h2>Responsive Image with Picture</h2>
+  <picture>
+    <source media="(min-width: 600px)" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7RcxJTin3dMxDQcmiSR78r2-YwfXVs5seEYHEe6Vp9HGcnwF_Q2YXZg0&s=10">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7RcxJTin3dMxDQcmiSR78r2-YwfXVs5seEYHEe6Vp9HGcnwF_Q2YXZg0&s=10" alt="Responsive Example">
+  </picture>
+
+  <!-- 3. <figure> and <figcaption> -->
+  <h2>Figure with Caption</h2>
+  <figure>
+    <img src="https://via.placeholder.com/200x100" alt="Placeholder Image">
+    <figcaption>Figure caption for image</figcaption>
+  </figure>
+
+  <!-- 4. <canvas> -->
+  <h2>Canvas Example</h2>
+  <canvas id="myCanvas" width="200" height="100"></canvas>
+  <script>
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "blue";
+    ctx.fillRect(20, 20, 150, 50);
+  </script>
+
+  <!-- 5. <svg> -->
+  <h2>SVG Example</h2>
+  <svg width="200" height="100">
+    <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
+    <text x="100" y="55" font-size="20">SVG</text>
+  </svg>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All HTML Tags</title>
+  <style>
+    body { font-family: Arial; padding: 20px; line-height: 1.6; }
+    section { border: 1px solid #ccc; margin: 20px 0; padding: 15px; border-radius: 10px; }
+    h2 { color: #007bff; }
+  </style>
+</head>
+<body>
+
+  <h1>All Major HTML Tags</h1>
+
+  <section>
+    <h2>Text Tags</h2>
+    <p>This is a paragraph.</p>
+    <strong>Strong text</strong><br>
+    <em>Emphasized text</em><br>
+    <b>Bold text</b><br>
+    <i>Italic text</i><br>
+    <u>Underlined text</u><br>
+    <s>Strikethrough text</s><br>
+    <mark>Marked text</mark><br>
+    <small>Small text</small><br>
+    <abbr title="HyperText Markup Language">HTML</abbr><br>
+    <q>Short quotation</q><br>
+    <blockquote>This is a block quote.</blockquote>
+    <code>console.log('Hello')</code><br>
+    <pre>
+      for(i = 0; i < 10; i++) {
+        console.log(i);
+      }
+    </pre>
+  </section>
+
+  <section>
+    <h2>Headings</h2>
+    <h1>H1 Heading</h1>
+    <h2>H2 Heading</h2>
+    <h3>H3 Heading</h3>
+    <h4>H4 Heading</h4>
+    <h5>H5 Heading</h5>
+    <h6>H6 Heading</h6>
+  </section>
+
+  <section>
+    <h2>Lists</h2>
+    <ul>
+      <li>Unordered list item</li>
+      <li>Another item</li>
+    </ul>
+    <ol>
+      <li>Ordered list item</li>
+      <li>Second item</li>
+    </ol>
+    <dl>
+      <dt>Term</dt>
+      <dd>Definition</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Table</h2>
+    <table border="1">
+      <caption>Sample Table</caption>
+      <thead>
+        <tr><th>Name</th><th>Age</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>John</td><td>25</td></tr>
+        <tr><td>Jane</td><td>30</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Forms</h2>
+    <form>
+      <label for="name">Name:</label>
+      <input type="text" id="name"><br><br>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email"><br><br>
+
+      <input type="checkbox" id="subscribe"> <label for="subscribe">Subscribe</label><br>
+      <input type="radio" name="gender" id="male"> <label for="male">Male</label>
+      <input type="radio" name="gender" id="female"> <label for="female">Female</label><br><br>
+
+      <label for="color">Choose color:</label>
+      <input type="color" id="color"><br><br>
+
+      <label for="file">Upload file:</label>
+      <input type="file" id="file"><br><br>
+
+      <label for="range">Range:</label>
+      <input type="range" id="range"><br><br>
+
+      <textarea rows="3" cols="30">Text area...</textarea><br><br>
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Media</h2>
+    <img src="https://via.placeholder.com/150" alt="Placeholder Image"><br><br>
+    <audio controls>
+      <source src="sample.mp3" type="audio/mpeg">
+      Your browser does not support audio.
+    </audio><br><br>
+    <video width="320" height="240" controls>
+      <source src="sample.mp4" type="video/mp4">
+      Your browser does not support video.
+    </video>
+  </section>
+
+  <section>
+    <h2>Interactive</h2>
+    <details>
+      <summary>Click to expand</summary>
+      <p>This is hidden content revealed using &lt;details&gt;.</p>
+    </details>
+    <dialog open>This is a sample dialog.</dialog>
+    <progress value="70" max="100">70%</progress><br>
+    <meter value="0.6">60%</meter>
+  </section>
+
+  <section>
+    <h2>Links and Nav</h2>
+    <a href="https://www.google.com" target="_blank">Google</a><br>
+    <nav>
+      <a href="#home">Home</a> |
+      <a href="#about">About</a>
+    </nav>
+  </section>
+
+  <section>
+    <h2>Other Tags</h2>
+    <div>This is a div.</div>
+    <span>This is a span.</span><br>
+    <hr>
+    <br>
+    <wbr> <!-- Word break opportunity -->
+    <noscript>You need to enable JavaScript.</noscript>
+  </section>
+
+</body>
+</html>

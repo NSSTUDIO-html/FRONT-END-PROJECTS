@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HTML Day 1 Practice</title>
+</head>
+<body>
+  <h1>Naga Sasank’s HTML Practice</h1>
+  <h2>Learning HTML Step-by-Step</h2>
+  <p>This is my first day of HTML learning.</p>
+  <p>I will become an HTML expert soon.<br>Keep pushing forward!</p>
+  <hr>
+  <p><strong>Bold</strong>, <i>Italic</i>, <mark>Marked</mark>, H<sub>2</sub>O, E = mc<sup>2</sup></p>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HTML Day 2 Practice</title>
+</head>
+<body>
+
+  <h1>Day 2 - Links, Images, and Lists</h1>
+
+  <h2>🔗 My Favorite Websites</h2>
+  <ul>
+    <li><a href="https://www.google.com" target="_blank">Google</a></li>
+    <li><a href="https://www.youtube.com" target="_blank">YouTube</a></li>
+    <li><a href="https://nsstudio-html.github.io" target="_blank">My Portfolio</a></li>
+  </ul>
+
+  <h2>🖼️ My Sample Image</h2>
+  <img src="https://via.placeholder.com/200" alt="My Sample Image" width="200">
+
+  <h2>📋 Ordered Learning Plan</h2>
+  <ol>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li>JavaScript</li>
+  </ol>
+
+  <h2>🧠 Web Terminology</h2>
+  <dl>
+    <dt>HTML</dt>
+    <dd>HyperText Markup Language</dd>
+    <dt>URL</dt>
+    <dd>Uniform Resource Locator</dd>
+  </dl>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HTML Day 3 - Tables and Forms</title>
+</head>
+<body>
+
+  <h1>📊 Student Table</h1>
+  <table border="1">
+    <tr>
+      <th>Name</th><th>Age</th><th>Course</th>
+    </tr>
+    <tr>
+      <td>Sasank</td><td>22</td><td>Web Dev</td>
+    </tr>
+    <tr>
+      <td>Arya</td><td>21</td><td>AI</td>
+    </tr>
+  </table>
+
+  <hr>
+
+  <h1>📝 Contact Form</h1>
+  <form action="/submit" method="post">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br><br>
+
+    <label>Gender:</label><br>
+    <input type="radio" name="gender" value="Male"> Male
+    <input type="radio" name="gender" value="Female"> Female<br><br>
+
+    <label for="country">Country:</label><br>
+    <select id="country" name="country">
+      <option>India</option>
+      <option>USA</option>
+      <option>UK</option>
+    </select><br><br>
+
+    <label>Message:</label><br>
+    <textarea rows="4" cols="30"></textarea><br><br>
+
+    <input type="submit" value="Send">
+  </form>
+
+</body>
+</html>
+<body>
+  <header>
+    <h1>My Blog</h1>
+    <nav>
+      <a href="#">Home</a> |
+      <a href="#">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+      <h2>Post Title</h2>
+      <p>This is a blog post.</p>
+    </article>
+
+    <aside>
+      <p>Sidebar: Author Info</p>
+    </aside>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Naga Sasank</p>
+  </footer>
+</body>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HTML Day 4 - Semantic & Media</title>
+</head>
+<body>
+
+  <header>
+    <h1>🎵 My Music Blog</h1>
+    <nav>
+      <a href="#">Home</a> |
+      <a href="#">Albums</a> |
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <article>
+        <h2>🎤 Song of the Day</h2>
+        <p>Here’s my favorite song today:</p>
+        <audio src="sample.mp3" controls></audio>
+      </article>
+
+      <article>
+        <h2>🎬 Music Video</h2>
+        <video src="sample.mp4" controls width="400"></video>
+      </article>
+
+      <article>
+        <h2>📍 Band Location</h2>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18..."
+          width="400"
+          height="300">
+        </iframe>
+      </article>
+    </section>
+
+    <aside>
+      <p>🧠 Fun Fact: The first song ever streamed online was in 1993!</p>
+    </aside>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 by Sasank Music World</p>
+  </footer>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HTML Day 5 – Advanced</title>
+</head>
+<body>
+
+  <h1>🔍 Smart Form</h1>
+  <form>
+    <label>Choose your browser:</label>
+    <input list="browsers" name="browser">
+    <datalist id="browsers">
+      <option value="Chrome">
+      <option value="Edge">
+      <option value="Firefox">
+    </datalist>
+    <br><br>
+
+    <label>Rate this training:</label>
+    <meter value="0.9" min="0" max="1"></meter><br><br>
+
+    <label>Progress:</label>
+    <progress value="80" max="100"></progress><br><br>
+
+    <label>Select your birthday:</label>
+    <input type="date"><br><br>
+
+    <input type="submit">
+  </form>
+
+  <h2>🎨 Canvas Drawing</h2>
+  <canvas id="myCanvas" width="200" height="200" style="border:1px solid black;"></canvas>
+
+  <script>
+    const c = document.getElementById("myCanvas");
+    const ctx = c.getContext("2d");
+    ctx.fillStyle = "blue";
+    ctx.fillRect(50, 50, 100, 100);
+  </script>
+
+  <h2>🖼️ SVG Circle</h2>
+  <svg width="200" height="200">
+    <circle cx="100" cy="100" r="80" fill="purple" />
+    <text x="70" y="110" fill="white" font-size="20">Sasank</text>
+  </svg>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio of Naga Sasank – Developer of RS Game and AI Tools.">
+  <title>Naga Sasank Portfolio</title>
+</head>
+<body>
+
+  <header>
+    <h1>Naga Sasank</h1>
+    <nav>
+      <a href="#about">About</a> |
+      <a href="#projects">Projects</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="about">
+      <h2>About Me</h2>
+      <p>I’m a full-stack developer and creator of RS Game and AI tools like AnimeAI and GuardAI.</p>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <ul>
+        <li><strong>RS Game</strong> – Action shooter with 50 levels</li>
+        <li><strong>AnimeAI</strong> – AI-based animation studio</li>
+        <li><strong>GuardAI</strong> – Cybersecurity assistant</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Naga Sasank. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

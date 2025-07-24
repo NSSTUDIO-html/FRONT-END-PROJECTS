@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chart.js Bar Chart with Gradient</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    canvas {
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Bar Chart with Gradient Colors</h2>
+  <canvas id="myChart" width="400" height="300"></canvas>
+
+  <script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+
+    // Create a vertical gradient
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'red');
+    gradient.addColorStop(1, 'yellow');
+
+    const myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: 'Votes',
+          data: [12, 19, 3, 5, 2, -3],
+          backgroundColor: gradient,
+          borderColor: 'red',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#333'
+            }
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
