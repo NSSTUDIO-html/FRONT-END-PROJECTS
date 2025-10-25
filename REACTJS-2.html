@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>React Tailwind Joke App</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React & ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <!-- Babel -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-yellow-100 min-h-screen flex items-center justify-center">
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+const JokeApp = () => {
+  const [joke, setJoke] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
+
+  const fetchJoke = async () => {
+    setLoading(true);
+    setJoke(null);
+    try {
+      const res = await fetch("https://official-joke-api.appspot.com/random_joke");
+      const data = await res.json();
+      setJoke(data);
+    } catch (err) {
+      setJoke({ setup: "Error fetching joke", punchline: "" });
+    }
+    setLoading(false);
+  };
+
+  React.useEffect(() => {
+    fetchJoke(); // Fetch a joke on first load
+  }, []);
+
+  return (
+    <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md text-center">
+      <h1 className="text-2xl font-bold mb-4">😂 Random Joke Generator</h1>
+      {loading && <p className="text-gray-500">Loading...</p>}
+      {joke && !loading && (
+        <div>
+          <p className="text-gray-700 text-lg mb-2">{joke.setup}</p>
+          <p className="text-gray-900 font-bold mb-4">{joke.punchline}</p>
+        </div>
+      )}
+      <button
+        onClick={fetchJoke}
+        className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition"
+      >
+        Get Another Joke
+      </button>
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById("root")).render(<JokeApp />);
+
+</script>
+</body>
+</html>

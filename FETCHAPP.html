@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-API Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-4">
+
+  <h1 class="text-3xl font-bold text-center mb-6">Multi-API Dashboard</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <!-- Weather -->
+    <div class="p-4 bg-white rounded shadow">
+      <h2 class="text-xl font-bold mb-2">Weather</h2>
+      <input id="weatherCity" type="text" placeholder="City" class="border p-1 rounded w-full mb-2">
+      <button id="getWeather" class="bg-blue-500 text-white px-3 py-1 rounded mb-2">Get Weather</button>
+      <p id="weatherResult"></p>
+    </div>
+
+    <!-- COVID-19 -->
+    <div class="p-4 bg-white rounded shadow">
+      <h2 class="text-xl font-bold mb-2">COVID-19 Stats</h2>
+      <input id="covidCountry" type="text" placeholder="Country" class="border p-1 rounded w-full mb-2">
+      <button id="getCovid" class="bg-red-500 text-white px-3 py-1 rounded mb-2">Get Stats</button>
+      <p id="covidResult"></p>
+    </div>
+
+    <!-- Crypto -->
+    <div class="p-4 bg-white rounded shadow">
+      <h2 class="text-xl font-bold mb-2">Crypto Prices</h2>
+      <input id="cryptoSymbol" type="text" placeholder="Symbol (btc, eth)" class="border p-1 rounded w-full mb-2">
+      <button id="getCrypto" class="bg-green-500 text-white px-3 py-1 rounded mb-2">Get Price</button>
+      <p id="cryptoResult"></p>
+    </div>
+
+    <!-- News -->
+    <div class="p-4 bg-white rounded shadow">
+      <h2 class="text-xl font-bold mb-2">News</h2>
+      <input id="newsQuery" type="text" placeholder="Topic" class="border p-1 rounded w-full mb-2">
+      <button id="getNews" class="bg-yellow-500 text-white px-3 py-1 rounded mb-2">Get News</button>
+      <ul id="newsResult" class="list-disc ml-5"></ul>
+    </div>
+
+    <!-- GitHub -->
+    <div class="p-4 bg-white rounded shadow">
+      <h2 class="text-xl font-bold mb-2">GitHub Profile</h2>
+      <input id="githubUser" type="text" placeholder="Username" class="border p-1 rounded w-full mb-2">
+      <button id="getGithub" class="bg-gray-800 text-white px-3 py-1 rounded mb-2">Get Profile</button>
+      <p id="githubResult"></p>
+    </div>
+
+    <!-- Movies -->
+    <div class="p-4 bg-white rounded shadow">
+      <h2 class="text-xl font-bold mb-2">Movie Info</h2>
+      <input id="movieName" type="text" placeholder="Movie Title" class="border p-1 rounded w-full mb-2">
+      <button id="getMovie" class="bg-purple-500 text-white px-3 py-1 rounded mb-2">Get Movie</button>
+      <p id="movieResult"></p>
+    </div>
+
+  </div>
+
+<script>
+  // ---------------- WEATHER -----------------
+  const WEATHER_KEY = "99566ad11be10d487a099354ed836146";
+  document.getElementById('getWeather').addEventListener('click', () => {
+    const city = document.getElementById('weatherCity').value;
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_KEY}&units=metric`)
+      .then(res => res.json())
+      .then(data => {
+        if(data.main) {
+          document.getElementById('weatherResult').innerText = 
+            `Temp: ${data.main.temp}°C, Weather: ${data.weather[0].description}`;
+        } else {
+          document.getElementById('weatherResult').innerText = 'City not found';
+        }
+      })
+      .catch(() => document.getElementById('weatherResult').innerText = 'Error fetching weather');
+  });
+
+  // ---------------- COVID -----------------
+  document.getElementById('getCovid').addEventListener('click', () => {
+    const country = document.getElementById('covidCountry').value;
+    fetch(`https://disease.sh/v3/covid-19/countries/${country}`)
+      .then(res => res.json())
+      .then(data => {
+        if(data.cases) {
+          document.getElementById('covidResult').innerText = 
+            `Cases: ${data.cases}, Deaths: ${data.deaths}, Recovered: ${data.recovered}`;
+        } else {
+          document.getElementById('covidResult').innerText = 'Country not found';
+        }
+      })
+      .catch(() => document.getElementById('covidResult').innerText = 'Error fetching data');
+  });
+
+  // ---------------- CRYPTO -----------------
+  document.getElementById('getCrypto').addEventListener('click', () => {
+    const symbol = document.getElementById('cryptoSymbol').value.toLowerCase();
+    fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${symbol}&vs_currencies=usd`)
+      .then(res => res.json())
+      .then(data => {
+        if(data[symbol]) {
+          document.getElementById('cryptoResult').innerText = `Price: $${data[symbol].usd}`;
+        } else {
+          document.getElementById('cryptoResult').innerText = 'Symbol not found';
+        }
+      })
+      .catch(() => document.getElementById('cryptoResult').innerText = 'Error fetching data');
+  });
+
+  // ---------------- NEWS -----------------
+  const NEWS_KEY = "6e39f5fd476340d3b8985ca9d6db2cc0";
+  document.getElementById('getNews').addEventListener('click', () => {
+    const query = document.getElementById('newsQuery').value;
+    fetch(`https://newsapi.org/v2/everything?q=${query}&apiKey=${NEWS_KEY}`)
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById('newsResult');
+        list.innerHTML = '';
+        if(data.articles) {
+          data.articles.slice(0,5).forEach(article => {
+            const li = document.createElement('li');
+            li.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
+            list.appendChild(li);
+          });
+        } else {
+          list.innerHTML = '<li>No articles found</li>';
+        }
+      })
+      .catch(() => document.getElementById('newsResult').innerHTML = '<li>Error fetching news</li>');
+  });
+
+  // ---------------- GITHUB -----------------
+  document.getElementById('getGithub').addEventListener('click', () => {
+    const username = document.getElementById('githubUser').value;
+    fetch(`https://api.github.com/users/${username}`)
+      .then(res => res.json())
+      .then(data => {
+        if(data.name) {
+          document.getElementById('githubResult').innerHTML = `
+            Name: ${data.name} <br>
+            Public Repos: ${data.public_repos} <br>
+            Followers: ${data.followers}`;
+        } else {
+          document.getElementById('githubResult').innerText = 'User not found';
+        }
+      })
+      .catch(() => document.getElementById('githubResult').innerText = 'Error fetching GitHub data');
+  });
+
+  // ---------------- MOVIE -----------------
+  const OMDB_KEY = "330ac824";
+  document.getElementById('getMovie').addEventListener('click', () => {
+    const title = document.getElementById('movieName').value;
+    fetch(`https://www.omdbapi.com/?t=${title}&apikey=${OMDB_KEY}`)
+      .then(res => res.json())
+      .then(data => {
+        if(data.Response === "True") {
+          document.getElementById('movieResult').innerHTML = `
+            Title: ${data.Title} <br>
+            Year: ${data.Year} <br>
+            Genre: ${data.Genre} <br>
+            Plot: ${data.Plot}`;
+        } else {
+          document.getElementById('movieResult').innerText = 'Movie not found';
+        }
+      })
+      .catch(() => document.getElementById('movieResult').innerText = 'Error fetching movie');
+  });
+</script>
+</body>
+</html>

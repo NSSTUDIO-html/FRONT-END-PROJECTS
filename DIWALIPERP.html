@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Diwali</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Open+Sans:wght@400;600&display=swap');
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at center, #1a1a1a, #000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: 'Open Sans', sans-serif;
+  overflow: hidden;
+}
+
+.card {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 0 20px rgba(255, 200, 0, 0.6);
+  position: relative;
+  z-index: 5;
+}
+
+h1 {
+  font-family: 'Kaushan Script', cursive;
+  font-size: 3em;
+  color: #ffd700;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1.1em;
+  color: #f8f8f8;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 8px;
+  background: #ff9500;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #ffb300;
+}
+
+.lamp {
+  margin: 0 auto 20px;
+  width: 60px;
+  height: 30px;
+  background: #c96;
+  border-radius: 0 0 60px 60px;
+  position: relative;
+}
+
+.flame {
+  width: 20px;
+  height: 30px;
+  background: radial-gradient(circle, #ff0 40%, #f60 70%);
+  border-radius: 50% 50% 20% 20%;
+  position: absolute;
+  top: -25px;
+  left: 20px;
+  animation: flicker 0.15s infinite alternate;
+  filter: blur(1px);
+}
+
+@keyframes flicker {
+  from { transform: scale(1) rotate(0deg); opacity: 0.9; }
+  to { transform: scale(1.1) rotate(2deg); opacity: 1; }
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="lamp">
+    <div class="flame"></div>
+  </div>
+  <h1>🪔 Happy Diwali 🪔</h1>
+  <p>May your life be filled with light, joy, and prosperity.</p>
+  <button id="wishBtn">Click for Fireworks</button>
+</div>
+
+<canvas id="fireworks"></canvas>
+
+<script>
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let fireworks = [];
+
+document.getElementById("wishBtn").addEventListener("click", () => {
+  createFirework(Math.random() * canvas.width, Math.random() * canvas.height / 1.5);
+});
+
+function createFirework(x, y) {
+  const sparks = [];
+  for (let i = 0; i < 60; i++) {
+    sparks.push({
+      x, y,
+      angle: (Math.PI * 2 * i) / 60,
+      speed: Math.random() * 4 + 2,
+      size: Math.random() * 2 + 1,
+      life: 100
+    });
+  }
+  fireworks.push(sparks);
+}
+
+function animate() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  fireworks.forEach((fw, i) => {
+    fw.forEach(s => {
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+      ctx.fillStyle = `hsl(${Math.random() * 360}, 100%, 60%)`;
+      ctx.fill();
+      s.x += Math.cos(s.angle) * s.speed;
+      s.y += Math.sin(s.angle) * s.speed;
+      s.life--;
+    });
+    fireworks[i] = fw.filter(s => s.life > 0);
+  });
+
+  fireworks = fireworks.filter(fw => fw.length > 0);
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+</script>
+</body>
+</html>

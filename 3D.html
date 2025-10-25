@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 2D to 3D Model Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        #canvas3d { width: 100%; height: 100%; display: block; }
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #a78bfa;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #a78bfa;
+            cursor: pointer;
+            border-radius: 50%;
+            border: none;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div class="w-full h-screen flex flex-col">
+        <!-- Header -->
+        <div class="bg-black bg-opacity-50 backdrop-blur-sm border-b border-purple-500/30 p-4 z-10">
+            <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
+                🤖 AI 2D → 3D Model Generator
+            </h1>
+            <p class="text-purple-200 text-sm mt-1">Upload an image and watch AI transform it into a 3D model</p>
+        </div>
+
+        <div class="flex-1 flex flex-col lg:flex-row gap-4 p-4 overflow-hidden">
+            <!-- Control Panel -->
+            <div class="lg:w-80 bg-black bg-opacity-40 backdrop-blur-md rounded-xl border border-purple-500/30 p-6 space-y-6 overflow-y-auto">
+                <div>
+                    <label class="block text-purple-300 font-semibold mb-3">📤 Upload Image</label>
+                    <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-purple-400 rounded-lg cursor-pointer hover:bg-purple-900/20 transition-all">
+                        <svg class="w-8 h-8 text-purple-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
+                        <span class="text-sm text-purple-300">Click to upload image</span>
+                        <input type="file" id="imageInput" class="hidden" accept="image/*">
+                    </label>
+                </div>
+
+                <div id="controls" class="hidden space-y-6">
+                    <!-- Depth Intensity -->
+                    <div>
+                        <label class="block text-purple-300 font-semibold mb-2">
+                            🎚️ Depth Intensity: <span id="depthValue">50</span>
+                        </label>
+                        <input type="range" id="depthSlider" min="10" max="100" value="50" 
+                               class="w-full h-2 bg-purple-900/50 rounded-lg appearance-none cursor-pointer">
+                    </div>
+
+                    <!-- Resolution -->
+                    <div>
+                        <label class="block text-purple-300 font-semibold mb-2">
+                            🔍 Model Resolution: <span id="resValue">128</span>
+                        </label>
+                        <input type="range" id="resSlider" min="64" max="256" value="128" step="32"
+                               class="w-full h-2 bg-purple-900/50 rounded-lg appearance-none cursor-pointer">
+                    </div>
+
+                    <!-- Model Type -->
+                    <div>
+                        <label class="block text-purple-300 font-semibold mb-2">🎨 3D Effect Type</label>
+                        <select id="modelType" class="w-full bg-purple-900/50 text-purple-200 rounded-lg p-2 border border-purple-500/30">
+                            <option value="brightness">Brightness Depth</option>
+                            <option value="edge">Edge Detection</option>
+                            <option value="combined">Combined Analysis</option>
+                        </select>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="space-y-2">
+                        <button id="resetBtn" class="w-full flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            Reset View
+                        </button>
+                        
+                        <button id="exportBtn" class="w-full flex items-center justify-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2 px-4 rounded-lg transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Export Model
+                        </button>
+
+                        <button id="screenshotBtn" class="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            Screenshot
+                        </button>
+                    </div>
+
+                    <!-- Image Preview -->
+                    <div class="bg-purple-900/30 rounded-lg p-4 border border-purple-500/30">
+                        <h3 class="text-purple-300 font-semibold mb-2">📷 Original Image</h3>
+                        <img id="preview" src="" alt="Preview" class="w-full rounded-lg">
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="bg-purple-900/30 rounded-lg p-4 border border-purple-500/30 text-sm">
+                        <h3 class="text-purple-300 font-semibold mb-2">📊 Model Stats</h3>
+                        <div class="text-purple-200 space-y-1">
+                            <div>Vertices: <span id="vertexCount">0</span></div>
+                            <div>Faces: <span id="faceCount">0</span></div>
+                            <div>Status: <span id="status">Waiting...</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Processing Indicator -->
+                <div id="processing" class="hidden text-center text-purple-300">
+                    <div class="animate-spin w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full mx-auto mb-2"></div>
+                    <p class="font-semibold">AI Processing Image...</p>
+                </div>
+            </div>
+
+            <!-- 3D Viewport -->
+            <div class="flex-1 bg-black bg-opacity-40 backdrop-blur-md rounded-xl border border-purple-500/30 overflow-hidden relative">
+                <canvas id="canvas3d"></canvas>
+                <div id="placeholder" class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="text-center text-purple-400">
+                        <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
+                        <p class="text-xl font-semibold">Upload an image to begin</p>
+                        <p class="text-sm mt-2 opacity-75">AI will analyze and create 3D depth</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let scene, camera, renderer, mesh, animationId;
+        let currentImage = null;
+        let currentSettings = {
+            depth: 50,
+            resolution: 128,
+            type: 'brightness'
+        };
+
+        // Initialize Three.js
+        function init3D() {
+            const canvas = document.getElementById('canvas3d');
+            const container = canvas.parentElement;
+
+            // Scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x1a1a2e);
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(
+                75,
+                container.clientWidth / container.clientHeight,
+                0.1,
+                1000
+            );
+            camera.position.z = 5;
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ 
+                canvas: canvas,
+                antialias: true 
+            });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+
+            const pointLight = new THREE.PointLight(0x4a90e2, 1, 100);
+            pointLight.position.set(-5, 5, 5);
+            scene.add(pointLight);
+
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+
+            animate();
+        }
+
+        // Animation loop
+        function animate() {
+            animationId = requestAnimationFrame(animate);
+            
+            if (mesh) {
+                mesh.rotation.y += 0.005;
+                mesh.rotation.x = Math.sin(Date.now() * 0.0005) * 0.1;
+            }
+            
+            renderer.render(scene, camera);
+        }
+
+        // AI Image Processing
+        function processImageTo3D(img) {
+            document.getElementById('processing').classList.remove('hidden');
+            document.getElementById('status').textContent = 'Processing...';
+
+            setTimeout(() => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                const res = currentSettings.resolution;
+                canvas.width = res;
+                canvas.height = res;
+                
+                ctx.drawImage(img, 0, 0, res, res);
+                const imageData = ctx.getImageData(0, 0, res, res);
+                
+                // Create geometry
+                const geometry = new THREE.PlaneGeometry(8, 8, res - 1, res - 1);
+                const vertices = geometry.attributes.position.array;
+                
+                // AI depth calculation based on type
+                for (let i = 0; i < res; i++) {
+                    for (let j = 0; j < res; j++) {
+                        const idx = (i * res + j) * 4;
+                        const r = imageData.data[idx];
+                        const g = imageData.data[idx + 1];
+                        const b = imageData.data[idx + 2];
+                        
+                        let depth = 0;
+                        
+                        if (currentSettings.type === 'brightness') {
+                            const brightness = (r + g + b) / 3;
+                            depth = (brightness / 255) * (currentSettings.depth / 10);
+                        } else if (currentSettings.type === 'edge') {
+                            // Edge detection
+                            const brightness = (r + g + b) / 3;
+                            const neighbors = getNeighborBrightness(imageData, i, j, res);
+                            const edgeStrength = Math.abs(brightness - neighbors);
+                            depth = (edgeStrength / 255) * (currentSettings.depth / 10);
+                        } else if (currentSettings.type === 'combined') {
+                            const brightness = (r + g + b) / 3;
+                            const neighbors = getNeighborBrightness(imageData, i, j, res);
+                            const edgeStrength = Math.abs(brightness - neighbors);
+                            depth = ((brightness + edgeStrength) / 510) * (currentSettings.depth / 10);
+                        }
+                        
+                        const vertexIndex = (i * res + j) * 3 + 2;
+                        vertices[vertexIndex] = depth;
+                    }
+                }
+                
+                geometry.attributes.position.needsUpdate = true;
+                geometry.computeVertexNormals();
+                
+                // Create texture
+                const texture = new THREE.CanvasTexture(canvas);
+                texture.needsUpdate = true;
+                
+                const material = new THREE.MeshStandardMaterial({
+                    map: texture,
+                    side: THREE.DoubleSide,
+                    metalness: 0.2,
+                    roughness: 0.7
+                });
+                
+                // Remove old mesh
+                if (mesh) {
+                    scene.remove(mesh);
+                    mesh.geometry.dispose();
+                    mesh.material.dispose();
+                }
+                
+                // Add new mesh
+                mesh = new THREE.Mesh(geometry, material);
+                scene.add(mesh);
+                
+                // Update stats
+                const vertexCount = geometry.attributes.position.count;
+                const faceCount = geometry.index ? geometry.index.count / 3 : vertexCount / 3;
+                document.getElementById('vertexCount').textContent = vertexCount.toLocaleString();
+                document.getElementById('faceCount').textContent = Math.floor(faceCount).toLocaleString();
+                document.getElementById('status').textContent = 'Ready';
+                
+                document.getElementById('processing').classList.add('hidden');
+                document.getElementById('placeholder').classList.add('hidden');
+            }, 100);
+        }
+
+        // Helper function for edge detection
+        function getNeighborBrightness(imageData, i, j, res) {
+            let sum = 0;
+            let count = 0;
+            
+            for (let di = -1; di <= 1; di++) {
+                for (let dj = -1; dj <= 1; dj++) {
+                    if (di === 0 && dj === 0) continue;
+                    const ni = i + di;
+                    const nj = j + dj;
+                    if (ni >= 0 && ni < res && nj >= 0 && nj < res) {
+                        const idx = (ni * res + nj) * 4;
+                        const brightness = (imageData.data[idx] + imageData.data[idx + 1] + imageData.data[idx + 2]) / 3;
+                        sum += brightness;
+                        count++;
+                    }
+                }
+            }
+            
+            return count > 0 ? sum / count : 0;
+        }
+
+        // Export to OBJ format
+        function exportToOBJ() {
+            if (!mesh) return;
+
+            const geometry = mesh.geometry;
+            const vertices = geometry.attributes.position.array;
+            const indices = geometry.index ? geometry.index.array : null;
+
+            let objContent = '# OBJ File Generated by AI 2D to 3D\n';
+            objContent += '# Vertices: ' + (vertices.length / 3) + '\n\n';
+
+            // Write vertices
+            for (let i = 0; i < vertices.length; i += 3) {
+                objContent += `v ${vertices[i]} ${vertices[i + 1]} ${vertices[i + 2]}\n`;
+            }
+
+            objContent += '\n';
+
+            // Write faces
+            if (indices) {
+                for (let i = 0; i < indices.length; i += 3) {
+                    objContent += `f ${indices[i] + 1} ${indices[i + 1] + 1} ${indices[i + 2] + 1}\n`;
+                }
+            } else {
+                for (let i = 0; i < vertices.length / 3; i += 3) {
+                    objContent += `f ${i + 1} ${i + 2} ${i + 3}\n`;
+                }
+            }
+
+            const blob = new Blob([objContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = '3d-model.obj';
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Screenshot
+        function takeScreenshot() {
+            if (!renderer) return;
+            
+            renderer.render(scene, camera);
+            const dataURL = renderer.domElement.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = '3d-screenshot.png';
+            link.click();
+        }
+
+        // Event Listeners
+        document.getElementById('imageInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    currentImage = img;
+                    document.getElementById('preview').src = event.target.result;
+                    document.getElementById('controls').classList.remove('hidden');
+                    processImageTo3D(img);
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('depthSlider').addEventListener('input', (e) => {
+            currentSettings.depth = parseInt(e.target.value);
+            document.getElementById('depthValue').textContent = currentSettings.depth;
+            if (currentImage) processImageTo3D(currentImage);
+        });
+
+        document.getElementById('resSlider').addEventListener('input', (e) => {
+            currentSettings.resolution = parseInt(e.target.value);
+            document.getElementById('resValue').textContent = currentSettings.resolution;
+            if (currentImage) processImageTo3D(currentImage);
+        });
+
+        document.getElementById('modelType').addEventListener('change', (e) => {
+            currentSettings.type = e.target.value;
+            if (currentImage) processImageTo3D(currentImage);
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            if (mesh) {
+                mesh.rotation.x = 0;
+                mesh.rotation.y = 0;
+                mesh.rotation.z = 0;
+            }
+        });
+
+        document.getElementById('exportBtn').addEventListener('click', exportToOBJ);
+        document.getElementById('screenshotBtn').addEventListener('click', takeScreenshot);
+
+        // Initialize
+        init3D();
+    </script>
+</body>
+</html>

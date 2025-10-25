@@ -1,0 +1,247 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Stylized Launched Missile — Three.js</title>
+  <style>
+    html,body { height:100%; margin:0; }
+    #container { width:100%; height:100vh; display:block; }
+    .ui { position: absolute; left:12px; top:12px; z-index:10; font-family: Arial, Helvetica, sans-serif; color:#111 }
+    .ui button { margin-right:8px }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+  <div class="ui">
+    <button id="launchBtn">Launch</button>
+    <button id="resetBtn">Reset</button>
+    <button id="exportBtn">Export GLB</button>
+  </div>  <script type="module">
+    import * as THREE from 'https://unpkg.com/three@0.156.0/build/three.module.js';
+    import { OrbitControls } from 'https://unpkg.com/three@0.156.0/examples/jsm/controls/OrbitControls.js';
+    import { GLTFExporter } from 'https://unpkg.com/three@0.156.0/examples/jsm/exporters/GLTFExporter.js';
+
+    const container = document.getElementById('container');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x87ceeb);
+
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 0.1, 2000);
+    camera.position.set(10, 8, 18);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.target.set(0,2,0);
+    controls.update();
+
+    // Lights
+    const dir = new THREE.DirectionalLight(0xffffff, 0.9);
+    dir.position.set(5,10,7);
+    scene.add(dir);
+    const amb = new THREE.AmbientLight(0xffffff, 0.35);
+    scene.add(amb);
+
+    // Ground
+    const ground = new THREE.Mesh(
+      new THREE.PlaneGeometry(500,500),
+      new THREE.MeshStandardMaterial({ color: 0x2b7a3a, roughness:1 })
+    );
+    ground.rotation.x = -Math.PI/2;
+    ground.position.y = -0.01;
+    scene.add(ground);
+
+    // Missile group
+    const missile = new THREE.Group();
+
+    // Body
+    const bodyGeom = new THREE.CylinderGeometry(0.6, 0.6, 6, 24);
+    const bodyMat = new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.7, roughness: 0.35 });
+    const body = new THREE.Mesh(bodyGeom, bodyMat);
+    body.rotation.z = Math.PI/2; // lay on its side for initial orientation
+    missile.add(body);
+
+    // Nose cone
+    const noseGeom = new THREE.ConeGeometry(0.6, 1.6, 24);
+    const noseMat = new THREE.MeshStandardMaterial({ color: 0x999999, metalness: 0.6, roughness:0.25 });
+    const nose = new THREE.Mesh(noseGeom, noseMat);
+    nose.position.x = 3.8; // front when body length is 6 centered at 0
+    nose.rotation.z = Math.PI/2;
+    missile.add(nose);
+
+    // Tail section (slightly narrower)
+    const tailGeom = new THREE.CylinderGeometry(0.45, 0.45, 0.8, 16);
+    const tail = new THREE.Mesh(tailGeom, bodyMat);
+    tail.position.x = -3.4;
+    tail.rotation.z = Math.PI/2;
+    missile.add(tail);
+
+    // Fins (4)
+    const finGeom = new THREE.BoxGeometry(0.05, 0.9, 1.6);
+    const finMat = new THREE.MeshStandardMaterial({ color: 0x222222, metalness:0.6 });
+    for (let i=0;i<4;i++){
+      const fin = new THREE.Mesh(finGeom, finMat);
+      const angle = i * Math.PI/2;
+      fin.position.set(-3.6, Math.sin(angle)*0.7, Math.cos(angle)*0.7);
+      fin.rotation.x = Math.PI/6;
+      fin.rotation.z = angle;
+      missile.add(fin);
+    }
+
+    // Decals / stripes
+    const stripeGeom = new THREE.CylinderGeometry(0.61,0.61,0.12,20);
+    const stripeMat = new THREE.MeshStandardMaterial({ color:0xffd700, emissive:0x000000 });
+    const stripe = new THREE.Mesh(stripeGeom, stripeMat);
+    stripe.position.x = 0.8;
+    stripe.rotation.z = Math.PI/2;
+    missile.add(stripe);
+
+    // Position the missile on a small launcher pad
+    missile.position.set(0, 1.8, 0);
+    missile.rotation.set(0, 0, Math.PI/16); // slight tilt
+    scene.add(missile);
+
+    // Simple launch pad
+    const pad = new THREE.Mesh(
+      new THREE.CylinderGeometry(2,2,0.3,32),
+      new THREE.MeshStandardMaterial({ color:0x4b4b4b })
+    );
+    pad.position.y = 0.15;
+    scene.add(pad);
+
+    // Flame particle system (Points)
+    const particleCount = 220;
+    const positions = new Float32Array(particleCount*3);
+    const sizes = new Float32Array(particleCount);
+    for(let i=0;i<particleCount;i++){
+      positions[i*3+0] = (Math.random()-0.5)*0.3; // x
+      positions[i*3+1] = -Math.random()*0.8; // y beneath tail
+      positions[i*3+2] = (Math.random()-0.5)*0.3; // z
+      sizes[i] = Math.random()*6 + 4;
+    }
+    const pGeom = new THREE.BufferGeometry();
+    pGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    pGeom.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+    const sprite = new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/spark1.png');
+    const pMat = new THREE.PointsMaterial({ map: sprite, transparent:true, depthWrite:false, sizeAttenuation:true });
+    pMat.alphaTest = 0.01;
+    const particles = new THREE.Points(pGeom, pMat);
+    particles.position.set(-3.4, 1.8, 0); // tie to tail position
+    scene.add(particles);
+
+    // Variables for animation
+    let launched = false;
+    let launchStart = 0;
+    const launchDuration = 6.5; // seconds to animate
+
+    function resetLaunch(){
+      launched = false;
+      launchStart = 0;
+      missile.position.set(0,1.8,0);
+      missile.rotation.set(0,0,Math.PI/16);
+      particles.visible = true;
+    }
+
+    resetLaunch();
+
+    // UI handlers
+    document.getElementById('launchBtn').addEventListener('click', ()=>{
+      if (!launched) {
+        launched = true;
+        launchStart = performance.now()/1000;
+      }
+    });
+    document.getElementById('resetBtn').addEventListener('click', ()=> resetLaunch());
+
+    // Export GLB
+    document.getElementById('exportBtn').addEventListener('click', ()=>{
+      const exporter = new GLTFExporter();
+      // Clone a reduced version for export (remove particles)
+      const exportScene = new THREE.Group();
+      exportScene.add(missile.clone());
+      exporter.parse(exportScene, function(result){
+        if (result instanceof ArrayBuffer) {
+          saveArrayBuffer(result, 'missile.glb');
+        } else {
+          const output = JSON.stringify(result, null, 2);
+          saveString(output, 'missile.gltf');
+        }
+      }, {binary:true});
+
+      function saveString(text, filename){
+        const blob = new Blob([text], {type:'text/plain'});
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+      }
+      function saveArrayBuffer(buffer, filename){
+        const blob = new Blob([buffer], {type:'application/octet-stream'});
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+      }
+    });
+
+    // Animation loop
+    const clock = new THREE.Clock();
+    function animate(){
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+
+      // Update flame particles when launching
+      if (launched){
+        const now = performance.now()/1000;
+        const elapsed = now - launchStart;
+        // rocket rotates upward and moves along world Y
+        const progress = Math.min(elapsed / launchDuration, 1);
+        // tilt to near-vertical
+        missile.rotation.z = Math.PI/16 * (1 - progress) - (Math.PI/2 - 0.05) * progress;
+        missile.position.y = 1.8 + Math.pow(progress,1.6) * 60; // big upward travel
+        missile.position.x = Math.sin(progress*0.2) * 1.5; // slight drift
+
+        // particle spread
+        const pos = pGeom.attributes.position.array;
+        for(let i=0;i<particleCount;i++){
+          const idx = i*3;
+          pos[idx+1] -= 0.08 + Math.random()*0.1 * (1+progress*2); // move downward relative to missile tail
+          pos[idx] += (Math.random()-0.5)*0.02;
+          pos[idx+2] += (Math.random()-0.5)*0.02;
+          if (pos[idx+1] < -8 - progress*40) {
+            pos[idx+0] = (Math.random()-0.5)*0.3;
+            pos[idx+1] = -Math.random()*0.8;
+            pos[idx+2] = (Math.random()-0.5)*0.3;
+          }
+        }
+        pGeom.attributes.position.needsUpdate = true;
+
+        // attach particles to missile tail
+        particles.position.set(missile.position.x - 3.4*Math.cos(missile.rotation.z), missile.position.y - 2.8*Math.sin(missile.rotation.z), 0);
+
+        // hide particles after launch completes (simulate disappearing)
+        if (progress >= 0.98) particles.visible = false;
+      } else {
+        // idle subtle motion
+        missile.rotation.y = Math.sin(t*0.25) * 0.03;
+      }
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Resize
+    window.addEventListener('resize', ()=>{
+      camera.aspect = window.innerWidth/window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+  </script></body>
+</html>

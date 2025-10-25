@@ -1,0 +1,157 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>What You Can Build With Coding</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Tailwind Play CDN (good for quick demos) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html,body { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+    /* subtle gradient bg */
+    body { background: linear-gradient(180deg,#0f172a 0%, #071022 50%, #071026 100%); }
+  </style>
+</head>
+<body class="min-h-screen text-slate-100">
+  <header class="max-w-6xl mx-auto px-6 py-10 flex items-center justify-between">
+    <div class="space-y-1">
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">What You Can Build With Coding</h1>
+      <p class="text-slate-300">From simple websites to rocket guidance — a friendly guide to ideas & paths.</p>
+    </div>
+    <div class="hidden md:flex items-center gap-4">
+      <a href="#learn" class="inline-flex items-center gap-2 px-4 py-2 bg-sky-500/90 rounded-lg shadow hover:bg-sky-400 transition">Learn roadmap
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+      </a>
+      <a href="#examples" class="px-4 py-2 border border-slate-700 rounded-lg text-slate-200 hover:bg-slate-800 transition">Examples</a>
+    </div>
+  </header>  <main class="max-w-6xl mx-auto px-6 pb-20">
+    <section class="bg-gradient-to-r from-slate-800/40 to-slate-900/30 rounded-2xl p-8 shadow-lg">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <h2 class="text-2xl font-bold">Build anything. Start small, scale big.</h2>
+          <p class="mt-3 text-slate-300">Coding is a toolkit — depending on the languages and tools you pick, you can create websites, mobile apps, games, AI systems, security tools, hardware controllers, and more. Below are the main domains and short examples to spark ideas.</p><div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="p-4 bg-slate-800/50 rounded-lg">
+          <h3 class="font-semibold">Web Development</h3>
+          <p class="text-slate-300 text-sm mt-1">Portfolios, dashboards, e‑commerce, web apps, and browser games.</p>
+        </div>
+        <div class="p-4 bg-slate-800/50 rounded-lg">
+          <h3 class="font-semibold">Mobile & Desktop Apps</h3>
+          <p class="text-slate-300 text-sm mt-1">Native apps, cross-platform apps, productivity tools.</p>
+        </div>
+        <div class="p-4 bg-slate-800/50 rounded-lg">
+          <h3 class="font-semibold">Games</h3>
+          <p class="text-slate-300 text-sm mt-1">2D/3D, multiplayer, AR/VR experiences.</p>
+        </div>
+        <div class="p-4 bg-slate-800/50 rounded-lg">
+          <h3 class="font-semibold">AI & Machine Learning</h3>
+          <p class="text-slate-300 text-sm mt-1">Chatbots, image generators, recommendation systems.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-center">
+      <div class="w-full rounded-lg p-6 bg-slate-900/60 border border-slate-800">
+        <div class="text-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-20 w-20 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7M8 3h8l1 4H7L8 3z" />
+          </svg>
+          <h4 class="mt-4 text-lg font-semibold">Start with one small project</h4>
+          <p class="text-slate-300 text-sm mt-2">Pick one simple idea — a to-do app, portfolio site, or a small game. Ship it, then add features.</p>
+          <a href="#steps" class="inline-block mt-4 px-4 py-2 bg-sky-500/95 rounded-md text-sm font-medium">See learning steps</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- sections list -->
+<section id="examples" class="mt-8 grid md:grid-cols-2 gap-6">
+  <article class="p-6 bg-slate-900/50 rounded-xl border border-slate-800">
+    <h3 class="text-xl font-bold">AI & Machine Learning</h3>
+    <p class="mt-2 text-slate-300">Build chatbots, image/video generators, classification models for healthcare, or a trading bot.</p>
+    <ul class="mt-4 space-y-2 text-sm text-slate-300">
+      <li>• Chatbots and voice assistants</li>
+      <li>• Image generation & enhancement</li>
+      <li>• Recommendation systems</li>
+      <li>• Predictive models (finance, health)</li>
+    </ul>
+  </article>
+
+  <article class="p-6 bg-slate-900/50 rounded-xl border border-slate-800">
+    <h3 class="text-xl font-bold">Cybersecurity & Tools</h3>
+    <p class="mt-2 text-slate-300">Create scanners, authentication systems, firewalls, and monitoring dashboards.</p>
+    <ul class="mt-4 space-y-2 text-sm text-slate-300">
+      <li>• Vulnerability scanners</li>
+      <li>• Secure authentication & 2FA</li>
+      <li>• Network monitoring dashboards</li>
+      <li>• Security automation & incident responders</li>
+    </ul>
+  </article>
+
+  <article class="p-6 bg-slate-900/50 rounded-xl border border-slate-800">
+    <h3 class="text-xl font-bold">Games & Interactive</h3>
+    <p class="mt-2 text-slate-300">From simple browser games to full 3D console-level titles and AR games.</p>
+    <ul class="mt-4 space-y-2 text-sm text-slate-300">
+      <li>• 2D platformers & puzzle games</li>
+      <li>• 3D shooters & adventure games</li>
+      <li>• Multiplayer servers & matchmaking</li>
+      <li>• AR/VR immersive experiences</li>
+    </ul>
+  </article>
+
+  <article class="p-6 bg-slate-900/50 rounded-xl border border-slate-800">
+    <h3 class="text-xl font-bold">IoT, Robotics & Cloud</h3>
+    <p class="mt-2 text-slate-300">Connect hardware to the cloud, build smart home systems, or automate factories.</p>
+    <ul class="mt-4 space-y-2 text-sm text-slate-300">
+      <li>• Smart home automation</li>
+      <li>• Drones & robotics control</li>
+      <li>• Cloud services & microservices</li>
+      <li>• Telemetry, monitoring & dashboards</li>
+    </ul>
+  </article>
+</section>
+
+<!-- Roadmap steps -->
+<section id="steps" class="mt-10 bg-slate-800/40 p-6 rounded-2xl border border-slate-700">
+  <h3 class="text-2xl font-bold">Learning steps — a simple roadmap</h3>
+  <div class="mt-4 grid sm:grid-cols-4 gap-4">
+    <div class="p-4 bg-slate-900/50 rounded-lg">
+      <h4 class="font-semibold">Beginner</h4>
+      <p class="text-sm text-slate-300 mt-2">HTML, CSS, JavaScript basics. Build a personal website.</p>
+    </div>
+    <div class="p-4 bg-slate-900/50 rounded-lg">
+      <h4 class="font-semibold">Intermediate</h4>
+      <p class="text-sm text-slate-300 mt-2">Learn a backend (Node/Django/Flask), DBs, and frameworks.</p>
+    </div>
+    <div class="p-4 bg-slate-900/50 rounded-lg">
+      <h4 class="font-semibold">Advanced</h4>
+      <p class="text-sm text-slate-300 mt-2">Systems design, scaling, ML or game engines, security practices.</p>
+    </div>
+    <div class="p-4 bg-slate-900/50 rounded-lg">
+      <h4 class="font-semibold">Ship</h4>
+      <p class="text-sm text-slate-300 mt-2">Deploy, collect feedback, iterate — shipping beats perfection.</p>
+    </div>
+  </div>
+
+  <div class="mt-6 flex flex-col sm:flex-row gap-4">
+    <a href="#" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-500/95 rounded-md font-medium">Project ideas</a>
+    <a href="#" class="inline-flex items-center justify-center gap-2 px-4 py-2 border border-slate-700 rounded-md">Tools & resources</a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="mt-10 p-6 rounded-2xl bg-gradient-to-r from-sky-900/40 to-slate-900/30 border border-slate-800 text-center">
+  <h3 class="text-2xl font-bold">Ready to build?</h3>
+  <p class="mt-2 text-slate-300">Tell me one idea and I’ll give you a step-by-step plan and starter code.</p>
+  <div class="mt-4">
+    <a href="#" class="inline-block px-6 py-3 bg-sky-500 rounded-lg font-semibold shadow hover:bg-sky-400 transition">Give me an idea</a>
+  </div>
+</section>
+
+  </main>  <footer class="mt-12 py-8 text-center text-slate-400">
+    <div class="max-w-6xl mx-auto px-6">Made with ♥ — Coding possibilities are endless.</div>
+  </footer>
+</body>
+</html>

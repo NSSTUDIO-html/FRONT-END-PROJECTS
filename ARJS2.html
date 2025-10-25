@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AR Bike</title>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/three.js/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/three.js/build/ar.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.159.0/examples/js/loaders/GLTFLoader.js"></script>
+  <style>
+    body { margin: 0; overflow: hidden; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <a-scene embedded arjs='trackingMethod: best; sourceType: webcam; debugUIEnabled: false;'>
+    <!-- Marker -->
+    <a-marker preset="hiro">
+      <a-entity id="ar-bike" position="0 0 0" rotation="0 0 0" scale="0.5 0.5 0.5"></a-entity>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
+
+  <script>
+    const loader = new THREE.GLTFLoader();
+    loader.load(
+      'http://localhost:8000/2024_ducati_streetfighter_v4_s.glb', // model path on local server
+      function (gltf) {
+        const bike = gltf.scene;
+        bike.scale.set(0.5, 0.5, 0.5);
+        bike.position.set(0, 0, 0);
+
+        const marker = document.querySelector('#ar-bike');
+        marker.object3D.add(bike);
+      },
+      undefined,
+      function (error) {
+        console.error('Error loading bike model:', error);
+      }
+    );
+  </script>
+</body>
+</html>

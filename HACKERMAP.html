@@ -1,0 +1,304 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hacking & Cybersecurity — Complete Curriculum</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9aa4b2;--glass:rgba(255,255,255,0.03)}
+    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{background:linear-gradient(180deg,#071021 0%, #071427 100%);color:#e6eef6;line-height:1.5}
+    .wrap{max-width:1100px;margin:32px auto;padding:28px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.7)}
+    header{display:flex;gap:16px;align-items:center}
+    header h1{font-size:22px;margin:0}
+    header p{margin:0;color:var(--muted)}
+    nav{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+    nav a{color:var(--accent);text-decoration:none;padding:6px 10px;background:var(--glass);border-radius:8px;font-size:14px}
+    section{margin-top:20px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:10px}
+    h2{margin-top:0;color:#dff7fb}
+    ul{margin:8px 0 16px 20px}
+    code{background:rgba(0,0,0,0.25);padding:2px 6px;border-radius:6px;font-family:monospace}
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:20px}
+    .card{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px}
+    .muted{color:var(--muted);font-size:14px}
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}nav{gap:6px}}
+    .toc a{display:block;padding:6px 0;color:#bfeff6}
+    .highlight{color:var(--accent);font-weight:600}
+    .tools{display:flex;flex-wrap:wrap;gap:8px}
+    .tool{background:rgba(255,255,255,0.02);padding:6px 8px;border-radius:8px;font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Hacking & Cybersecurity — Complete Curriculum</h1>
+        <p class="muted">A structured, legal, hands-on learning roadmap: foundations → offensive & defensive → labs, tools, and career steps.</p>
+      </div>
+    </header><nav>
+  <a href="#foundations">Foundations</a>
+  <a href="#domains">Core Domains</a>
+  <a href="#tools">Essential Tools</a>
+  <a href="#labs">Practice Labs</a>
+  <a href="#books">Books & Courses</a>
+  <a href="#certs">Certifications</a>
+  <a href="#roadmap">Roadmap</a>
+  <a href="#projects">Projects</a>
+  <a href="#routine">Practice Routine</a>
+  <a href="#career">Career Paths</a>
+</nav>
+
+<div class="grid">
+  <main>
+
+    <section id="foundations">
+      <h2>1. Foundations (must before anything else)</h2>
+      <p class="muted">These fundamentals stay useful no matter which specialized path you follow.</p>
+      <ul>
+        <li><strong>Computer basics</strong>: filesystems, processes, services, shell (bash/powershell).</li>
+        <li><strong>Networking</strong>: OSI model, TCP/UDP, IP, subnetting, routing, DNS, HTTP(S), TLS.</li>
+        <li><strong>Operating systems</strong>: Deep Linux, Windows internals (registry, services, Event Logs).</li>
+        <li><strong>Programming / scripting</strong>: Python (primary), Bash, PowerShell, JavaScript basics.</li>
+        <li><strong>Databases</strong>: SQL basics and injection concepts.</li>
+        <li><strong>Cryptography fundamentals</strong>: symmetric/asymmetric, hashing, TLS basics.</li>
+      </ul>
+    </section>
+
+    <section id="domains">
+      <h2>2. Core Domains & What to Learn in Each</h2>
+
+      <h3>Web Application Security</h3>
+      <ul>
+        <li>Skills: HTTP, sessions, auth, cookies, CSRF, XSS, SQLi, file upload bugs, RCE.</li>
+        <li>Tools: Burp Suite, OWASP ZAP, sqlmap, curl, Postman.</li>
+        <li>Resources: OWASP Top 10, Web Application Hacker’s Handbook.</li>
+      </ul>
+
+      <h3>Network Security & Wireless</h3>
+      <ul>
+        <li>Skills: packet capture/analysis, IDS/IPS, routing attacks, Wi‑Fi attacks, VPNs.</li>
+        <li>Tools: Wireshark, tcpdump, Nmap, Aircrack-ng, Bettercap, Netcat.</li>
+      </ul>
+
+      <h3>System / Host Security</h3>
+      <ul>
+        <li>Hardening, patching, EDR, privilege escalation, persistence.</li>
+        <li>Tools: Sysinternals (Windows), auditd, OSQuery, autoruns.</li>
+      </ul>
+
+      <h3>Offensive Security / Pentesting (Red Team)</h3>
+      <ul>
+        <li>Recon/OSINT, scanning, exploitation (in labs), pivoting, post-exploitation, reporting.</li>
+        <li>Tools: Kali, Metasploit (lab-only), proxy tools.</li>
+      </ul>
+
+      <h3>Defensive Security (Blue Team / SOC)</h3>
+      <ul>
+        <li>Alert triage, incident response, log analysis, endpoint detection, threat hunting.</li>
+        <li>Tools: SIEM (Splunk/ELK), EDR (CrowdStrike, Sentinel), Suricata, Zeek.</li>
+      </ul>
+
+      <h3>Incident Response & Forensics</h3>
+      <ul>
+        <li>Disk & memory forensics, timeline building, containment, evidence preservation.</li>
+        <li>Tools: Volatility, Autopsy, FTK Imager, SleuthKit.</li>
+      </ul>
+
+      <h3>Reverse Engineering & Malware Analysis</h3>
+      <ul>
+        <li>Assembly basics, static/dynamic analysis, unpacking.</li>
+        <li>Tools: Ghidra, IDA, x64dbg, OllyDbg.</li>
+      </ul>
+
+      <h3>Cloud Security</h3>
+      <ul>
+        <li>IAM, secure architecture, cloud-native threats, misconfigurations.</li>
+        <li>Tools: CloudTrail, ScoutSuite, Prowler; learn AWS/Azure/GCP basics.</li>
+      </ul>
+
+      <h3>Mobile & IoT Security</h3>
+      <ul>
+        <li>App hardening, reverse engineering APKs, firmware analysis, Bluetooth/BLE.</li>
+        <li>Tools: apktool, jadx, Frida, Burp for mobile proxies.</li>
+      </ul>
+
+      <h3>Identity & Access Management (IAM)</h3>
+      <ul>
+        <li>Auth flows, SSO, OAuth/OpenID, MFA concepts and defenses.</li>
+      </ul>
+
+      <h3>Threat Intelligence & OSINT</h3>
+      <ul>
+        <li>Mapping attacker TTPs, tracking leaks, OSINT tooling like Shodan & Maltego.</li>
+      </ul>
+
+      <h3>Governance, Risk & Compliance (GRC)</h3>
+      <ul>
+        <li>Policies, risk assessments, compliance frameworks (ISO27001, PCI, GDPR).</li>
+      </ul>
+    </section>
+
+    <section id="tools">
+      <h2>3. Essential Tools (learn these well)</h2>
+      <div class="tools">
+        <div class="tool">Linux & bash</div>
+        <div class="tool">Windows internals</div>
+        <div class="tool">Nmap</div>
+        <div class="tool">Wireshark</div>
+        <div class="tool">Burp Suite</div>
+        <div class="tool">Metasploit (lab only)</div>
+        <div class="tool">Ghidra / IDA</div>
+        <div class="tool">sqlmap</div>
+        <div class="tool">Hashcat</div>
+        <div class="tool">Volatility</div>
+        <div class="tool">Splunk / ELK</div>
+        <div class="tool">Docker / Git</div>
+      </div>
+    </section>
+
+    <section id="labs">
+      <h2>4. Safe Practice Platforms & Labs</h2>
+      <ul>
+        <li>TryHackMe (beginner → guided rooms)</li>
+        <li>Hack The Box (realistic boxes)</li>
+        <li>OverTheWire (war games)</li>
+        <li>VulnHub (downloadable VMs)</li>
+        <li>CTFTime (timed competitions)</li>
+        <li>Offensive Security labs (OSCP)</li>
+        <li>SANS NetWars (paid)</li>
+      </ul>
+    </section>
+
+    <section id="books">
+      <h2>5. Books & Courses (high-value)</h2>
+      <ul>
+        <li>The Web Application Hacker’s Handbook</li>
+        <li>Hacking: The Art of Exploitation</li>
+        <li>Practical Malware Analysis</li>
+        <li>The Hacker Playbook series</li>
+        <li>Offensive Security PWK (OSCP)</li>
+        <li>SANS courses for IR/Forensics</li>
+      </ul>
+    </section>
+
+    <section id="certs">
+      <h2>6. Certifications (path suggestions)</h2>
+      <ul>
+        <li>Beginner: CompTIA Security+</li>
+        <li>Intermediate: CEH (conceptual), OSCP (hands-on)</li>
+        <li>Advanced / Specialized: OSCE, GIAC certs (GCIH, GCIA), CISSP (managerial)</li>
+      </ul>
+    </section>
+
+    <section id="roadmap">
+      <h2>7. Sample Learning Roadmaps (suggested timelines)</h2>
+      <ul>
+        <li><strong>0–3 months (foundations):</strong> Linux, networking, Python, basic web concepts, OverTheWire.</li>
+        <li><strong>3–6 months (practical skills):</strong> Nmap/Wireshark, Burp, TryHackMe beginner rooms, small Python projects.</li>
+        <li><strong>6–12 months (specialize):</strong> choose a track, HTB boxes, OSCP prep or Security+.</li>
+        <li><strong>12–24 months (professional):</strong> CTFs, build portfolio, internships, advanced certs.</li>
+      </ul>
+    </section>
+
+    <section id="projects">
+      <h2>8. Practical Projects & Portfolio Ideas</h2>
+      <ul>
+        <li>Home lab with vulnerable VMs (Metasploitable, DVWA).</li>
+        <li>Write-ups for HTB/CTF solves (host on GitHub).</li>
+        <li>Automate recon tasks with Python (subdomain discovery, port scanning).</li>
+        <li>Build small SIEM demo using ELK + Suricata.</li>
+        <li>Do an app-sec code review of an open-source project.</li>
+      </ul>
+    </section>
+
+    <section id="routine">
+      <h2>9. Daily / Weekly Practice Routine</h2>
+      <ul>
+        <li>Daily: 30–60 min reading + 30 min scripting practice.</li>
+        <li>Weekly: 1 HTB/THM lab or CTF challenge with a write-up.</li>
+        <li>Monthly: improve your lab or detection rules; join a community event.</li>
+      </ul>
+    </section>
+
+    <section id="soft">
+      <h2>10. Soft Skills & Important Non-technical Skills</h2>
+      <ul>
+        <li>Report writing & communication.</li>
+        <li>Legal & ethics: know your local laws; always get permission.</li>
+        <li>Teamwork & curiosity.</li>
+      </ul>
+    </section>
+
+    <section id="career">
+      <h2>11. Career Paths & Roles</h2>
+      <ul>
+        <li>Junior SOC Analyst → Senior SOC → Threat Hunter.</li>
+        <li>Junior Pentester → Senior Pentester → Red Team Lead.</li>
+        <li>Incident Responder, AppSec Engineer, Security Architect, CISO.</li>
+      </ul>
+    </section>
+
+    <section id="final">
+      <h2>12. Final Tips & Mindset</h2>
+      <ul>
+        <li>Focus on fundamentals (networking, OS, programming).</li>
+        <li>Practice legally — labs, bug bounties in scope, employer-approved tests.</li>
+        <li>Keep notes and publish write-ups — build a portfolio.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <aside>
+    <div class="card">
+      <h3>Quick Table of Contents</h3>
+      <div class="toc">
+        <a href="#foundations">Foundations</a>
+        <a href="#domains">Core Domains</a>
+        <a href="#tools">Tools</a>
+        <a href="#labs">Labs & Platforms</a>
+        <a href="#books">Books & Courses</a>
+        <a href="#certs">Certifications</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#projects">Projects</a>
+        <a href="#routine">Practice Routine</a>
+        <a href="#career">Career Paths</a>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h4>Top Practice Platforms</h4>
+      <ul>
+        <li>TryHackMe</li>
+        <li>Hack The Box</li>
+        <li>OverTheWire</li>
+        <li>VulnHub</li>
+        <li>CTFTime</li>
+      </ul>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h4>Quick Tools Cheatsheet</h4>
+      <p class="muted">Learn these first:</p>
+      <div class="tools" style="margin-top:6px">
+        <div class="tool">Nmap</div>
+        <div class="tool">Wireshark</div>
+        <div class="tool">Burp Suite</div>
+        <div class="tool">Python</div>
+        <div class="tool">Linux</div>
+        <div class="tool">Docker</div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<footer>
+  Created for learning — practice only in legal, authorized environments. © Your Cybersecurity Roadmap
+</footer>
+
+  </div>
+</body>
+</html>

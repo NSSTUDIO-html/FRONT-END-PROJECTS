@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Diwali 2025! 🪔</title>
+    
+    <style>
+        /* Basic Reset and Setup */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Festive Gradient Background: Gold, Red, Orange */
+            background: linear-gradient(135deg, #FFD700 0%, #FF4500 50%, #FFA07A 100%);
+            color: #FFFFFF; /* White text for contrast */
+            text-align: center;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay for readability */
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            max-width: 90%;
+            width: 600px;
+        }
+
+        /* Typography Styles */
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 0.1em;
+            color: #FFEB3B; /* Bright Gold/Yellow */
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+            border-bottom: 3px solid #FFEB3B;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.6em;
+            margin-top: 0;
+            font-weight: 300;
+        }
+
+        .message {
+            font-style: italic;
+            margin-top: 30px;
+            padding: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            font-size: 1.1em;
+            line-height: 1.4;
+        }
+
+        /* JavaScript Output Style */
+        #current-time {
+            font-size: 1.4em;
+            margin: 25px 0;
+            font-weight: bold;
+            color: #FFFFFF;
+            letter-spacing: 1px;
+        }
+
+        /* Diya Animation */
+        .diya-animation {
+            margin: 30px 0;
+        }
+
+        .diya {
+            font-size: 3.5em;
+            margin: 0 20px;
+            display: inline-block;
+            /* Simple 'glow' animation */
+            animation: glow 1.5s infinite alternate;
+        }
+
+        /* Delay the animation for a staggered effect */
+        .diya:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        .diya:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        /* Keyframes for the glow effect */
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FF8C00;
+                transform: scale(1) rotate(0deg);
+            }
+            to {
+                text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FF4500;
+                transform: scale(1.05) rotate(1deg); /* Slight rotation for flickering effect */
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <header>
+            <h1>Shubh Deepavali 2025!</h1>
+            <h2>May the Festival of Lights Illuminate Your Life</h2>
+        </header>
+        
+        <div class="diya-animation">
+            <span class="diya">🪔</span>
+            <span class="diya">🪔</span>
+            <span class="diya">🪔</span>
+        </div>
+        
+        <p id="current-time">Loading date and time...</p>
+        
+        <p class="message">Wishing you and your family a Diwali filled with health, prosperity, and joy. May the year ahead be bright and successful!</p>
+    </div>
+
+    <script>
+        // Function to update the time display
+        function updateTime() {
+            const timeElement = document.getElementById('current-time');
+            
+            // Get the current date and time
+            const now = new Date();
+            
+            // Format the date and time
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+            
+            const formattedDate = now.toLocaleDateString('en-IN', dateOptions);
+            const formattedTime = now.toLocaleTimeString('en-IN', timeOptions);
+            
+            // Update the element's text
+            timeElement.textContent = `Today: ${formattedDate} | Time: ${formattedTime}`;
+        }
+
+        // Initial call to display the time immediately
+        updateTime();
+
+        // Set up an interval to update the time every 1000 milliseconds (1 second)
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

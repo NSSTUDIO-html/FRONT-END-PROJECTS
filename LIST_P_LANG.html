@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Types of Languages in Computer Science</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-10 shadow-lg">
+    <div class="max-w-5xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl font-extrabold">Types of Languages in Computer Science</h1>
+      <p class="text-lg mt-3 opacity-90">A complete classification of computer-related languages with examples</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 py-10">
+
+    <!-- Grid of Categories -->
+    <section class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      
+      <!-- Card -->
+      <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-2xl transition">
+        <h2 class="text-xl font-semibold text-indigo-600">1. Machine-Level Language</h2>
+        <p class="mt-2 text-sm">Binary (`0` and `1`) directly understood by hardware.</p>
+        <p class="mt-2 text-xs bg-gray-100 p-2 rounded">Example: <code>10101010 11001100</code></p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-2xl transition">
+        <h2 class="text-xl font-semibold text-indigo-600">2. Assembly Language</h2>
+        <p class="mt-2 text-sm">Uses mnemonics instead of binary. Needs an assembler.</p>
+        <p class="mt-2 text-xs bg-gray-100 p-2 rounded">Example: <code>MOV A, B</code></p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-2xl transition">
+        <h2 class="text-xl font-semibold text-indigo-600">3. High-Level Programming Languages</h2>
+        <ul class="list-disc ml-5 text-sm mt-2 space-y-1">
+          <li>Procedural → C, Pascal, Fortran</li>
+          <li>Object-Oriented → Java, C++, Python</li>
+          <li>Functional → Lisp, Haskell, Scala</li>
+          <li>Scripting → Python, JS, PHP</li>
+          <li>Logic-Based → Prolog</li>
+        </ul>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-2xl transition">
+        <h2 class="text-xl font-semibold text-indigo-600">4. Markup Languages</h2>
+        <p class="mt-2 text-sm">For structuring/presenting data.</p>
+        <p class="mt-2 text-xs bg-gray-100 p-2 rounded">Examples: HTML, XML, Markdown</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-2xl transition">
+        <h2 class="text-xl font-semibold text-indigo-600">5. Query Languages</h2>
+        <p class="mt-2 text-sm">Used for databases.</p>
+        <p class="mt-2 text-xs bg-gray-100 p-2 rounded">Examples: SQL, GraphQL, XQuery</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-2xl transition">
+        <h2 class="text-xl font-semibold text-indigo-600">6. Domain-Specific Languages</h2>
+        <p class="mt-2 text-sm">Special-purpose for specific fields.</p>
+        <p class="mt-2 text-xs bg-gray-100 p-2 rounded">Examples: MATLAB, R, Verilog, CSS</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-2xl transition">
+        <h2 class="text-xl font-semibold text-indigo-600">7. Modeling & Specification Languages</h2>
+        <p class="mt-2 text-sm">For system design and formal descriptions.</p>
+        <p class="mt-2 text-xs bg-gray-100 p-2 rounded">Examples: UML, Z notation</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-2xl transition">
+        <h2 class="text-xl font-semibold text-indigo-600">8. Hardware Description Languages</h2>
+        <p class="mt-2 text-sm">Used to design/simulate circuits.</p>
+        <p class="mt-2 text-xs bg-gray-100 p-2 rounded">Examples: Verilog, VHDL</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-2xl transition">
+        <h2 class="text-xl font-semibold text-indigo-600">9. NLP-Oriented Languages</h2>
+        <p class="mt-2 text-sm">Bridge between human languages & machines.</p>
+        <p class="mt-2 text-xs bg-gray-100 p-2 rounded">Examples: AIML, Inform</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-md p-6 hover:shadow-2xl transition">
+        <h2 class="text-xl font-semibold text-indigo-600">10. Esoteric Languages</h2>
+        <p class="mt-2 text-sm">Made for experiments, challenges, or fun.</p>
+        <p class="mt-2 text-xs bg-gray-100 p-2 rounded">Examples: Brainfuck, Whitespace</p>
+      </div>
+
+    </section>
+
+    <!-- Flowchart -->
+    <section class="mt-16">
+      <h2 class="text-2xl font-bold text-center text-purple-700">Classification Flow</h2>
+      <div class="flex flex-col items-center mt-8 space-y-6">
+        
+        <!-- Root -->
+        <div class="bg-indigo-600 text-white px-6 py-3 rounded-full shadow-md font-semibold">
+          Computer Languages
+        </div>
+
+        <!-- Level 1 -->
+        <div class="flex flex-wrap justify-center gap-6">
+          <div class="bg-white border-2 border-indigo-500 px-5 py-2 rounded-lg shadow">
+            Low-Level (Machine, Assembly)
+          </div>
+          <div class="bg-white border-2 border-indigo-500 px-5 py-2 rounded-lg shadow">
+            High-Level (C, Java, Python...)
+          </div>
+          <div class="bg-white border-2 border-indigo-500 px-5 py-2 rounded-lg shadow">
+            Special Purpose (SQL, HTML, CSS, HDL...)
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-6 mt-12">
+    <p class="text-sm">© 2025 Computer Science Reference | Built with 💻 HTML & TailwindCSS</p>
+  </footer>
+
+</body>
+</html>

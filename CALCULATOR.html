@@ -1,0 +1,147 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Modern Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .btn-press:active { transform: scale(0.97); }
+    .tabular { font-variant-numeric: tabular-nums; }
+    body { background: linear-gradient(135deg, #667eea, #764ba2); }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+  <main class="w-full max-w-sm bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl p-6 border border-white/20">
+    <header class="mb-6 text-center">
+      <h1 class="text-2xl font-bold text-white tracking-wide">Smart Calculator</h1>
+      <p class="text-sm text-slate-200 opacity-80">Built with Tailwind & JavaScript</p>
+    </header><!-- Display -->
+<div class="bg-black/70 text-right text-white rounded-2xl p-5 mb-5 border border-white/10">
+  <div id="history" class="text-sm text-gray-400 truncate">&nbsp;</div>
+  <div id="display" class="text-4xl font-semibold tabular">0</div>
+</div>
+
+<!-- Buttons -->
+<div class="grid grid-cols-4 gap-3">
+  <button class="btn-press py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold" data-action="all-clear">AC</button>
+  <button class="btn-press py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-semibold" data-action="back">⌫</button>
+  <button class="btn-press py-3 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold" data-value="%">%</button>
+  <button class="btn-press py-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold" data-value="/">÷</button>
+
+  <button class="btn-press py-4 rounded-xl bg-white/20 hover:bg-white/30 text-white text-lg" data-value="7">7</button>
+  <button class="btn-press py-4 rounded-xl bg-white/20 hover:bg-white/30 text-white text-lg" data-value="8">8</button>
+  <button class="btn-press py-4 rounded-xl bg-white/20 hover:bg-white/30 text-white text-lg" data-value="9">9</button>
+  <button class="btn-press py-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-lg" data-value="*">×</button>
+
+  <button class="btn-press py-4 rounded-xl bg-white/20 hover:bg-white/30 text-white text-lg" data-value="4">4</button>
+  <button class="btn-press py-4 rounded-xl bg-white/20 hover:bg-white/30 text-white text-lg" data-value="5">5</button>
+  <button class="btn-press py-4 rounded-xl bg-white/20 hover:bg-white/30 text-white text-lg" data-value="6">6</button>
+  <button class="btn-press py-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-lg" data-value="-">−</button>
+
+  <button class="btn-press py-4 rounded-xl bg-white/20 hover:bg-white/30 text-white text-lg" data-value="1">1</button>
+  <button class="btn-press py-4 rounded-xl bg-white/20 hover:bg-white/30 text-white text-lg" data-value="2">2</button>
+  <button class="btn-press py-4 rounded-xl bg-white/20 hover:bg-white/30 text-white text-lg" data-value="3">3</button>
+  <button class="btn-press py-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-lg" data-value="+">+</button>
+
+  <button class="col-span-2 btn-press py-4 rounded-xl bg-white/20 hover:bg-white/30 text-white text-lg text-left pl-6" data-value="0">0</button>
+  <button class="btn-press py-4 rounded-xl bg-white/20 hover:bg-white/30 text-white text-lg" data-value=".">.</button>
+  <button id="equals" class="btn-press py-4 rounded-xl bg-green-500 hover:bg-green-600 text-white text-lg font-semibold" data-action="equals">=</button>
+</div>
+
+<footer class="mt-4 text-xs text-slate-200 text-center opacity-80">Press Enter to evaluate • Esc to clear</footer>
+
+  </main>  <script>
+    (function(){
+      const displayEl = document.getElementById('display');
+      const historyEl = document.getElementById('history');
+      let current = '0';
+      let expression = '';
+      let justEvaluated = false;
+
+      function updateDisplay(){
+        displayEl.textContent = current;
+        historyEl.textContent = expression || '\u00A0';
+      }
+
+      function clearAll(){ current = '0'; expression = ''; justEvaluated = false; updateDisplay(); }
+      function backspace(){
+        if(justEvaluated){ clearAll(); return; }
+        if(current.length <= 1){ current = '0'; }
+        else { current = current.slice(0,-1); }
+        updateDisplay();
+      }
+
+      function appendNumber(n){
+        if(justEvaluated){ current = '0'; expression = ''; justEvaluated = false; }
+        if(n === '.' && current.includes('.')) return;
+        if(current === '0' && n !== '.') current = n;
+        else current += n;
+        updateDisplay();
+      }
+
+      function appendOperator(op){
+        if(justEvaluated){ expression = current; justEvaluated = false; }
+        if(/[+\-*/]$/.test(expression)){
+          expression = expression.slice(0,-1) + op;
+        } else {
+          expression = expression ? expression + op + current : current + op;
+        }
+        current = '0';
+        updateDisplay();
+      }
+
+      function applyPercent(){
+        const num = parseFloat(current || '0')/100;
+        current = String(num);
+        updateDisplay();
+      }
+
+      function evaluateExpression(){
+        try{
+          let expr = expression ? expression + current : current;
+          expr = expr.replace(/×/g, '*').replace(/÷/g, '/');
+          if(!/^[-+()*/. 0-9%]+$/.test(expr)) throw new Error('Invalid');
+          expr = expr.replace(/(\d+(?:\.\d+)?)%/g, '($1/100)');
+          const result = Function('return ' + expr)();
+          const rounded = (Math.round((result + Number.EPSILON) * 1e12) / 1e12).toString();
+          historyEl.textContent = expr;
+          current = rounded;
+          expression = '';
+          justEvaluated = true;
+          updateDisplay();
+        }catch(e){ current = 'Error'; expression = ''; justEvaluated = true; updateDisplay(); }
+      }
+
+      document.querySelectorAll('[data-value]').forEach(btn => {
+        btn.addEventListener('click', ()=>{
+          const v = btn.getAttribute('data-value');
+          if(/[0-9.]/.test(v)) appendNumber(v);
+          else if(v === '%') applyPercent();
+          else if(/[+\-*/]/.test(v)) appendOperator(v);
+        });
+      });
+
+      document.querySelectorAll('[data-action]').forEach(btn => {
+        btn.addEventListener('click', ()=>{
+          const action = btn.getAttribute('data-action');
+          if(action === 'all-clear') clearAll();
+          else if(action === 'back') backspace();
+          else if(action === 'equals') evaluateExpression();
+        });
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if((e.key >= '0' && e.key <= '9') || e.key === '.') { appendNumber(e.key); }
+        else if(['+','-','*','/'].includes(e.key)) { appendOperator(e.key); }
+        else if(e.key === 'Enter' || e.key === '=') { e.preventDefault(); evaluateExpression(); }
+        else if(e.key === 'Backspace') { backspace(); }
+        else if(e.key === 'Escape') { clearAll(); }
+        else if(e.key === '%') { applyPercent(); }
+      });
+
+      updateDisplay();
+    })();
+  </script></body>
+</html>

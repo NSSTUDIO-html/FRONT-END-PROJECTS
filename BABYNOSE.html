@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Babylon.js Nose Example</title>
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <style>
+    html, body { width:100%; height:100%; margin:0; overflow:hidden; }
+    #renderCanvas { width:100%; height:100%; touch-action:none; }
+  </style>
+</head>
+<body>
+<canvas id="renderCanvas"></canvas>
+<script>
+  var canvas = document.getElementById("renderCanvas");
+  var engine = new BABYLON.Engine(canvas, true);
+
+  var createScene = function () {
+    var scene = new BABYLON.Scene(engine);
+    scene.clearColor = new BABYLON.Color3(0.9,0.9,0.9);
+
+    var camera = new BABYLON.ArcRotateCamera("camera",
+      Math.PI/2, Math.PI/3, 8, BABYLON.Vector3.Zero(), scene);
+    camera.attachControl(canvas, true);
+
+    var light = new BABYLON.HemisphericLight("light",
+      new BABYLON.Vector3(1,1,0), scene);
+
+    // --- Nose Bridge (extruded ellipse) ---
+    var ellipse = [];
+    for (var i=0;i<30;i++){
+      var ang = (i/30)*Math.PI*2;
+      ellipse.push(new BABYLON.Vector3(Math.cos(ang)*0.3, Math.sin(ang)*0.15, 0));
+    }
+    var path = [
+      new BABYLON.Vector3(0,0,0),
+      new BABYLON.Vector3(0,-1.2,0)
+    ];
+    var bridge = BABYLON.MeshBuilder.ExtrudeShape("bridge",
+      {shape:ellipse, path:path, cap:BABYLON.Mesh.CAP_ALL}, scene);
+
+    // --- Nose Tip ---
+    var tip = BABYLON.MeshBuilder.CreateSphere("tip",
+      {diameterX:1, diameterY:0.8, diameterZ:0.9}, scene);
+    tip.position.y = -1.3;
+
+    // --- Nostrils ---
+    var nostril1 = BABYLON.MeshBuilder.CreateSphere("nostril1",
+      {diameter:0.35}, scene);
+    nostril1.scaling.y = 0.6;
+    nostril1.position.set(-0.35,-1.3,0.25);
+
+    var nostril2 = nostril1.clone("nostril2");
+    nostril2.position.x = 0.35;
+
+    // --- Merge all parts into one nose mesh ---
+    var nose = BABYLON.Mesh.MergeMeshes([bridge, tip, nostril1, nostril2], true, true, undefined, false, true);
+
+    // Material
+    var skin = new BABYLON.StandardMaterial("skin", scene);
+    skin.diffuseColor = new BABYLON.Color3(1, 0.8, 0.7);
+    nose.material = skin;
+
+    return scene;
+  };
+
+  var scene = createScene();
+  engine.runRenderLoop(()=>scene.render());
+  window.addEventListener("resize", ()=>engine.resize());
+</script>
+</body>
+</html>

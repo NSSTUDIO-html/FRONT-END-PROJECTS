@@ -1,0 +1,251 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Python — 9 Levels</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-slate-900 to-sky-900 min-h-screen text-slate-100">
+  <div class="max-w-5xl mx-auto p-6">
+    <header class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-3xl font-extrabold tracking-tight">Python From Zero → Pro</h1>
+        <p class="text-slate-300 mt-1">Click any level to view topics. Built with HTML + Tailwind CSS.</p>
+      </div>
+      <div class="text-right">
+        <span class="inline-block px-3 py-1 bg-slate-800/60 rounded-md text-sm">9 Levels • Interactive</span>
+      </div>
+    </header><main class="grid md:grid-cols-3 gap-6">
+  <!-- Left: Levels -->
+  <section class="md:col-span-1 bg-white/5 rounded-2xl p-4 shadow-lg">
+    <h2 class="text-xl font-semibold mb-3">Levels</h2>
+    <div id="levels" class="space-y-3">
+      <!-- Buttons injected by JS -->
+    </div>
+    <div class="mt-6 flex gap-3">
+      <button id="expandAll" class="w-full py-2 px-3 rounded-md bg-sky-500/90 hover:bg-sky-600">Expand All</button>
+      <button id="collapseAll" class="w-full py-2 px-3 rounded-md bg-slate-700/70 hover:bg-slate-600">Collapse</button>
+    </div>
+  </section>
+
+  <!-- Right: Topics -->
+  <section class="md:col-span-2 bg-white/5 rounded-2xl p-6 shadow-lg">
+    <div class="flex items-start justify-between">
+      <div>
+        <h2 id="levelTitle" class="text-2xl font-bold">Select a Level</h2>
+        <p id="levelSubtitle" class="text-slate-300 mt-1">Topics for each level will appear here when you click a button.</p>
+      </div>
+      <div class="text-slate-400 text-sm">Made with ❤️ • Tailwind</div>
+    </div>
+
+    <div class="mt-6">
+      <input id="search" type="text" placeholder="Search topics..." class="w-full rounded-md p-3 bg-white/5 placeholder:text-slate-400 outline-none" />
+    </div>
+
+    <div id="topics" class="mt-6 grid gap-4"></div>
+
+    <footer class="mt-8 text-slate-400 text-sm">Tip: Use the search box to filter topics quickly.</footer>
+  </section>
+</main>
+
+  </div>  <script>
+    const levels = [
+      { id: 1, title: 'Level 1 — Basics', topics: [
+        'Hello World & print()', 'Variables & Data Types', 'Type Conversion', 'Input & Output', 'Basic Operators'
+      ]},
+      { id: 2, title: 'Level 2 — Control Flow', topics: [
+        'if / elif / else', 'Comparison & Logical Operators', 'for loops', 'while loops', 'break & continue', 'Nested loops'
+      ]},
+      { id: 3, title: 'Level 3 — Data Structures', topics: [
+        'Lists', 'Tuples', 'Sets', 'Dictionaries', 'List Comprehensions'
+      ]},
+      { id: 4, title: 'Level 4 — Functions', topics: [
+        'Defining Functions', 'Parameters & Arguments', 'Return Values', 'Default params', '*args & **kwargs', 'Lambda'
+      ]},
+      { id: 5, title: 'Level 5 — Modules & Packages', topics: [
+        'Built-in modules (math, random, datetime)', 'Creating modules', 'pip & virtualenv', 'requests'
+      ]},
+      { id: 6, title: 'Level 6 — File Handling', topics: [
+        'Read/Write files', 'CSV', 'JSON', 'Error handling with files'
+      ]},
+      { id: 7, title: 'Level 7 — OOP', topics: [
+        'Classes & Objects', '__init__', 'Methods', 'Inheritance', 'Polymorphism', 'Encapsulation'
+      ]},
+      { id: 8, title: 'Level 8 — Advanced Python', topics: [
+        'Exception Handling', 'Iterators & Generators', 'Decorators', 'Regex', 'Threading', 'APIs (requests)'
+      ]},
+      { id: 9, title: 'Level 9 — Data Science / AI / Web', topics: [
+        'NumPy', 'Pandas', 'Matplotlib', 'Scikit-learn', 'TensorFlow / PyTorch', 'Flask / FastAPI'
+      ]}
+    ];
+
+    const levelsContainer = document.getElementById('levels');
+    const topicsContainer = document.getElementById('topics');
+    const levelTitle = document.getElementById('levelTitle');
+    const levelSubtitle = document.getElementById('levelSubtitle');
+    const search = document.getElementById('search');
+
+    function createLevelButton(level) {
+      const btn = document.createElement('button');
+      btn.className = 'w-full text-left p-3 rounded-xl bg-white/3 hover:bg-white/6 transition flex items-center justify-between';
+      btn.innerHTML = `<div><div class=\"font-semibold\">${level.title}</div><div class=\"text-slate-400 text-sm\">Click to open topics</div></div><svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-6 w-6 text-slate-300\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M9 5l7 7-7 7\" /></svg>`;
+      btn.onclick = () => showLevel(level.id);
+      return btn;
+    }
+
+    function showLevel(id) {
+      const level = levels.find(l => l.id === id);
+      levelTitle.textContent = level.title;
+      levelSubtitle.textContent = `Topics (${level.topics.length}) — click any topic for a short explanation.`;
+
+      renderTopics(level.topics);
+      highlightActive(id);
+    }
+
+    function renderTopics(topicList) {
+      topicsContainer.innerHTML = '';
+      topicList.forEach(topic => {
+        const card = document.createElement('div');
+        card.className = 'p-4 rounded-xl bg-white/4 border border-white/6';
+        card.innerHTML = `
+          <div class=\"flex items-start justify-between\">
+            <div>
+              <div class=\"font-semibold\">${topic}</div>
+              <div class=\"text-slate-300 text-sm mt-1\" id=\"desc-${sanitizeId(topic)}\">Click to view description</div>
+            </div>
+            <div class=\"ml-4\"><button class=\"px-3 py-1 bg-sky-500/90 rounded-md text-sm\" onclick=\"showDesc('${escapeJS(topic)}')\">Show</button></div>
+          </div>
+        `;
+        topicsContainer.appendChild(card);
+      });
+    }
+
+    function showDesc(topic) {
+      const descId = 'desc-' + sanitizeId(topic);
+      const el = document.getElementById(descId);
+      if (!el) return;
+      const descriptions = descriptionsMap();
+      el.textContent = descriptions[topic] || 'Short explanation not available.';
+    }
+
+    function descriptionsMap() {
+      return {
+        'Hello World & print()': 'How to print text and basic console output using print().',
+        'Variables & Data Types': 'Storing values: int, float, str, bool, complex.',
+        'Type Conversion': 'Converting between types using int(), float(), str(), etc.',
+        'Input & Output': 'Using input() to receive user input and printing results.',
+        'Basic Operators': 'Arithmetic and comparison operators.',
+        'if / elif / else': 'Conditional execution based on boolean expressions.',
+        'Comparison & Logical Operators': 'Operators like ==, !=, and, or, not.',
+        'for loops': 'Iterating over sequences with for and range().',
+        'while loops': 'Repeat while a condition is true.',
+        'break & continue': 'Controlling loop flow.',
+        'Nested loops': 'Loops inside loops, e.g., tables and grids.',
+        'Lists': 'Ordered, changeable collections with [] and many methods.',
+        'Tuples': 'Immutable ordered collections using ().',
+        'Sets': 'Unordered collections without duplicates.',
+        'Dictionaries': 'Key-value stores with {}.',
+        'List Comprehensions': 'Concise list creation syntax.',
+        'Defining Functions': 'Create reusable code blocks with def.',
+        'Parameters & Arguments': 'Pass data into functions.',
+        'Return Values': 'Return results using return.',
+        'Default params': 'Provide default values for function parameters.',
+        '*args & **kwargs': 'Variable positional and keyword arguments.',
+        'Lambda': 'Short anonymous functions using lambda.',
+        'Built-in modules (math, random, datetime)': 'Use existing modules for math, randomness, and dates.',
+        'Creating modules': 'Organize code into .py files and import them.',
+        'pip & virtualenv': 'Install packages and isolate environments.',
+        'requests': 'HTTP requests to APIs using requests library.',
+        'Read/Write files': 'Open, read, write files with open() and context managers.',
+        'CSV': 'Comma-separated values handling with csv module.',
+        'JSON': 'JSON serialization/deserialization with json module.',
+        'Error handling with files': 'Use try/except to handle missing files and IO errors.',
+        'Classes & Objects': 'Blueprints (classes) and instances (objects).',
+        '__init__': 'Constructor to initialize object state.',
+        'Methods': 'Functions defined inside classes.',
+        'Inheritance': 'Derive classes from parent classes.',
+        'Polymorphism': 'Same interface, different implementations.',
+        'Encapsulation': 'Hide internal state using private attributes.',
+        'Exception Handling': 'try/except/finally to manage errors.',
+        'Iterators & Generators': 'Custom iteration with __iter__ and yield.',
+        'Decorators': 'Wrap functions to add behavior.',
+        'Regex': 'Pattern matching with the re module.',
+        'Threading': 'Run tasks concurrently using threads.',
+        'APIs (requests)': 'Consume web APIs with HTTP requests.',
+        'NumPy': 'Numerical arrays and fast math operations.',
+        'Pandas': 'DataFrames for data analysis and manipulation.',
+        'Matplotlib': 'Plotting and visualization.',
+        'Scikit-learn': 'Classic ML algorithms and pipelines.',
+        'TensorFlow / PyTorch': 'Deep learning libraries for neural networks.',
+        'Flask / FastAPI': 'Lightweight web frameworks for building web apps and APIs.'
+      };
+    }
+
+    function sanitizeId(text) {
+      return text.replace(/[^a-z0-9]/gi,'_');
+    }
+
+    function escapeJS(text) {
+      return text.replace(/'/g, "\\'");
+    }
+
+    function highlightActive(activeId) {
+      Array.from(levelsContainer.children).forEach((c, i) => {
+        c.classList.toggle('ring-2 ring-sky-400/30', (i+1) === activeId);
+      });
+    }
+
+    // render level buttons
+    levels.forEach(level => {
+      levelsContainer.appendChild(createLevelButton(level));
+    });
+
+    // Expand / Collapse
+    document.getElementById('expandAll').onclick = () => {
+      levels.forEach(l => showLevel(l.id));
+    };
+    document.getElementById('collapseAll').onclick = () => {
+      levelTitle.textContent = 'Select a Level';
+      levelSubtitle.textContent = 'Topics for each level will appear here when you click a button.';
+      topicsContainer.innerHTML = '';
+      Array.from(levelsContainer.children).forEach(c => c.classList.remove('ring-2','ring-sky-400/30'));
+    };
+
+    // Search topics
+    search.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      const currentTitle = levelTitle.textContent;
+      if (!q) return; // don't overwrite current view
+
+      // gather all topics across levels that match
+      const matches = [];
+      levels.forEach(l => l.topics.forEach(t => {
+        if (t.toLowerCase().includes(q)) matches.push({level: l.title, topic: t});
+      }));
+
+      if (matches.length === 0) {
+        topicsContainer.innerHTML = `<div class='text-slate-400'>No topics match "${q}".</div>`;
+        levelTitle.textContent = `Search: "${q}"`;
+        levelSubtitle.textContent = `${matches.length} results`;
+        return;
+      }
+
+      levelTitle.textContent = `Search: "${q}"`;
+      levelSubtitle.textContent = `${matches.length} result(s)`;
+      topicsContainer.innerHTML = '';
+      matches.forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'p-4 rounded-xl bg-white/4 border border-white/6';
+        card.innerHTML = `
+          <div class=\"font-semibold\">${m.topic}</div>
+          <div class=\"text-slate-400 text-sm mt-1\">Level: ${m.level}</div>
+          <div class=\"mt-2 text-slate-300\">${descriptionsMap()[m.topic] || 'Short explanation not available.'}</div>
+        `;
+        topicsContainer.appendChild(card);
+      });
+    });
+
+  </script></body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WarDrive3D – Car Base</title>
+
+  <!-- ✅ Babylon.js Core -->
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <!-- ✅ Babylon.js Loaders (needed for .glb/.gltf) -->
+  <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+  <!-- ✅ Babylon.js GUI (optional HUD/UI) -->
+  <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
+
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background-color: black;
+    }
+    #renderCanvas {
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+    #status {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-family: sans-serif;
+      font-size: 14px;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="renderCanvas"></canvas>
+  <div id="status">🚗 Loading Car...</div>
+
+  <script>
+const canvas = document.getElementById("renderCanvas");
+const engine = new BABYLON.Engine(canvas, true);
+let scene, carRoot;
+
+const createScene = async () => {
+  scene = new BABYLON.Scene(engine);
+  scene.clearColor = new BABYLON.Color3(0.02, 0.02, 0.02);
+
+  // Camera
+  const camera = new BABYLON.ArcRotateCamera(
+    "camera",
+    Math.PI / 2,
+    Math.PI / 3,
+    10,
+    new BABYLON.Vector3(0, 1, 0),
+    scene
+  );
+  camera.attachControl(canvas, true);
+
+  // Lights
+  const light1 = new BABYLON.HemisphericLight("hemiLight", new BABYLON.Vector3(0, 1, 0), scene);
+  light1.intensity = 0.8;
+  const light2 = new BABYLON.PointLight("pointLight", new BABYLON.Vector3(5, 5, 5), scene);
+  light2.intensity = 0.8;
+
+  // Ground
+  const ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 20, height: 20 }, scene);
+  const groundMat = new BABYLON.StandardMaterial("groundMat", scene);
+  groundMat.diffuseColor = new BABYLON.Color3(0.1, 0.1, 0.1);
+  ground.material = groundMat;
+
+  // Create one root node for all
+  carRoot = new BABYLON.TransformNode("carRoot", scene);
+
+  const basePath = "/storage/emulated/0/#@WAR_DRIVE(3D)[ ] + NS/FRONTEND/ASSETS/WARCAR/";
+
+  // Helper to load and attach model
+  const loadAndAttach = (file, scale, pos, rot) => {
+    BABYLON.SceneLoader.ImportMesh("", basePath, file, scene, (meshes) => {
+      const m = meshes[0];
+      m.scaling = scale;
+      m.position = pos;
+      m.rotation = rot;
+      m.parent = carRoot; // attach to root
+    });
+  };
+
+  // Main Car
+  BABYLON.SceneLoader.ImportMesh("", basePath, "bumblebee_tf1_2007_vehicle_mode.glb", scene, (meshes) => {
+    const car = meshes[0];
+    car.position = new BABYLON.Vector3(0, 0, 0);
+    car.scaling = new BABYLON.Vector3(1, 1, 1);
+    car.parent = carRoot;
+    document.getElementById("status").innerText = "✅ Car Loaded Successfully!";
+  });
+
+  // Weapons + Add-ons
+  loadAndAttach("pkp.glb", new BABYLON.Vector3(0.2, 0.2, 0.2), new BABYLON.Vector3(0.6, 1.8, -0.6), new BABYLON.Vector3(0,0,0));
+  loadAndAttach("stylized_retro-futuristic_shotgun.glb", new BABYLON.Vector3(0.5, 0.5, 0.5), new BABYLON.Vector3(-0.7, 0.6, 2), new BABYLON.Vector3(0, Math.PI/2, 0));
+  loadAndAttach("rl202.glb", new BABYLON.Vector3(3, 3, 3), new BABYLON.Vector3(0, 1, -3), new BABYLON.Vector3(0,0,0));
+  loadAndAttach("missile_launcher.glb", new BABYLON.Vector3(0.05, 0.05, 0.05), new BABYLON.Vector3(-0.5, 0.7, 0), new BABYLON.Vector3(0, Math.PI/2, 0));
+  loadAndAttach("upgraded_laser_energy_cannon.glb", new BABYLON.Vector3(0.3, 0.3, 0.3), new BABYLON.Vector3(-0.7, 0, -3), new BABYLON.Vector3(0, Math.PI, 0));
+  loadAndAttach("sci-fi_emp_grenade.glb", new BABYLON.Vector3(0.5, 0.5, 0.5), new BABYLON.Vector3(1.3, 0.6, 1), new BABYLON.Vector3(Math.PI/2, Math.PI, 0));
+  loadAndAttach("mirrors_edge_catalyst_vtol.glb", new BABYLON.Vector3(0.05, 0.05, 0.05), new BABYLON.Vector3(1, 1, -2), new BABYLON.Vector3(Math.PI/2, Math.PI/2, 0));
+  loadAndAttach("egyptian_shield.glb", new BABYLON.Vector3(1, 1, 1), new BABYLON.Vector3(-1, 1, 0), new BABYLON.Vector3(Math.PI/8, 0, Math.PI/7));
+  loadAndAttach("trident.glb", new BABYLON.Vector3(0.005, 0.005, 0.005), new BABYLON.Vector3(-0.7, 1, 0), new BABYLON.Vector3(Math.PI, 0, Math.PI));
+
+  // Move or rotate whole car group
+  carRoot.position = new BABYLON.Vector3(0, 0, 0);
+  carRoot.rotation = new BABYLON.Vector3(0, 0, 0);
+  carRoot.scaling = new BABYLON.Vector3(1, 1, 1);
+
+  return scene;
+};
+
+createScene().then((scene) => {
+  engine.runRenderLoop(() => scene.render());
+});
+
+window.addEventListener("resize", () => engine.resize());
+</script>
+</body>
+</html>

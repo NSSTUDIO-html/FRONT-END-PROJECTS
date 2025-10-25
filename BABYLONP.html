@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Babylon.js Extrude Best Practices</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <style>
+    html, body {
+      width: 100%; height: 100%;
+      margin: 0; overflow: hidden;
+      background: #111;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+    #renderCanvas {
+      width: 100%; height: 100%; display: block;
+    }
+    #info {
+      position: absolute; top: 10px; left: 10px;
+      background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px;
+      max-width: 300px; font-size: 14px; line-height: 1.4em;
+    }
+  </style>
+</head>
+<body>
+<div id="info">
+  <h3>Babylon.js Extrude Best Practices</h3>
+  <ul>
+    <li><b>Few points</b> → sharp shapes (Box, Star)</li>
+    <li><b>Many points</b> → smooth shapes (Circle, Pipe)</li>
+    <li>Use <b>cap: CAP_ALL</b> to close ends</li>
+    <li>Use <b>paths</b> for curves & tubes</li>
+  </ul>
+  <p>Rotate & zoom with touch/drag.</p>
+</div>
+<canvas id="renderCanvas"></canvas>
+
+<script>
+  var canvas = document.getElementById("renderCanvas");
+  var engine = new BABYLON.Engine(canvas, true);
+
+  var createScene = function () {
+    var scene = new BABYLON.Scene(engine);
+    scene.clearColor = new BABYLON.Color3(0.1,0.1,0.1);
+
+    var camera = new BABYLON.ArcRotateCamera("camera",
+        Math.PI/2, Math.PI/3, 25, BABYLON.Vector3.Zero(), scene);
+    camera.attachControl(canvas, true);
+
+    var light = new BABYLON.HemisphericLight("light",
+        new BABYLON.Vector3(1,1,0), scene);
+    light.intensity = 0.9;
+
+    // ---------- Example 1: Sharp Shape (Box Extrude) ----------
+    var path1 = [new BABYLON.Vector3(0,0,0), new BABYLON.Vector3(0,0,2)];
+    var shape1 = [
+      new BABYLON.Vector3(-1,-1,0),
+      new BABYLON.Vector3(1,-1,0),
+      new BABYLON.Vector3(1,1,0),
+      new BABYLON.Vector3(-1,1,0)
+    ];
+    var sharp = BABYLON.MeshBuilder.ExtrudeShape("sharp",
+      {shape:shape1,path:path1,cap:BABYLON.Mesh.CAP_ALL}, scene);
+    sharp.position.x = -10;
+    sharp.material = new BABYLON.StandardMaterial("mat1", scene);
+    sharp.material.diffuseColor = new BABYLON.Color3(0.2,0.6,1);
+
+    // ---------- Example 2: Smooth Shape (Circle Extrude) ----------
+    var circle = [];
+    for (var i=0;i<40;i++){ // more points = smoother
+      var a = (i/40)*Math.PI*2;
+      circle.push(new BABYLON.Vector3(Math.cos(a), Math.sin(a), 0));
+    }
+    var path2 = [new BABYLON.Vector3(0,0,0), new BABYLON.Vector3(0,0,3)];
+    var smooth = BABYLON.MeshBuilder.ExtrudeShape("smooth",
+      {shape:circle,path:path2,cap:BABYLON.Mesh.CAP_ALL}, scene);
+    smooth.position.x = -3;
+    smooth.material = new BABYLON.StandardMaterial("mat2", scene);
+    smooth.material.diffuseColor = new BABYLON.Color3(1,0.4,0.4);
+
+    // ---------- Example 3: Star Extrusion (Sharp + Fancy) ----------
+    var star = [];
+    for (var i=0;i<10;i++){
+      var ang = i*Math.PI/5;
+      var r = (i%2===0)?1.5:0.7;
+      star.push(new BABYLON.Vector3(Math.cos(ang)*r, Math.sin(ang)*r, 0));
+    }
+    var path3 = [new BABYLON.Vector3(0,0,0), new BABYLON.Vector3(0,0,3)];
+    var starExtrude = BABYLON.MeshBuilder.ExtrudeShape("star",
+      {shape:star,path:path3,cap:BABYLON.Mesh.CAP_ALL}, scene);
+    starExtrude.position.x = 4;
+    starExtrude.material = new BABYLON.StandardMaterial("mat3", scene);
+    starExtrude.material.diffuseColor = new BABYLON.Color3(1,1,0.3);
+
+    // ---------- Example 4: Pipe Extrusion (Curve Path) ----------
+    var path4 = [];
+    for (var i=0;i<20;i++){
+      path4.push(new BABYLON.Vector3(Math.sin(i*0.3)*2, i*0.2, Math.cos(i*0.3)*2));
+    }
+    var tubeShape = [];
+    for (var j=0;j<20;j++){
+      var ang2 = (j/20)*Math.PI*2;
+      tubeShape.push(new BABYLON.Vector3(Math.cos(ang2)*0.3, Math.sin(ang2)*0.3, 0));
+    }
+    var pipe = BABYLON.MeshBuilder.ExtrudeShape("pipe",
+      {shape:tubeShape,path:path4,cap:BABYLON.Mesh.CAP_START}, scene);
+    pipe.position.x = 10;
+    pipe.material = new BABYLON.StandardMaterial("mat4", scene);
+    pipe.material.diffuseColor = new BABYLON.Color3(0.4,1,0.4);
+
+    // Animation
+    scene.onBeforeRenderObservable.add(() => {
+      sharp.rotation.y += 0.01;
+      smooth.rotation.y += 0.01;
+      starExtrude.rotation.y += 0.01;
+      pipe.rotation.y += 0.01;
+    });
+
+    return scene;
+  };
+
+  var scene = createScene();
+  engine.runRenderLoop(()=>scene.render());
+  window.addEventListener("resize", ()=>engine.resize());
+</script>
+</body>
+</html>

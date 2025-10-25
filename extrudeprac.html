@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <style>
+    html, body { width:100%; height:100%; margin:0; padding:0; overflow:hidden; }
+    #c { width:100%; height:100%; touch-action:none; }
+  </style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+const canvas=document.getElementById("c");
+const engine=new BABYLON.Engine(canvas,true);
+const scene=new BABYLON.Scene(engine);
+
+// camera + light
+const cam=new BABYLON.ArcRotateCamera("cam",Math.PI/2,Math.PI/3,6,BABYLON.Vector3.Zero(),scene);
+cam.attachControl(canvas,true);
+new BABYLON.HemisphericLight("light",new BABYLON.Vector3(1,1,0),scene);
+
+// 🔹 Example extrude shape
+let shape=[new BABYLON.Vector3(0,0,0),
+           new BABYLON.Vector3(1,0,0),
+           new BABYLON.Vector3(1,1,0),
+           new BABYLON.Vector3(0,1,0),
+           new BABYLON.Vector3(0,0,0)];
+let path=[new BABYLON.Vector3(0,0,0),
+          new BABYLON.Vector3(0,0,2)];
+BABYLON.MeshBuilder.ExtrudeShape("box",{shape,path,cap:BABYLON.Mesh.CAP_ALL},scene);
+
+let shape1=[new BABYLON.Vector3(0,2,0),
+           new BABYLON.Vector3(2,1,0),
+           new BABYLON.Vector3(2,5,0),
+           new BABYLON.Vector3(0,4,0),
+           new BABYLON.Vector3(0,2,0)];
+let path1=[new BABYLON.Vector3(0,2,0),
+          new BABYLON.Vector3(0,2,4)];
+BABYLON.MeshBuilder.ExtrudeShape("box1",{shape:shape1,path:path1,cap:BABYLON.Mesh.CAP_ALL},scene);
+
+
+// 🔹 Resize for fullscreen mobile
+window.addEventListener("resize",()=>engine.resize());
+engine.runRenderLoop(()=>scene.render());
+</script>
+</body>
+</html>
